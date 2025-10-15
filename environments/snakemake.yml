@@ -1,0 +1,17 @@
+name: snakemake
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.12
+  - snakemake=9.1.1
+  - snakemake-interface-common=1.17.4
+  - snakemake-interface-executor-plugins=9.3.3
+  - snakemake-interface-logger-plugins=1.2.3
+  - snakemake-interface-report-plugins=1.1.0
+  - snakemake-interface-storage-plugins=4.2.1
+  - snakemake-minimal=9.1.1
+  - pip:
+      - snakemake-executor-plugin-lsf==0.2.6
+      - snakemake-executor-plugin-lsf-jobstep==0.1.10

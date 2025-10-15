@@ -1,0 +1,90 @@
+import os
+from snakemake.io import expand, directory
+import re
+# First, add this import at the top of your file
+import glob
+
+
+# PATHS
+# raw read storage in "/sc/arion/projects/faithj02a/data/seq"
+RAW_READ_DIR = '/Volumes/sd/sample_data' #'/Volumes/sd/faith/sequencing_raw/30-1179742904/00_fastq'
+OUTPUT_DIR = '/Volumes/sd/faith/test_output'  
+STRAIN_BARCODES = '/Users/ruprec01/Documents/Faith_lab/Git/population_bottlenecks/input_files/strain_barcodes.fasta'
+SCRIPTS_DIR = '/Users/ruprec01/Documents/Faith_lab/Git/population_bottlenecks/scripts'
+
+# Get input files and extract strain names, removes hidden files
+FILES = [i for i in os.listdir(RAW_READ_DIR) if i.endswith('.fastq.gz') and not i.startswith('._')]
+SAMPLE_NAMES = list(set([re.split(r'_R\d+_', i)[0] for i in sorted(FILES)]))
+#SAMPLE_NAMES = list(set([re.split(r'_R2_001', i)[0] for i in sorted(FILE_NAMES)]))
+
+# Create main output directory structure
+#os.makedirs(OUTPUT_DIR + "1-merge", exist_ok=True)
+os.makedirs(OUTPUT_DIR + "1-join", exist_ok=True)
+os.makedirs(OUTPUT_DIR + "2-trimmed", exist_ok=True)
+#os.makedirs(OUTPUT_DIR + "4-cluster", exist_ok=True)
+os.makedirs(OUTPUT_DIR + "3-readtables", exist_ok=True)
+
+
+
+rule all:
+    input:
+        expand(OUTPUT_DIR + "2-trimmed/{prefix}_filtered.fastq.gz", prefix=SAMPLE_NAMES),
+        expand(OUTPUT_DIR + "2-trimmed/{prefix}_trimmed.fastq.gz", prefix=SAMPLE_NAMES),
+        expand(OUTPUT_DIR + "3-readtables/{prefix}/{prefix}_umi_cluster.done", prefix=SAMPLE_NAMES),
+
+#cutadapt trims r2 after the adapter and keeps the relevant 38 nucleotide barcoding region
+rule cutadapt:
+    input:
+        lambda wildcards: os.path.join(RAW_READ_DIR, f"{wildcards.prefix}_R2_001.fastq.gz")
+    output:
+         file=OUTPUT_DIR + "2-trimmed/{prefix}_trimmed.fastq.gz",
+    log:
+        OUTPUT_DIR + "0-logs/{prefix}/{prefix}.2-trim.log"
+    # ml cutadapt
+    shell:
+        """
+        conda run -n umi_env cutadapt -g ^CAAATCCAGATGGAGTTCTGAGGTCATTACTGGATCTATCAACAGGAGTCCAAGactagtCCTG \
+        -o {output.file} \
+        -l 38 \
+        {input} &> {log}
+        """
+
+rule fastp:
+    input:
+        OUTPUT_DIR + "2-trimmed/{prefix}_trimmed.fastq.gz",
+    output:
+        OUTPUT_DIR + "2-trimmed/{prefix}_filtered.fastq.gz",
+    log:
+        OUTPUT_DIR + "0-logs/{prefix}/{prefix}.2-trim.log"
+    shell:
+        """
+        conda run -n umi_env fastp -i {input} -o {output} --html {output}.html
+        """
+
+
+
+
+## Call UMI demux script
+## Create a csv file for all reads without filtering anything
+rule umi_cluster:
+    input:
+        file=OUTPUT_DIR + "2-trimmed/{prefix}_filtered.fastq.gz",
+        barcodes= STRAIN_BARCODES
+    output:
+        OUTPUT_DIR + "3-readtables/{prefix}/{prefix}_umi_cluster.done"
+    params:
+        output_dir = directory(OUTPUT_DIR + "3-readtables/{prefix}/"),
+        sample = "{prefix}"
+    log:
+        OUTPUT_DIR + "0-logs/{prefix}/{prefix}.3-cluster.log"
+    shell:
+        '''
+        mkdir -p {params.output_dir}
+        conda run -n umi_env python {SCRIPTS_DIR}/umi_cluster_R2.py \
+        -i {input.file} \
+        -o {params.output_dir} \
+        -s {params.sample} \
+        -bc {input.barcodes} \
+        &> {log}
+        touch {output}
+        '''

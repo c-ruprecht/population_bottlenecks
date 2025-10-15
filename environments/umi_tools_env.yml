@@ -1,0 +1,16 @@
+name: umi_tools_env
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - biopython=1.84
+  - numpy=2.2.0
+  - pandas=2.2.3
+  - umi_tools=1.1.6
+  - fastp
+  - cutadapt
+  - plotly
+  - pip
+  - pip:
+    - kaleido
