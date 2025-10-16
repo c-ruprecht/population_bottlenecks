@@ -40,6 +40,9 @@ def process_fastq(file_path, len_barcode_region = 38, bc_dict_pre = {}, bc_dict_
     i = 0
     for record in SeqIO.parse(handle, "fastq"):
         sequence = str(record.seq[0:len_barcode_region])
+        # remove all sequences that are not full length
+        if len(sequence) != len_barcode_region:
+            continue
         prefix = sequence[:10]
         suffix = sequence[-10:]
         umi_seq = sequence[10:-10]
@@ -69,6 +72,7 @@ def process_fastq(file_path, len_barcode_region = 38, bc_dict_pre = {}, bc_dict_
 
 def cluster_umis(umi_dict, cluster_method = "directional", threshold = 2):
     clusterer = UMIClusterer(cluster_method=cluster_method)
+    
     #convert string keys to bytes
     umi_dict = {key.encode(): value for key, value in umi_dict.items()}
     clustered_umis = clusterer(umi_dict, threshold=threshold)
