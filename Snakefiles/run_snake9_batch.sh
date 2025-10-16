@@ -23,13 +23,13 @@ mkdir -p /sc/arion/work/ruprec01/log/cluster
 
 
 #Define inout and output directories
-INPUT_DIRS=('/sc/arion/projects/faithj02a/data/seq/2025/ILL138',
-            '/sc/arion/projects/faithj02a/data/seq/2025/ILL135',
+INPUT_DIRS=('/sc/arion/projects/faithj02a/data/seq/2025/ILL138'
+            '/sc/arion/projects/faithj02a/data/seq/2025/ILL135'
             '/sc/arion/projects/faithj02a/data/seq/2025/ILL134')
             #'/sc/arion/projects/faithj02a/data/seq/2025/ILL132/30-1179742904/00_fastq',
             # '/sc/arion/projects/faithj02a/data/seq/2025/ILL130/00_fastq',
-OUTPUT_DIRS=('/sc/arion/work/ruprec02/population-bottlenecks/ILL138',
-             '/sc/arion/work/ruprec02/population-bottlenecks/ILL135',
+OUTPUT_DIRS=('/sc/arion/work/ruprec02/population-bottlenecks/ILL138'
+             '/sc/arion/work/ruprec02/population-bottlenecks/ILL135'
              '/sc/arion/work/ruprec02/population-bottlenecks/ILL134')
              #'/sc/arion/work/ruprec02/population-bottlenecks/ILL132',
              #'/sc/arion/work/ruprec02/population-bottlenecks/ILL130',
@@ -53,3 +53,4 @@ for i in "${!INPUT_DIRS[@]}"; do
       lsf_queue="express" \
       walltime=120 \
       "lsf_extra='-o /sc/arion/work/ruprec01/log/cluster/%J.out -e /sc/arion/work/ruprec01/log/cluster/%J.err -L /bin/bash'"
+done
