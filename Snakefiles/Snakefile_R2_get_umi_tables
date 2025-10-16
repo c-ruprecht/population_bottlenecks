@@ -8,21 +8,21 @@ import glob
 # PATHS
 # raw read storage in "/sc/arion/projects/faithj02a/data/seq"
 RAW_READ_DIR = '/Volumes/sd/sample_data' #'/Volumes/sd/faith/sequencing_raw/30-1179742904/00_fastq'
+SCRATCH_DIR = '/Volumes/sd/faith/scratch'  #'/sc/arion/projects/faithj02a/scratch/ruprec01/pop_bottlenecks'
 OUTPUT_DIR = '/Volumes/sd/faith/test_output'  
 STRAIN_BARCODES = '/Users/ruprec01/Documents/Faith_lab/Git/population_bottlenecks/input_files/strain_barcodes.fasta'
 SCRIPTS_DIR = '/Users/ruprec01/Documents/Faith_lab/Git/population_bottlenecks/scripts'
+#ILL_RUNS = ['ILL30', 'ILL132', 'ILL135', 'ILL138']
 
 # Get input files and extract strain names, removes hidden files
-FILES = [i for i in os.listdir(RAW_READ_DIR) if i.endswith('.fastq.gz') and not i.startswith('._')]
+FILES = [i  for i in os.listdir(RAW_READ_DIRl) if i.endswith('_R2_001.fastq.gz')] #and not i.startswith('._')]
 SAMPLE_NAMES = list(set([re.split(r'_R\d+_', i)[0] for i in sorted(FILES)]))
-#SAMPLE_NAMES = list(set([re.split(r'_R2_001', i)[0] for i in sorted(FILE_NAMES)]))
 
 # Create main output directory structure
 #os.makedirs(OUTPUT_DIR + "1-merge", exist_ok=True)
-os.makedirs(OUTPUT_DIR + "1-join", exist_ok=True)
-os.makedirs(OUTPUT_DIR + "2-trimmed", exist_ok=True)
-#os.makedirs(OUTPUT_DIR + "4-cluster", exist_ok=True)
-os.makedirs(OUTPUT_DIR + "3-readtables", exist_ok=True)
+for run in ILL_RUNS:
+    os.makedirs(SCRATCH_DIR + f"/{run}/1-trimmed", exist_ok=True)
+    os.makedirs(OUTPUT_DIR + f"/{run}/readtables", exist_ok=True)
 
 
 
