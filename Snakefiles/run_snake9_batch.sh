@@ -33,14 +33,18 @@ OUTPUT_DIRS=('/sc/arion/work/ruprec02/population-bottlenecks/ILL138'
              '/sc/arion/work/ruprec02/population-bottlenecks/ILL134')
              #'/sc/arion/work/ruprec02/population-bottlenecks/ILL132',
              #'/sc/arion/work/ruprec02/population-bottlenecks/ILL130',
-
+SCRATCH_DIR=('/sc/arion/scratch/ruprec02/population-bottlenecks/ILL138'
+             '/sc/arion/scratch/ruprec02/population-bottlenecks/ILL135'
+             '/sc/arion/scratch/ruprec02/population-bottlenecks/ILL134')
+             #'/sc/arion/scratch/ruprec02/population-bottlenecks/ILL132',
+             #'/sc/arion/scratch/ruprec02/population-bottlenecks/ILL130',
 
 # Run with Snakemake 9.1.1
 # rerung specific rules -R get_single_GD get_GD_aggregate
 for i in "${!INPUT_DIRS[@]}"; do
   snakemake \
     -s ${SNAKEFILE} \
-    --config input_dir="${INPUT_DIRS[$i]}" output_dir="${OUTPUT_DIRS[$i]}" \
+    --config input_dir="${INPUT_DIRS[$i]}" output_dir="${OUTPUT_DIRS[$i]}" scratch_dir="${SCRATCH_DIR[$i]}" \
     --jobs 500 \
     --cores 1 \
     --rerun-incomplete \
