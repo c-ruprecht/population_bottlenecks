@@ -12,5 +12,5 @@ dependencies:
   - cutadapt
   - plotly
   - pip
-  - pip:
-    - kaleido
+  - python-kaleido
+  
