@@ -50,13 +50,13 @@ for i in "${!INPUT_DIRS[@]}"; do
     --jobs 500 \
     --cores 1 \
     --rerun-incomplete \
-    --latency-wait 400000 \
+    --latency-wait 240 \
     --executor lsf \
     --default-resources \
       mem_mb=40000 \
       disk_mb=30000 \
       lsf_project="acc_faithj02a" \
       lsf_queue="express" \
-      walltime=120 \
+      walltime=480 \
       "lsf_extra='-o /sc/arion/work/ruprec01/log/cluster/%J.out -e /sc/arion/work/ruprec01/log/cluster/%J.err -L /bin/bash'"
 done
