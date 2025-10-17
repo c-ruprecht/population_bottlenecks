@@ -51,9 +51,10 @@ for i in "${!INPUT_DIRS[@]}"; do
     --cores 1 \
     --rerun-incomplete \
     --latency-wait 240 \
+    --keep-going \
     --executor lsf \
     --default-resources \
-      mem_mb=40000 \
+      mem_mb=60000 \
       disk_mb=30000 \
       lsf_project="acc_faithj02a" \
       lsf_queue="express" \
