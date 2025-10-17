@@ -40,11 +40,12 @@ def process_fastq(file_path, len_barcode_region = 38, bc_dict_pre = {}, bc_dict_
     i = 0
     for record in SeqIO.parse(handle, "fastq"):
         sequence = str(record.seq[0:len_barcode_region])
+
         # remove all sequences that are not full length
-        
         prefix = sequence[:10]
         suffix = sequence[-10:]
         umi_seq = sequence[10:-10]
+        #maybe this shouuld be grabbed with 10:10+18
 
         # Map barcodes directly during parsing
         prefix_strain = bc_dict_pre.get(prefix)
