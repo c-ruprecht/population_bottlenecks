@@ -74,7 +74,7 @@ def process_fastq(file_path, len_barcode_region = 38, bc_dict_pre = {}, bc_dict_
     # Return as DataFrame directly
     return pd.DataFrame(results), i
 
-def cluster_umis(umi_dict, cluster_method = "directional", threshold = 2):
+def cluster_umis(umi_dict, cluster_method = "cluster", threshold = 1):
     clusterer = UMIClusterer(cluster_method=cluster_method)
     
     #convert string keys to bytes
