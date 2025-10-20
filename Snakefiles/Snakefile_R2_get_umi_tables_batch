@@ -71,7 +71,8 @@ rule umi_cluster:
         OUTPUT_DIR + "/readtables/{prefix}/{prefix}_umi_cluster.done"
     params:
         output_dir = directory(OUTPUT_DIR + "/readtables/{prefix}/"),
-        sample = "{prefix}"
+        sample = "{prefix}",
+        threads=12
     log:
         OUTPUT_DIR + "/0-logs/{prefix}.3-cluster.log"
     shell:
@@ -82,6 +83,7 @@ rule umi_cluster:
         -o {params.output_dir} \
         -s {params.sample} \
         -bc {input.barcodes} \
+        -t {params.threads}
         &> {log}
         touch {output}
         '''

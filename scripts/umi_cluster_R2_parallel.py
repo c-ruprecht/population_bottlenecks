@@ -25,6 +25,7 @@ def parse_arguments():
     parser.add_argument("-o", "--output", required=True, help="Path to the output directory")
     parser.add_argument("-s", "--sample", required=True, help="Sample name")
     parser.add_argument("-bc", "--strain_barcode", required=True, help="Path to the strain barcode fasta file")
+    parser.add_argument("-t", "--threads", type=int, default=1, help="Number of CPU threads for parallel processing (default: 1)")
     #parser.add_argument("-bc", "--strain_barcode", required=True, help="Path to the strain barcode fasta file")
     return parser.parse_args()
 
