@@ -142,19 +142,26 @@ def main():
     df_strains = pd.concat(results, axis=0)
     df_strains.to_csv(args.output + '/' + sample_name + '_total_readstable.csv', index=False)
 
+    #Normalizing molecules
     df_st3_spike = df_strains[df_strains['index'] == 'ST3-TCACACATTGACCTATGG'].copy()
-    df_st3_spike['molecules'] = 1000
-    df_st3_spike['reads/molecule'] = df_st3_spike['count'] / df_st3_spike['molecules']
-    df_st3_spike
+    if df_st3_spike.empty:
+         #Export a message indicating spike not found
+        warning_df = pd.DataFrame({'index': ['ST3-spike'],'molecules': [0]})
+        warning_df.to_csv(args.output + '/' + sample_name + '_total_molecules_table.csv', index=False)
+        print(f"WARNING: ST3 spike-in not found in sample {sample_name}")
+    else:
+        df_st3_spike['molecules'] = 1000
+        df_st3_spike['reads/molecule'] = df_st3_spike['count'] / df_st3_spike['molecules']
+        df_st3_spike
 
-    df_strains['molecules'] = df_strains['count'] / df_st3_spike['reads/molecule'].values[0]
-    df_strains['over_spike'] = df_strains['molecules'] >= 1000
-    df_strains['strain'] = df_strains['index'].apply(lambda x: 'ST3-spike' if x == 'ST3-TCACACATTGACCTATGG' else x.split('-')[0] )
-    df_strains['index'] = df_strains['index'].replace('ST3-TCACACATTGACCTATGG', 'ST3-spike')
-    df_strains = df_strains.sort_values(by='molecules', ascending=False)
-    
-    #export molecules table
-    df_strains[['index', 'molecules']].to_csv(args.output + '/' + sample_name + '_total_molecules_table.csv', index=False)
+        df_strains['molecules'] = df_strains['count'] / df_st3_spike['reads/molecule'].values[0]
+        df_strains['over_spike'] = df_strains['molecules'] >= 1000
+        df_strains['strain'] = df_strains['index'].apply(lambda x: 'ST3-spike' if x == 'ST3-TCACACATTGACCTATGG' else x.split('-')[0] )
+        df_strains['index'] = df_strains['index'].replace('ST3-TCACACATTGACCTATGG', 'ST3-spike')
+        df_strains = df_strains.sort_values(by='molecules', ascending=False)
+        
+        #export molecules table
+        df_strains[['index', 'molecules']].to_csv(args.output + '/' + sample_name + '_total_molecules_table.csv', index=False)
 
     df_strains = df_strains.sort_values(by=['strain', 'molecules'], ascending=True)
     # use defined color dictionary for STs
