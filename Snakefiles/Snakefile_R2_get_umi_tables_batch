@@ -77,7 +77,7 @@ rule umi_cluster:
     shell:
         '''
         mkdir -p {params.output_dir}
-        conda run -n umi_tools_env python {SCRIPTS_DIR}/umi_cluster_R2.py \
+        conda run -n umi_tools_env python {SCRIPTS_DIR}/umi_cluster_R2_parallel.py \
         -i {input.file} \
         -o {params.output_dir} \
         -s {params.sample} \

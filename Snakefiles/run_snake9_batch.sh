@@ -48,7 +48,7 @@ for i in "${!INPUT_DIRS[@]}"; do
     -s ${SNAKEFILE} \
     --config input_dir="${INPUT_DIRS[$i]}" output_dir="${OUTPUT_DIRS[$i]}" scratch_dir="${SCRATCH_DIR[$i]}" \
     --jobs 500 \
-    --cores 8 \
+    --cores 12 \
     --rerun-incomplete \
     --latency-wait 240 \
     --keep-going \
