@@ -13,9 +13,9 @@ import tempfile
 
 
 # Set the temporary directory when running on cluster
-os.makedirs("/sc/arion/scratch/ruprec01/tmp", exist_ok=True)
-tempfile.tempdir = "/sc/arion/scratch/ruprec01/tmp"
-os.environ["TMPDIR"] = "/sc/arion/scratch/ruprec01/tmp"
+#os.makedirs("/sc/arion/scratch/ruprec01/tmp", exist_ok=True)
+#tempfile.tempdir = "/sc/arion/scratch/ruprec01/tmp"
+#os.environ["TMPDIR"] = "/sc/arion/scratch/ruprec01/tmp"
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Process UMI clustering.")
