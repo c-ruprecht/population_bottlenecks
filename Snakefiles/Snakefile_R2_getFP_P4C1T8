@@ -9,7 +9,6 @@ import glob
 INPUT_DIR = '/sc/arion/work/ruprec02/population-bottlenecks/experiments/P4C1T8/fp_inputs/'
 OUTPUT_DIR = '/sc/arion/work/ruprec02/population-bottlenecks/experiments/P4C1T8/' 
 
-
 # Create main output directory structure
 os.makedirs(OUTPUT_DIR + "FP", exist_ok=True)
 

@@ -1,0 +1,114 @@
+# read fastq file
+# test usage
+
+#conda run -n umi_tools_env python /Users/ruprec01/Documents/Faith_lab/Git/bc_seq_P4C2/scripts/umi_cluster_R2.py -i /Volumes/sd/sample_data/trimmed/NTC-G5_R2_001.fastq.gz-trimmed.fastq -o /Volumes/sd/sample_data -s test -bc /Users/ruprec01/Documents/Faith_lab/Git/bc_seq_P4C2/input_files/strain_barcodes.fasta
+import argparse
+import gzip
+from Bio import SeqIO
+from umi_tools import UMIClusterer
+import pandas as pd
+import os
+import plotly.express as px
+import tempfile
+from multiprocessing import Pool
+
+
+
+# Set the temporary directory when running on cluster
+#os.makedirs("/sc/arion/scratch/ruprec01/tmp", exist_ok=True)
+#tempfile.tempdir = "/sc/arion/scratch/ruprec01/tmp"
+#os.environ["TMPDIR"] = "/sc/arion/scratch/ruprec01/tmp"
+
+def parse_arguments():
+    parser = argparse.ArgumentParser(description="Process UMI clustering.")
+    parser.add_argument("-i", "--input", required=True, help="Path to the input .fastq.gz file")
+    parser.add_argument("-o", "--output", required=True, help="Path to the output directory")
+    parser.add_argument("-s", "--sample", required=True, help="Sample name")
+    parser.add_argument("-bc", "--strain_barcode", required=True, help="Path to the strain barcode fasta file")
+    parser.add_argument("-t", "--threads", type=int, default=1, help="Number of CPU threads for parallel processing (default: 1)")
+    #parser.add_argument("-bc", "--strain_barcode", required=True, help="Path to the strain barcode fasta file")
+    return parser.parse_args()
+
+def process_fastq(file_path, len_barcode_region = 38, bc_dict_pre = {}, bc_dict_suff = {}):
+    
+    results = []
+    # Handle gzipped files properly
+    if file_path.endswith('.gz'):
+        # Open gzipped file in text mode
+        handle = gzip.open(file_path, 'rt')
+    else:
+        # Open regular file
+        handle = open(file_path, 'r')
+    #speed test version A:
+    i = 0
+    for record in SeqIO.parse(handle, "fastq"):
+        sequence = str(record.seq[0:len_barcode_region])
+
+        # remove all sequences that are not full length
+        prefix = sequence[:10]
+        suffix = sequence[-10:]
+        umi_seq = sequence[10:-10]
+        #maybe this shouuld be grabbed with 10:10+18
+
+        # Map barcodes directly during parsing
+        prefix_strain = bc_dict_pre.get(prefix)
+        suffix_strain = bc_dict_suff.get(suffix)
+        # Determine strain
+        strain = None
+        if prefix_strain == suffix_strain:
+            strain = prefix_strain
+        elif suffix_strain is None and prefix_strain is not None:
+            strain = prefix_strain
+        elif prefix_strain is None and suffix_strain is not None:
+            strain = suffix_strain
+            
+        # Only keep reads with assigned barcodes and proper umi length
+        if strain is not None and len(umi_seq) == 18:
+            results.append({
+                'id': record.id,
+                'umi_seq': strain + '-' + umi_seq,
+                'strain': strain,
+            })
+        i=i+1
+    
+    # Return as DataFrame directly
+    return pd.DataFrame(results), i
+
+def process_single_strain(strain_data):
+    strain, df_loc = strain_data
+    df_loc['idx'] = df_loc['umi_seq']
+    df_loc = df_loc.set_index(['idx'])
+    umi_dict = df_loc['counts'].to_dict()
+    df_umis = pd.DataFrame.from_dict(
+        cluster_umis(umi_dict, threshold=3, cluster_method='directional'), 
+        orient='index', columns=['count'])
+    df_umis = df_umis.reset_index()
+    df_umis = df_umis.sort_values(by='count', ascending=False)
+    return df_umis
+
+def main():
+    args = parse_arguments()
+    path = args.input 
+    sample_name = args.sample
+
+    # get barcode dictionaries
+    bc_dict_pre = {}
+    bc_dict_suff = {}
+    #speed test version A:
+    for record in SeqIO.parse(args.strain_barcode, "fasta"):
+            umi = str(record.seq.reverse_complement())
+            bc_dict_pre[umi[:10]] = record.id
+            bc_dict_suff[umi[-10:]] = record.id
+    print(bc_dict_pre)
+    print(bc_dict_suff)
+    #process fastq input files
+    df_umis, tota_reads = process_fastq(args.input, len_barcode_region = 38, bc_dict_pre = bc_dict_pre, bc_dict_suff = bc_dict_suff)
+    print(str(len(df_umis)) + " bardode reads of " + str(tota_reads) + ' reads processed')
+    print(df_umis)
+    #df_umis.to_csv(args.output + '/' + sample_name + '_umi_table.csv', index=False)
+    df_gpd = df_umis.groupby(['strain', 'umi_seq']).size().reset_index(name='counts').sort_values(by='counts', ascending=False)
+    df_gpd.to_csv(args.output + '/' + sample_name + '_unique_umi_table.csv', index=False)
+    
+    
+if __name__ == "__main__":
+    main()
