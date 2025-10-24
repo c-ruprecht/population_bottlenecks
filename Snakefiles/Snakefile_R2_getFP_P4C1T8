@@ -13,7 +13,7 @@ OUTPUT_DIR = '/sc/arion/work/ruprec02/population-bottlenecks/experiments/P4C1T8'
 # Create main output directory structure
 os.makedirs(OUTPUT_DIR + "FP", exist_ok=True)
 
-FILES = [i  for i in os.listdir(RAW_READ_DIR) if i.endswith('_readstable.csv')] #and not i.startswith('._')]
+FILES = [i  for i in os.listdir(INPUT_DIR) if i.endswith('_readstable.csv')] #and not i.startswith('._')]
 SAMPLE_NAMES = list(set([re.split(r'_readstable.csv', i)[0] for i in sorted(FILES)]))
 
 
