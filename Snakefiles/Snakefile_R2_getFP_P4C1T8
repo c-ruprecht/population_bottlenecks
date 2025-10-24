@@ -29,7 +29,7 @@ rule get_FP:
         OUTPUT_DIR + "FP/{strain}/{strain}.FP_complete.done"
     params:
         output_dir=directory(OUTPUT_DIR + "FP/{strain}/"),
-        scripts_dir = '/Users/ruprec01/Documents/Faith_lab/Git/population_bottlenecks/scripts'
+        scripts_dir = '/hpc/users/ruprec02/git/population_bottlenecks/scripts'
     log:
         OUTPUT_DIR + "logs/FP/{strain}_FP_complete.log"
     shell:
