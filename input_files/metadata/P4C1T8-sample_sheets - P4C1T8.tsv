@@ -1,0 +1,159 @@
+project	sample_id	sample_type	date_collected	time_point_h	cage_id	mouse_id	gender	gavage_dose_200ul	strain_bcs	strains	tube_type	tube_weight_empty	tube_weight_full	stool_weight_mg	cfu_g_stool	dna_conc_ng_ul	cfu_incubation_time	cfu_g_stool_spec	cfu_g_stool_cmr
+P4C1T8	s1	gavage DNA	241217	0 h	c1	mA	NA	10^8	ST1a|ST2d	E. coli|E.coli	2ml_screwcap	1653.5							
+P4C1T8	s2	gavage DNA	241217	0 h	c1	mB	NA	10^8	ST5a|ST6d	E. coli|E.coli	2ml_screwcap	1690.5							
+P4C1T8	s3	gavage DNA	241217	0 h	c2	mA	NA	10^6	ST1a|ST2d	E. coli|E.coli	2ml_screwcap	1644.7							
+P4C1T8	s4	gavage DNA	241217	0 h	c2	mB	NA	10^6	ST5a|ST6d	E. coli|E.coli	2ml_screwcap	1651.9							
+P4C1T8	s5	gavage DNA	241217	0 h	c3	mA	NA	10^4	ST1a|ST2d	E. coli|E.coli	2ml_screwcap	1657.2							
+P4C1T8	s6	gavage DNA	241217	0 h	c3	mB	NA	10^4	ST5a|ST6d	E. coli|E.coli	2ml_screwcap	1697.4							
+P4C1T8	s7	gavage DNA	241217	0 h	c4	mA	NA	10^2	ST1a|ST2d	E. coli|E.coli	2ml_screwcap	1680.2							
+P4C1T8	s8	gavage DNA	241217	0 h	c4	mB	NA	10^2	ST5a|ST6d	E. coli|E.coli	2ml_screwcap	1686							
+P4C1T8	s9	gavage DNA	241217	0 h	c5	mAB	NA	10^6	ST1a|ST2d|ST4a	E. coli|E.coli|B.uniformis	2ml_screwcap	1691							
+P4C1T8	s10	gavage CFU	241217	0 h	c1	NA	NA	10^8	ST1a|ST2d	E. coli	2ml_screwcap	1669.1	NA	NA			24 h		
+P4C1T8	s11	gavage CFU	241217	0 h	c1	NA	NA	10^8	ST5a|ST6d	E. coli	2ml_screwcap	1705.3	NA	NA			24 h		
+P4C1T8	s12	gavage CFU	241217	0 h	c2	NA	NA	10^6	ST1a|ST2d	E. coli	2ml_screwcap	1662.8	NA	NA			24 h		
+P4C1T8	s13	gavage CFU	241217	0 h	c2	NA	NA	10^6	ST5a|ST6d	E. coli	2ml_screwcap	1681.2	NA	NA			24 h		
+P4C1T8	s14	gavage CFU	241217	0 h	c3	NA	NA	10^4	ST1a|ST2d	E. coli	2ml_screwcap	1679.2	NA	NA			24 h		
+P4C1T8	s15	gavage CFU	241217	0 h	c3	NA	NA	10^4	ST5a|ST6d	E. coli	2ml_screwcap	1643.9	NA	NA			24 h		
+P4C1T8	s16	gavage CFU	241217	0 h	c4	NA	NA	10^2	ST1a|ST2d	E. coli	2ml_screwcap	1653.1	NA	NA			24 h		
+P4C1T8	s17	gavage CFU	241217	0 h	c4	NA	NA	10^2	ST5a|ST6d	E. coli	2ml_screwcap	1651.5	NA	NA			24 h		
+P4C1T8	s18	gavage CFU	241217	0 h	c5	NA	NA	10^6	ST1a|ST2d|ST4a	E. coli|E.coli|B.uniformis	2ml_screwcap	1663.9	NA	NA			48 h		
+P4C1T8	s19	stool DNA	241217	8 h	c1	mA	female	10^8	ST1a|ST2d	E. coli	2ml_screwcap	1674.1	1752	77.9		4.38			
+P4C1T8	s20	stool DNA	241217	8 h	c1	mB	female	10^8	ST5a|ST6d	E. coli	2ml_screwcap	1657.2	1728.7	71.5		1.32			
+P4C1T8	s21	stool DNA	241217	8 h	c2	mA	female	10^6	ST1a|ST2d	E. coli	2ml_screwcap	1682.8	1724.3	41.5		0.6			
+P4C1T8	s22	stool DNA	241217	8 h	c2	mB	female	10^6	ST5a|ST6d	E. coli	2ml_screwcap	1683.2	1704	20.8		-0.02			
+P4C1T8	s23	stool DNA	241217	8 h	c3	mA	female	10^4	ST1a|ST2d	E. coli	2ml_screwcap	1692.5	1725.9	33.4		0.25			
+P4C1T8	s24	stool DNA	241217	8 h	c3	mB	female	10^4	ST5a|ST6d	E. coli	2ml_screwcap	1690.7	1756.7	66		0.53			
+P4C1T8	s25	stool DNA	241217	8 h	c4	mA	female	10^2	ST1a|ST2d	E. coli	2ml_screwcap	1686.6	1734.3	47.7		0.29			
+P4C1T8	s26	stool DNA	241217	8 h	c4	mB	female	10^2	ST5a|ST6d	E. coli	2ml_screwcap	1658.9	1688.6	29.7		0.11			
+P4C1T8	s27	stool DNA	241217	8 h	c5	mA	female	10^6	ST1a|ST2d|ST4a	E. coli|E.coli|B.uniformis	2ml_screwcap	1649.7	1697.5	47.8		0.42			
+P4C1T8	s28	stool DNA	241217	8 h	c5	mB	female	10^6	ST1a|ST2d|ST4a	E. coli|E.coli|B.uniformis	2ml_screwcap	1711.1	1846.5	135.4		1.62			
+P4C1T8	s29	stool DNA	241218	24 h	c1	mA	female	10^8	ST1a|ST2d	E. coli	2ml_screwcap	1695.1	1763.1	68		4.18			
+P4C1T8	s30	stool DNA	241218	24 h	c1	mB	female	10^8	ST5a|ST6d	E. coli	2ml_screwcap	1657.8	1716.9	59.1		3.19			
+P4C1T8	s31	stool DNA	241218	24 h	c2	mA	female	10^6	ST1a|ST2d	E. coli	2ml_screwcap	1682.1	1733.6	51.5		3.45			
+P4C1T8	s32	stool DNA	241218	24 h	c2	mB	female	10^6	ST5a|ST6d	E. coli	2ml_screwcap	1657.39	1739.8	82.41		5.62			
+P4C1T8	s33	stool DNA	241218	24 h	c3	mA	female	10^4	ST1a|ST2d	E. coli	2ml_screwcap	1637.84	1685.1	47.26		3.64			
+P4C1T8	s34	stool DNA	241218	24 h	c3	mB	female	10^4	ST5a|ST6d	E. coli	2ml_screwcap	1664.71	1728.9	64.19		3.95			
+P4C1T8	s35	stool DNA	241218	24 h	c4	mA	female	10^2	ST1a|ST2d	E. coli	2ml_screwcap	1651	1739.6	88.6		4.82			
+P4C1T8	s36	stool DNA	241218	24 h	c4	mB	female	10^2	ST5a|ST6d	E. coli	2ml_screwcap	1654.69	1744.6	89.91		0.14			
+P4C1T8	s37	stool DNA	241218	24 h	c5	mA	female	10^6	ST1a|ST2d|ST4a	E. coli|E.coli|B.uniformis	2ml_screwcap	1649.32	1726.3	76.98		42.82			
+P4C1T8	s38	stool DNA	241218	24 h	c5	mB	female	10^6	ST1a|ST2d|ST4a	E. coli|E.coli|B.uniformis	2ml_screwcap	1696.35	1749.3	52.95		39.79			
+P4C1T8	s39	stool DNA	241218	32 h	c1	mA	female	10^8	ST1a|ST2d	E. coli	2ml_screwcap	1692.02	1769.1	77.08		5.31			
+P4C1T8	s40	stool DNA	241218	32 h	c1	mB	female	10^8	ST5a|ST6d	E. coli	2ml_screwcap	1688.02	1746.6	58.58		3.39			
+P4C1T8	s41	stool DNA	241218	32 h	c2	mA	female	10^6	ST1a|ST2d	E. coli	2ml_screwcap	1650.11	1693.1	42.99		2.88			
+P4C1T8	s42	stool DNA	241218	32 h	c2	mB	female	10^6	ST5a|ST6d	E. coli	2ml_screwcap	1657.59	1713.9	56.31		3.19			
+P4C1T8	s43	stool DNA	241218	32 h	c3	mA	female	10^4	ST1a|ST2d	E. coli	2ml_screwcap	1659.42	1734.1	74.68		5.31			
+P4C1T8	s44	stool DNA	241218	32 h	c3	mB	female	10^4	ST5a|ST6d	E. coli	2ml_screwcap	1711.34	1804.4	93.06		6.09			
+P4C1T8	s45	stool DNA	241218	32 h	c4	mA	female	10^2	ST1a|ST2d	E. coli	2ml_screwcap	1647.33	1738.4	91.07		5.87			
+P4C1T8	s46	stool DNA	241218	32 h	c4	mB	female	10^2	ST5a|ST6d	E. coli	2ml_screwcap	1646.89	1733.2	86.31		2.91			
+P4C1T8	s47	stool DNA	241218	32 h	c5	mA	female	10^6	ST1a|ST2d|ST4a	E. coli|E.coli|B.uniformis	2ml_screwcap	1689.45	1772.3	82.85		43.2			
+P4C1T8	s48	stool DNA	241218	32 h	c5	mB	female	10^6	ST1a|ST2d|ST4a	E. coli|E.coli|B.uniformis	2ml_screwcap	1637.48	1713.3	75.82		31.54			
+P4C1T8	s49	stool DNA	241219	48 h	c1	mA	female	10^8	ST1a|ST2d	E. coli	2ml_screwcap	1644.88	1689	44.12		7.46			
+P4C1T8	s50	stool DNA	241219	48 h	c1	mB	female	10^8	ST5a|ST6d	E. coli	2ml_screwcap	1691.5	1721	29.5		6.56			
+P4C1T8	s51	stool DNA	241219	48 h	c2	mA	female	10^6	ST1a|ST2d	E. coli	2ml_screwcap	1674.28	1671.3	-2.98		1.67			
+P4C1T8	s52	stool DNA	241219	48 h	c2	mB	female	10^6	ST5a|ST6d	E. coli	2ml_screwcap	1659.61	1700.4	40.79		3.7			
+P4C1T8	s53	stool DNA	241219	48 h	c3	mA	female	10^4	ST1a|ST2d	E. coli	2ml_screwcap	1656.67	1696.2	39.53		3.88			
+P4C1T8	s54	stool DNA	241219	48 h	c3	mB	female	10^4	ST5a|ST6d	E. coli	2ml_screwcap	1693.54	1755	61.46		5.52			
+P4C1T8	s55	stool DNA	241219	48 h	c4	mA	female	10^2	ST1a|ST2d	E. coli	2ml_screwcap	1692.49	1713.2	20.71		2.37			
+P4C1T8	s56	stool DNA	241219	48 h	c4	mB	female	10^2	ST5a|ST6d	E. coli	2ml_screwcap	1653.47	1693.6	40.13		18.15			
+P4C1T8	s57	stool DNA	241219	48 h	c5	mA	female	10^6	ST1a|ST2d|ST4a	E. coli|E.coli|B.uniformis	2ml_screwcap	1709.35	1738.8	29.45		35.06			
+P4C1T8	s58	stool DNA	241219	48 h	c5	mB	female	10^6	ST1a|ST2d|ST4a	E. coli|E.coli|B.uniformis	2ml_screwcap	1660.79	1698.8	38.01		36.44			
+P4C1T8	s59	stool CFU	241217	8 h	c1	mA	female	10^8	ST1a|ST2d	E. coli	2ml_screwcap	1697.65	1752.1	54.45	9.18E+07		24 h		
+P4C1T8	s60	stool CFU	241217	8 h	c1	mB	female	10^8	ST5a|ST6d	E. coli	2ml_screwcap	1669.18	1719.8	50.62	1.19E+07		24 h		
+P4C1T8	s61	stool CFU	241217	8 h	c2	mA	female	10^6	ST1a|ST2d	E. coli	2ml_screwcap	1695.98	1724.8	28.82	1.04E+05		24 h		
+P4C1T8	s62	stool CFU	241217	8 h	c2	mB	female	10^6	ST5a|ST6d	E. coli	2ml_screwcap	1653.85	1682.6	28.75	6.50E+04		24 h		
+P4C1T8	s63	stool CFU	241217	8 h	c3	mA	female	10^4	ST1a|ST2d	E. coli	2ml_screwcap	1677.03	1701.7	24.67	1.99E+04		24 h		
+P4C1T8	s64	stool CFU	241217	8 h	c3	mB	female	10^4	ST5a|ST6d	E. coli	2ml_screwcap	1654.89	1706.4	51.51	7.77E+02		24 h		
+P4C1T8	s65	stool CFU	241217	8 h	c4	mA	female	10^2	ST1a|ST2d	E. coli	2ml_screwcap	1691.38	1735.3	43.92	0.00E+00		24 h		
+P4C1T8	s66	stool CFU	241217	8 h	c4	mB	female	10^2	ST5a|ST6d	E. coli	2ml_screwcap	1675.28	1719	43.72	0.00E+00		24 h		
+P4C1T8	s67	stool CFU	241217	8 h	c5	mA	female	10^6	ST1a|ST2d|ST4a	E. coli|E.coli|B.uniformis	2ml_screwcap	1698.41	1763.1	64.69	4.95E+05		48 h		
+P4C1T8	s68	stool CFU	241217	8 h	c5	mB	female	10^6	ST1a|ST2d|ST4a	E. coli|E.coli|B.uniformis	2ml_screwcap	1690.63	1752.1	61.47	2.60E+07		48 h		
+P4C1T8	s69	stool CFU	241218	24 h	c1	mA	female	10^8	ST1a|ST2d	E. coli	2ml_screwcap	1690.71	1785.5	94.79	2.95E+07		24 h	4.22E+06	NA
+P4C1T8	s70	stool CFU	241218	24 h	c1	mB	female	10^8	ST5a|ST6d	E. coli	2ml_screwcap	1659.26	1714.4	55.14	3.08E+07		24 h	2.36E+07	NA
+P4C1T8	s71	stool CFU	241218	24 h	c2	mA	female	10^6	ST1a|ST2d	E. coli	2ml_screwcap	1696.67	1738.1	41.43	4.10E+07		24 h	4.34E+08	NA
+P4C1T8	s72	stool CFU	241218	24 h	c2	mB	female	10^6	ST5a|ST6d	E. coli	2ml_screwcap	1710.3	1784.8	74.5	8.72E+08		24 h	8.05E+07	NA
+P4C1T8	s73	stool CFU	241218	24 h	c3	mA	female	10^4	ST1a|ST2d	E. coli	2ml_screwcap	1694.25	1757.4	63.15	6.33E+07		24 h	4.75E+07	NA
+P4C1T8	s74	stool CFU	241218	24 h	c3	mB	female	10^4	ST5a|ST6d	E. coli	2ml_screwcap	1703.37	1775.7	72.33	5.53E+07		24 h	8.30E+07	NA
+P4C1T8	s75	stool CFU	241218	24 h	c4	mA	female	10^2	ST1a|ST2d	E. coli	2ml_screwcap	1659.02	1740.4	81.38	4.92E+07		24 h	6.14E+07	NA
+P4C1T8	s76	stool CFU	241218	24 h	c4	mB	female	10^2	ST5a|ST6d	E. coli	2ml_screwcap	1660.36	1733.1	72.74	4.12E+04		24 h	NA	NA
+P4C1T8	s77	stool CFU	241218	24 h	c5	mA	female	10^6	ST1a|ST2d|ST4a	E. coli|E.coli|B.uniformis	2ml_screwcap	1653.7	1738.8	85.1	8.23E+09		48 h	7.05E+06	7.05E+09
+P4C1T8	s78	stool CFU	241218	24 h	c5	mB	female	10^6	ST1a|ST2d|ST4a	E. coli|E.coli|B.uniformis	2ml_screwcap	1645.9	1710.4	64.5	2.33E+10		48 h	1.86E+07	1.86E+10
+P4C1T8	s79	stool CFU	241218	32 h	c1	mA	female	10^8	ST1a|ST2d	E. coli	2ml_screwcap	1650.18	1718.4	68.22			24 h		
+P4C1T8	s80	stool CFU	241218	32 h	c1	mB	female	10^8	ST5a|ST6d	E. coli	2ml_screwcap	1698.72	1762.9	64.18			24 h		
+P4C1T8	s81	stool CFU	241218	32 h	c2	mA	female	10^6	ST1a|ST2d	E. coli	2ml_screwcap	1692.46	1733.2	40.74			24 h		
+P4C1T8	s82	stool CFU	241218	32 h	c2	mB	female	10^6	ST5a|ST6d	E. coli	2ml_screwcap	1661.36	1719.2	57.84			24 h		
+P4C1T8	s83	stool CFU	241218	32 h	c3	mA	female	10^4	ST1a|ST2d	E. coli	2ml_screwcap	1667.06	1741.7	74.64			24 h		
+P4C1T8	s84	stool CFU	241218	32 h	c3	mB	female	10^4	ST5a|ST6d	E. coli	2ml_screwcap	1661.49	1762.4	100.91			24 h		
+P4C1T8	s85	stool CFU	241218	32 h	c4	mA	female	10^2	ST1a|ST2d	E. coli	2ml_screwcap	1661.01	1719.8	58.79			24 h		
+P4C1T8	s86	stool CFU	241218	32 h	c4	mB	female	10^2	ST5a|ST6d	E. coli	2ml_screwcap	1646.01	1728.9	82.89			24 h		
+P4C1T8	s87	stool CFU	241218	32 h	c5	mA	female	10^6	ST1a|ST2d|ST4a	E. coli|E.coli|B.uniformis	2ml_screwcap	1662.05	1743.3	81.25			48 h		
+P4C1T8	s88	stool CFU	241218	32 h	c5	mB	female	10^6	ST1a|ST2d|ST4a	E. coli|E.coli|B.uniformis	2ml_screwcap	1650.21	1715.5	65.29			48 h		
+P4C1T8	s89	stool CFU	241219	48 h	c1	mA	female	10^8	ST1a|ST2d	E. coli	2ml_screwcap	1662.23	1696.9	34.67	5.77E+07		24 h	2.02E+08	NA
+P4C1T8	s90	stool CFU	241219	48 h	c1	mB	female	10^8	ST5a|ST6d	E. coli	2ml_screwcap	1704.86	1739.5	34.64	2.60E+07		24 h	4.04E+07	NA
+P4C1T8	s91	stool CFU	241219	48 h	c2	mA	female	10^6	ST1a|ST2d	E. coli	2ml_screwcap	1689.6	1747.2	57.6	3.47E+07		24 h	4.51E+07	NA
+P4C1T8	s92	stool CFU	241219	48 h	c2	mB	female	10^6	ST5a|ST6d	E. coli	2ml_screwcap	1695.72	1713	17.28	2.31E+07		24 h	5.79E+07	NA
+P4C1T8	s93	stool CFU	241219	48 h	c3	mA	female	10^4	ST1a|ST2d	E. coli	2ml_screwcap	1670.41	1693.5	23.09	1.39E+07		24 h	1.13E+07	NA
+P4C1T8	s94	stool CFU	241219	48 h	c3	mB	female	10^4	ST5a|ST6d	E. coli	2ml_screwcap	1651.58	1689.2	37.62	6.91E+07		24 h	4.25E+07	NA
+P4C1T8	s95	stool CFU	241219	48 h	c4	mA	female	10^2	ST1a|ST2d	E. coli	2ml_screwcap	1677.77	1727.1	49.33	9.73E+07		24 h	7.30E+07	NA
+P4C1T8	s96	stool CFU	241219	48 h	c4	mB	female	10^2	ST5a|ST6d	E. coli	2ml_screwcap	1707.76	1749.4	41.64	6.24E+07		24 h	9.13E+07	NA
+P4C1T8	s97	stool CFU	241219	48 h	c5	mA	female	10^6	ST1a|ST2d|ST4a	E. coli|E.coli|B.uniformis	2ml_screwcap	1662.69	1676.2	13.51	5.92E+10		48 h	8.88E+06	4.44E+10
+P4C1T8	s98	stool CFU	241219	48 h	c5	mB	female	10^6	ST1a|ST2d|ST4a	E. coli|E.coli|B.uniformis	2ml_screwcap	1650.04	1694.6	44.56	4.49E+10		48 h	5.39E+06	4.94E+10
+P4C1T8	s99	SI DNA	241219	48 h	c1	mA	female	10^8	ST1a|ST2d	E. coli	2ml_screwcap	1646.51	1676.9	30.39		30.45			
+P4C1T8	s100	SI DNA	241219	48 h	c1	mB	female	10^8	ST5a|ST6d	E. coli	2ml_screwcap	1660.84	1713.5	52.66		0.4			
+P4C1T8	s101	SI DNA	241219	48 h	c2	mA	female	10^6	ST1a|ST2d	E. coli	2ml_screwcap	1692.91	1696.1	3.19		0.3			
+P4C1T8	s102	SI DNA	241219	48 h	c2	mB	female	10^6	ST5a|ST6d	E. coli	2ml_screwcap	1667.37	1664.7	-2.67		4.6			
+P4C1T8	s103	SI DNA	241219	48 h	c3	mA	female	10^4	ST1a|ST2d	E. coli	2ml_screwcap	1649.4	1685.5	36.1		35.27			
+P4C1T8	s104	SI DNA	241219	48 h	c3	mB	female	10^4	ST5a|ST6d	E. coli	2ml_screwcap	1686.23	1724.6	38.37		4.32			
+P4C1T8	s105	SI DNA	241219	48 h	c4	mA	female	10^2	ST1a|ST2d	E. coli	2ml_screwcap	1671.39	1732.7	61.31		1.31			
+P4C1T8	s106	SI DNA	241219	48 h	c4	mB	female	10^2	ST5a|ST6d	E. coli	2ml_screwcap	1705.02	1728.5	23.48		4.79			
+P4C1T8	s107	SI DNA	241219	48 h	c5	mA	female	10^6	ST1a|ST2d|ST4a	E. coli|E.coli|B.uniformis	2ml_screwcap	1651.32	1674.9	23.58		0.74			
+P4C1T8	s108	SI DNA	241219	48 h	c5	mB	female	10^6	ST1a|ST2d|ST4a	E. coli|E.coli|B.uniformis	2ml_screwcap	1679.87	1701.5	21.63		12.88			
+P4C1T8	s109	Cecum DNA	241219	48 h	c1	mA	female	10^8	ST1a|ST2d	E. coli	2ml_screwcap	1699.35	1785.6	86.25		10.48			
+P4C1T8	s110	Cecum DNA	241219	48 h	c1	mB	female	10^8	ST5a|ST6d	E. coli	2ml_screwcap	1684.42	1776	91.58		10.89			
+P4C1T8	s111	Cecum DNA	241219	48 h	c2	mA	female	10^6	ST1a|ST2d	E. coli	2ml_screwcap	1653.55	1722.5	68.95		6.84			
+P4C1T8	s112	Cecum DNA	241219	48 h	c2	mB	female	10^6	ST5a|ST6d	E. coli	2ml_screwcap	1710.54	1743	32.46		3.86			
+P4C1T8	s113	Cecum DNA	241219	48 h	c3	mA	female	10^4	ST1a|ST2d	E. coli	2ml_screwcap	1695.51	1732.2	36.69		8.07			
+P4C1T8	s114	Cecum DNA	241219	48 h	c3	mB	female	10^4	ST5a|ST6d	E. coli	2ml_screwcap	1650.64	1783.1	132.46		8.84			
+P4C1T8	s115	Cecum DNA	241219	48 h	c4	mA	female	10^2	ST1a|ST2d	E. coli	2ml_screwcap	1701.01	1794.7	93.69		7.3			
+P4C1T8	s116	Cecum DNA	241219	48 h	c4	mB	female	10^2	ST5a|ST6d	E. coli	2ml_screwcap	1684.15	1745.5	61.35		3.69			
+P4C1T8	s117	Cecum DNA	241219	48 h	c5	mA	female	10^6	ST1a|ST2d|ST4a	E. coli|E.coli|B.uniformis	2ml_screwcap	1650.13	1684.7	34.57		57.78			
+P4C1T8	s118	Cecum DNA	241219	48 h	c5	mB	female	10^6	ST1a|ST2d|ST4a	E. coli|E.coli|B.uniformis	2ml_screwcap	1658.6	1747.3	88.7		50.31			
+P4C1T8	s119	Pr. Colon DNA	241219	48 h	c1	mA	female	10^8	ST1a|ST2d	E. coli	2ml_screwcap	1649.02	1672.5	23.48		0.52			
+P4C1T8	s120	Pr. Colon DNA	241219	48 h	c1	mB	female	10^8	ST5a|ST6d	E. coli	2ml_screwcap	1645.97	1702.4	56.43		14.14			
+P4C1T8	s121	Pr. Colon DNA	241219	48 h	c2	mA	female	10^6	ST1a|ST2d	E. coli	2ml_screwcap	1703.88	1770.5	66.62		5.66			
+P4C1T8	s122	Pr. Colon DNA	241219	48 h	c2	mB	female	10^6	ST5a|ST6d	E. coli	2ml_screwcap	1688.85	1718.6	29.75		1.74			
+P4C1T8	s123	Pr. Colon DNA	241219	48 h	c3	mA	female	10^4	ST1a|ST2d	E. coli	2ml_screwcap	1689.34	1715.9	26.56		26.15			
+P4C1T8	s124	Pr. Colon DNA	241219	48 h	c3	mB	female	10^4	ST5a|ST6d	E. coli	2ml_screwcap	1661.7	1701.8	40.1		22.96			
+P4C1T8	s125	Pr. Colon DNA	241219	48 h	c4	mA	female	10^2	ST1a|ST2d	E. coli	2ml_screwcap	1692.98	1741.2	48.22		4.61			
+P4C1T8	s126	Pr. Colon DNA	241219	48 h	c4	mB	female	10^2	ST5a|ST6d	E. coli	2ml_screwcap	1659.06	1711.5	52.44		1.54			
+P4C1T8	s127	Pr. Colon DNA	241219	48 h	c5	mA	female	10^6	ST1a|ST2d|ST4a	E. coli|E.coli|B.uniformis	2ml_screwcap	1651.19	1670.4	19.21		22.12			
+P4C1T8	s128	Pr. Colon DNA	241219	48 h	c5	mB	female	10^6	ST1a|ST2d|ST4a	E. coli|E.coli|B.uniformis	2ml_screwcap	1705.58	1768.4	62.82		53.72			
+P4C1T8	s129	SI CFU	241219	48 h	c1	mA	female	10^8	ST1a|ST2d	E. coli	2ml_screwcap	1679.4	1712.4	33	1.82E+04		24 h		
+P4C1T8	s130	SI CFU	241219	48 h	c1	mB	female	10^8	ST5a|ST6d	E. coli	2ml_screwcap	1675.84	1727.7	51.86	3.86E+05		24 h		
+P4C1T8	s131	SI CFU	241219	48 h	c2	mA	female	10^6	ST1a|ST2d	E. coli	2ml_screwcap	1703.26	1723.8	20.54	0.00E+00		24 h		
+P4C1T8	s132	SI CFU	241219	48 h	c2	mB	female	10^6	ST5a|ST6d	E. coli	2ml_screwcap	1644.59	1700.5	55.91	0.00E+00		24 h		
+P4C1T8	s133	SI CFU	241219	48 h	c3	mA	female	10^4	ST1a|ST2d	E. coli	2ml_screwcap	1659.59	1689.6	30.01	0.00E+00		24 h		
+P4C1T8	s134	SI CFU	241219	48 h	c3	mB	female	10^4	ST5a|ST6d	E. coli	2ml_screwcap	1660.18	1686.6	26.42	0.00E+00		24 h		
+P4C1T8	s135	SI CFU	241219	48 h	c4	mA	female	10^2	ST1a|ST2d	E. coli	2ml_screwcap	1662.61	1739.1	76.49	0.00E+00		24 h		
+P4C1T8	s136	SI CFU	241219	48 h	c4	mB	female	10^2	ST5a|ST6d	E. coli	2ml_screwcap	1682.83	1727.7	44.87	4.46E+02		24 h		
+P4C1T8	s137	SI CFU	241219	48 h	c5	mA	female	10^6	ST1a|ST2d|ST4a	E. coli|E.coli|B.uniformis	2ml_screwcap	1695.56	1709.2	13.64	8.80E+05		48 h		
+P4C1T8	s138	SI CFU	241219	48 h	c5	mB	female	10^6	ST1a|ST2d|ST4a	E. coli|E.coli|B.uniformis	2ml_screwcap	1683.5	1709.6	26.1	5.36E+04		48 h		
+P4C1T8	s139	Cecum CFU	241219	48 h	c1	mA	female	10^8	ST1a|ST2d	E. coli	2ml_screwcap	1682.46	1856.8	174.34	1.38E+07		24 h		
+P4C1T8	s140	Cecum CFU	241219	48 h	c1	mB	female	10^8	ST5a|ST6d	E. coli	2ml_screwcap	1660.49	1715	54.51	7.71E+07		24 h		
+P4C1T8	s141	Cecum CFU	241219	48 h	c2	mA	female	10^6	ST1a|ST2d	E. coli	2ml_screwcap	1648.99	1895.2	246.21	3.57E+07		24 h		
+P4C1T8	s142	Cecum CFU	241219	48 h	c2	mB	female	10^6	ST5a|ST6d	E. coli	2ml_screwcap	1693.12	1736.9	43.78	1.83E+07		24 h		
+P4C1T8	s143	Cecum CFU	241219	48 h	c3	mA	female	10^4	ST1a|ST2d	E. coli	2ml_screwcap	1684.89	1764.3	79.41	2.77E+07		24 h		
+P4C1T8	s144	Cecum CFU	241219	48 h	c3	mB	female	10^4	ST5a|ST6d	E. coli	2ml_screwcap	1701.16	1839.2	138.04	6.09E+07		24 h		
+P4C1T8	s145	Cecum CFU	241219	48 h	c4	mA	female	10^2	ST1a|ST2d	E. coli	2ml_screwcap	1673.12	1756.6	83.48	2.40E+07		24 h		
+P4C1T8	s146	Cecum CFU	241219	48 h	c4	mB	female	10^2	ST5a|ST6d	E. coli	2ml_screwcap	1663.73	1744.6	80.87	1.73E+07		24 h		
+P4C1T8	s147	Cecum CFU	241219	48 h	c5	mA	female	10^6	ST1a|ST2d|ST4a	E. coli|E.coli|B.uniformis	2ml_screwcap	1638.77	1704	65.23	3.99E+10		48 h		
+P4C1T8	s148	Cecum CFU	241219	48 h	c5	mB	female	10^6	ST1a|ST2d|ST4a	E. coli|E.coli|B.uniformis	2ml_screwcap	1655.4	1727.8	72.4	4.97E+10		48 h		
+P4C1T8	s149	Pr. Colon CFU	241219	48 h	c1	mA	female	10^8	ST1a|ST2d	E. coli	2ml_screwcap	1648.67	1689.4	40.73	9.82E+04		24 h		
+P4C1T8	s150	Pr. Colon CFU	241219	48 h	c1	mB	female	10^8	ST5a|ST6d	E. coli	2ml_screwcap	1684.56	1725.7	41.14	0.00E+00		24 h		
+P4C1T8	s151	Pr. Colon CFU	241219	48 h	c2	mA	female	10^6	ST1a|ST2d	E. coli	2ml_screwcap	1691.24	1734.2	42.96	6.52E+07		24 h		
+P4C1T8	s152	Pr. Colon CFU	241219	48 h	c2	mB	female	10^6	ST5a|ST6d	E. coli	2ml_screwcap	1696.56	1731.3	34.74	8.64E+06		24 h		
+P4C1T8	s153	Pr. Colon CFU	241219	48 h	c3	mA	female	10^4	ST1a|ST2d	E. coli	2ml_screwcap	1662.61	1680.6	17.99	5.56E+07		24 h		
+P4C1T8	s154	Pr. Colon CFU	241219	48 h	c3	mB	female	10^4	ST5a|ST6d	E. coli	2ml_screwcap	1691.53	1725	33.47	7.77E+07		24 h		
+P4C1T8	s155	Pr. Colon CFU	241219	48 h	c4	mA	female	10^2	ST1a|ST2d	E. coli	2ml_screwcap	1694.81	1745.3	50.49	1.23E+08		24 h		
+P4C1T8	s156	Pr. Colon CFU	241219	48 h	c4	mB	female	10^2	ST5a|ST6d	E. coli	2ml_screwcap	1684.7	1718.2	33.5	4.18E+07		24 h		
+P4C1T8	s157	Pr. Colon CFU	241219	48 h	c5	mA	female	10^6	ST1a|ST2d|ST4a	E. coli|E.coli|B.uniformis	2ml_screwcap	1676.81	1711.4	34.59	2.14E+10		48 h		
+P4C1T8	s158	Pr. Colon CFU	241219	48 h	c5	mB	female	10^6	ST1a|ST2d|ST4a	E. coli|E.coli|B.uniformis	2ml_screwcap	1658.83	1698.5	39.67	1.81E+10		48 h		
