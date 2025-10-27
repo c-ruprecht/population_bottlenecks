@@ -68,11 +68,10 @@ rule umi_cluster:
         file=SCRATCH_DIR + "/trimmed/{prefix}_filtered.fastq.gz",
         barcodes= STRAIN_BARCODES
     output:
-        OUTPUT_DIR + "/readtables/{prefix}/{prefix}_umi_cluster.done"
+        OUTPUT_DIR + "/readtables/{prefix}/{prefix}_total_moleculestable.csv"
     params:
         output_dir = directory(OUTPUT_DIR + "/readtables/{prefix}/"),
         sample = "{prefix}",
-        threads=12
     log:
         OUTPUT_DIR + "/0-logs/{prefix}.3-cluster.log"
     shell:
@@ -83,7 +82,5 @@ rule umi_cluster:
         -o {params.output_dir} \
         -s {params.sample} \
         -bc {input.barcodes} \
-        -t {params.threads}
         &> {log}
-        touch {output}
         '''
