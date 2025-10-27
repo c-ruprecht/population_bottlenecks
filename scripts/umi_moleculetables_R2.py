@@ -109,6 +109,53 @@ def main():
     df_gpd = df_umis.groupby(['strain', 'umi_seq']).size().reset_index(name='counts').sort_values(by='counts', ascending=False)
     df_gpd.to_csv(args.output + '/' + sample_name + '_unique_umi_table.csv', index=False)
     
+    df_strains = df_gpd.copy()
+    df_strains.drop(columns=['strain'], inplace = True)
+    df_strains = df_strains.rename(columns = {'counts': 'count'})
+    #Normalizing molecules
+    df_st3_spike = df_strains[df_strains['umi_seq'] == 'ST3-TCACACATTGACCTATGG'].copy()
+    if df_st3_spike.empty:
+        #Add an arbitrary count of 1 if ST3 has not been found
+        df_st3_spike = pd.DataFrame({'umi_seq': ['ST3-TCACACATTGACCTATGG'],'counts': [1]})
+        #write empty file to warn that this happend!
+    else:
+        pass
+
+    df_st3_spike['molecules'] = 1000
+    df_st3_spike['reads/molecule'] = df_st3_spike['count'] / df_st3_spike['molecules']
+    df_strains['molecules'] = round(df_strains['count'] / df_st3_spike['reads/molecule'].values[0])
+    df_strains['over_spike'] = df_strains['molecules'] >= 1000
+    df_strains['strain'] = df_strains['umi_seq'].apply(lambda x: 'ST3-spike' if x == 'ST3-TCACACATTGACCTATGG' else x.split('-')[0] )
+    df_strains['umi_seq'] = df_strains['umi_seq'].replace('ST3-TCACACATTGACCTATGG', 'ST3-spike')
+    df_strains = df_strains.sort_values(by='molecules', ascending=False)
+
+    #export molecules table
+    df_strains[['index', 'molecules']].to_csv(args.output + '/' + sample_name + '_total_moleculestable.csv', index=False)
+
+    df_strains = df_strains.sort_values(by=['strain', 'molecules'], ascending=True)
+    # use defined color dictionary for STs
+    color_dict = {'ST3-spike': 'black',
+                    'ST3': 'grey',
+                'ST1': px.colors.qualitative.D3[0],
+                'ST2': px.colors.qualitative.D3[1],
+                'ST4': px.colors.qualitative.D3[2],
+                'ST5': px.colors.qualitative.D3[3],
+                'ST6': px.colors.qualitative.D3[4],
+                'ST7': px.colors.qualitative.D3[5],
+                'ST8': px.colors.qualitative.D3[6],
+                'ST9': px.colors.qualitative.D3[7]}
+
+    fig = px.scatter(df_strains, x='umi_seq', 
+                    y='molecules', 
+                    color='strain', 
+                    log_y=True,
+                    color_discrete_map=color_dict,
+                    width=2000, height=1000,
+                    template='simple_white')#, 
+                    #title=args.sample,)
+    fig.add_hline(y=1000, line_color="black", line_dash="dash", line_width=2)
+    fig.show()
+    fig.write_image(args.output + '/' + sample_name + '_total_molecules_table.png', width=2000, height=1000)  
     
 if __name__ == "__main__":
     main()
