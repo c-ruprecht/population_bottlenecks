@@ -144,16 +144,16 @@ def main():
                 'ST8': px.colors.qualitative.D3[6],
                 'ST9': px.colors.qualitative.D3[7]}
 
-    fig = px.scatter(df_strains, x='umi_seq', 
-                    y='molecules', 
-                    color='strain', 
-                    log_y=True,
-                    color_discrete_map=color_dict,
-                    width=2000, height=1000,
-                    template='simple_white', 
-                    title=args.sample,)
-    fig.add_hline(y=1000, line_color="black", line_dash="dash", line_width=2)
-    fig.write_image(args.output + '/' + sample_name + '_total_molecules_table.png', width=2000, height=1000)  
+    #fig = px.scatter(df_strains, x='umi_seq', 
+    #                y='molecules', 
+    #                color='strain', 
+    #                log_y=True,
+    #                color_discrete_map=color_dict,
+    #                width=2000, height=1000,
+    #                template='simple_white', 
+    #                title=args.sample,)
+    #fig.add_hline(y=1000, line_color="black", line_dash="dash", line_width=2)
+    #fig.write_image(args.output + '/' + sample_name + '_total_molecules_table.png', width=2000, height=1000)  
     
 if __name__ == "__main__":
     main()
