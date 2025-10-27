@@ -153,7 +153,6 @@ def main():
                     template='simple_white', 
                     title=args.sample,)
     fig.add_hline(y=1000, line_color="black", line_dash="dash", line_width=2)
-    fig.show()
     fig.write_image(args.output + '/' + sample_name + '_total_molecules_table.png', width=2000, height=1000)  
     
 if __name__ == "__main__":
