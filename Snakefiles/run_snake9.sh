@@ -42,7 +42,7 @@ snakemake \
   --latency-wait 240 \
   --executor lsf \
   --default-resources \
-    mem_mb=64 \
+    mem_mb=64000 \
     disk_mb=30000 \
     lsf_project="acc_faithj02a" \
     lsf_queue="premium" \
