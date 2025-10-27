@@ -27,7 +27,7 @@ rule all:
     input:
         expand(SCRATCH_DIR + "/trimmed/{prefix}_filtered.fastq.gz", prefix=SAMPLE_NAMES),
         expand(SCRATCH_DIR + "/trimmed/{prefix}_trimmed.fastq.gz", prefix=SAMPLE_NAMES),
-        expand(OUTPUT_DIR + "/readtables/{prefix}/{prefix}_umi_cluster.done", prefix=SAMPLE_NAMES),
+        expand(OUTPUT_DIR + "/readtables/{prefix}/{prefix}_total_moleculestable.csv", prefix=SAMPLE_NAMES),
 
 #cutadapt trims r2 after the adapter and keeps the relevant 38 nucleotide barcoding region
 rule cutadapt:
