@@ -39,12 +39,12 @@ snakemake \
   --jobs 200 \
   --cores 1 \
   --rerun-incomplete \
-  --latency-wait 400000 \
+  --latency-wait 240 \
   --executor lsf \
   --default-resources \
-    mem_mb=80000 \
+    mem_mb=64 \
     disk_mb=30000 \
     lsf_project="acc_faithj02a" \
     lsf_queue="premium" \
-    walltime=120 \
+    walltime=720 \
     "lsf_extra='-o /sc/arion/work/ruprec01/log/cluster/%J.out -e /sc/arion/work/ruprec01/log/cluster/%J.err -L /bin/bash'"
