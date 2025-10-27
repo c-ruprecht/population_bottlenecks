@@ -1,0 +1,51 @@
+import os
+from snakemake.io import expand, directory
+import re
+# First, add this import at the top of your file
+import glob
+
+
+# PATHS
+INPUT_DIR = '/sc/arion/work/ruprec02/population-bottlenecks/experiments/P4C4T1/'
+OUTPUT_DIR = '/sc/arion/work/ruprec02/population-bottlenecks/experiments/P4C4T1/' 
+
+# Create main output directory structure
+os.makedirs(OUTPUT_DIR + "FP", exist_ok=True)
+
+FILES = [i  for i in os.listdir(INPUT_DIR) if i.endswith('_onlygavage_moleculestable.csv') and not i.startswith('._')]
+SAMPLE_NAMES = list(set([re.split(r'_onlygavage_moleculestable.csv', i)[0] for i in sorted(FILES)]))
+print(SAMPLE_NAMES)
+
+rule all:
+    input:
+        expand(OUTPUT_DIR + "FP/{strain}/{strain}.FP_complete.done", strain=SAMPLE_NAMES),
+
+#runs getFP using column 1 as gavage column        
+rule get_FP:
+    input:
+        readstable = INPUT_DIR + "{strain}_onlygavage_moleculestable.csv"
+    output:
+        OUTPUT_DIR + "FP/{strain}/{strain}.FP_complete.done"
+    params:
+        output_dir=directory(OUTPUT_DIR + "FP/{strain}/"),
+        scripts_dir = '/hpc/users/ruprec02/git/population_bottlenecks/scripts'
+    log:
+        OUTPUT_DIR + "logs/FP/{strain}_FP_complete.log"
+    shell:
+        """
+        mkdir -p {params.output_dir}
+        mkdir -p $(dirname {log})
+        ml R/4.2.0
+        # Process single file with error handling
+        echo "Processing {input.readstable} using getFP.R"
+        if Rscript {params.scripts_dir}/getFP_3.R {input.readstable} NULL "1,2,3,4,5,6" 0.03 {params.output_dir}; then
+            echo "Successfully processed {input}" 
+        else
+            echo "WARNING: Error processing {input.readstable}, creating empty output file"
+            touch {params.output_dir}/empty_output  # Create a file inside the directory
+        fi &> {log}
+        
+        # Always touch the done file so the workflow can continue
+        touch {output}
+        """
+
