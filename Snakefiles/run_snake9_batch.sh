@@ -48,16 +48,16 @@ for i in "${!INPUT_DIRS[@]}"; do
     -s ${SNAKEFILE} \
     --config input_dir="${INPUT_DIRS[$i]}" output_dir="${OUTPUT_DIRS[$i]}" scratch_dir="${SCRATCH_DIR[$i]}" \
     --jobs 500 \
-    --cores 12 \
+    --cores 1 \
     --rerun-incomplete \
     --latency-wait 240 \
     --keep-going \
     --executor lsf \
     --default-resources \
-      mem_mb=80000 \
-      disk_mb=60000 \
+      mem_mb=16000 \
+      disk_mb=10000 \
       lsf_project="acc_faithj02a" \
       lsf_queue="express" \
-      walltime=480 \
+      walltime=720 \
       "lsf_extra='-o /sc/arion/work/ruprec01/log/cluster/%J.out -e /sc/arion/work/ruprec01/log/cluster/%J.err -L /bin/bash'"
 done
