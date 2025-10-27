@@ -106,12 +106,11 @@ def main():
     print(str(len(df_umis)) + " bardode reads of " + str(tota_reads) + ' reads processed')
     print(df_umis)
     #df_umis.to_csv(args.output + '/' + sample_name + '_umi_table.csv', index=False)
-    df_gpd = df_umis.groupby(['strain', 'umi_seq']).size().reset_index(name='counts').sort_values(by='counts', ascending=False)
+    df_gpd = df_umis.groupby(['strain', 'umi_seq']).size().reset_index(name='count').sort_values(by='count', ascending=False)
     df_gpd.to_csv(args.output + '/' + sample_name + '_unique_umi_table.csv', index=False)
     
     df_strains = df_gpd.copy()
     df_strains.drop(columns=['strain'], inplace = True)
-    df_strains = df_strains.rename(columns = {'counts': 'count'})
     #Normalizing molecules
     df_st3_spike = df_strains[df_strains['umi_seq'] == 'ST3-TCACACATTGACCTATGG'].copy()
     if df_st3_spike.empty:
@@ -125,12 +124,12 @@ def main():
     df_st3_spike['reads/molecule'] = df_st3_spike['count'] / df_st3_spike['molecules']
     df_strains['molecules'] = round(df_strains['count'] / df_st3_spike['reads/molecule'].values[0])
     df_strains['over_spike'] = df_strains['molecules'] >= 1000
-    df_strains['strain'] = df_strains['umi_seq'].apply(lambda x: 'ST3-spike' if x == 'ST3-TCACACATTGACCTATGG' else x.split('-')[0] )
+    #df_strains['strain'] = df_strains['umi_seq'].apply(lambda x: 'ST3-spike' if x == 'ST3-TCACACATTGACCTATGG' else x.split('-')[0] )
     df_strains['umi_seq'] = df_strains['umi_seq'].replace('ST3-TCACACATTGACCTATGG', 'ST3-spike')
     df_strains = df_strains.sort_values(by='molecules', ascending=False)
 
     #export molecules table
-    df_strains[['index', 'molecules']].to_csv(args.output + '/' + sample_name + '_total_moleculestable.csv', index=False)
+    df_strains[['umi_seq', 'molecules']].to_csv(args.output + '/' + sample_name + '_total_moleculestable.csv', index=False)
 
     df_strains = df_strains.sort_values(by=['strain', 'molecules'], ascending=True)
     # use defined color dictionary for STs
@@ -151,8 +150,8 @@ def main():
                     log_y=True,
                     color_discrete_map=color_dict,
                     width=2000, height=1000,
-                    template='simple_white')#, 
-                    #title=args.sample,)
+                    template='simple_white', 
+                    title=args.sample,)
     fig.add_hline(y=1000, line_color="black", line_dash="dash", line_width=2)
     fig.show()
     fig.write_image(args.output + '/' + sample_name + '_total_molecules_table.png', width=2000, height=1000)  
