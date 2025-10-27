@@ -13,7 +13,7 @@ STRAIN_BARCODES = '/hpc/users/ruprec02/git/population_bottlenecks/input_files/st
 SCRIPTS_DIR = '/hpc/users/ruprec02/git/population_bottlenecks/scripts'
 
 # Get input files and extract strain names, removes hidden files
-FILES = [i  for i in os.listdir(RAW_READ_DIR) if i.endswith('_R2_001.fastq.gz')] #and not i.startswith('._')]
+FILES = [i  for i in os.listdir(RAW_READ_DIR) if i.endswith('_R2_001.fastq.gz') and not i.startswith('._')]
 SAMPLE_NAMES = list(set([re.split(r'_R\d+_', i)[0] for i in sorted(FILES)]))
 
 # Create main output directory structure

@@ -1,0 +1,97 @@
+	sample_id	Row	Column	OD620	Sample	Inoculation	Inoculation_2	Inoculation_2_time	CmR	Media
+0	A1	A	1	0.384	Sample 2	barcodes	NA	NA	NA	GAM+
+1	A2	A	2	0.363	Sample 10	barcodes	mtc01	3h	NA	GAM+
+2	A3	A	3	0.419	Sample 18	barcodes	mtc01	6h	NA	GAM+
+3	A4	A	4	0.426	Sample 26	mtc01	NA	NA	NA	GAM+
+4	A5	A	5	0.424	Sample 34	mtc01	barcodes	3h	NA	GAM+
+5	A6	A	6	0.442	Sample 42	mtc01	barcodes	6h	NA	GAM+
+6	A7	A	7	0.359	Sample 50	barcodes	NA	NA	NA	GAM-
+7	A8	A	8	0.367	Sample 58	barcodes	mtc01	3h	NA	GAM-
+8	A9	A	9	0.347	Sample 66	barcodes	mtc01	6h	NA	GAM-
+9	A10	A	10	0.356	Sample 74	mtc01	NA	NA	NA	GAM-
+10	A11	A	11	0.411	Sample 82	mtc01	barcodes	3h	NA	GAM-
+11	A12	A	12	0.431	Sample 90	mtc01	barcodes	6h	NA	GAM-
+12	B1	B	1	0.338	Sample 3	barcodes	NA	NA	NA	GAM+
+13	B2	B	2	0.34	Sample 11	barcodes	mtc01	3h	NA	GAM+
+14	B3	B	3	0.336	Sample 19	barcodes	mtc01	6h	NA	GAM+
+15	B4	B	4	0.495	Sample 27	mtc01	NA	NA	NA	GAM+
+16	B5	B	5	0.371	Sample 35	mtc01	barcodes	3h	NA	GAM+
+17	B6	B	6	0.37	Sample 43	mtc01	barcodes	6h	NA	GAM+
+18	B7	B	7	0.362	Sample 51	barcodes	NA	NA	NA	GAM-
+19	B8	B	8	0.399	Sample 59	barcodes	mtc01	3h	NA	GAM-
+20	B9	B	9	0.374	Sample 67	barcodes	mtc01	6h	NA	GAM-
+21	B10	B	10	0.661	Sample 75	mtc01	NA	NA	NA	GAM-
+22	B11	B	11	0.504	Sample 83	mtc01	barcodes	3h	NA	GAM-
+23	B12	B	12	0.528	Sample 91	mtc01	barcodes	6h	NA	GAM-
+24	C1	C	1	0.323	Sample 4	barcodes	NA	NA	NA	GAM+
+25	C2	C	2	0.324	Sample 12	barcodes	mtc01	3h	NA	GAM+
+26	C3	C	3	0.332	Sample 20	barcodes	mtc01	6h	NA	GAM+
+27	C4	C	4	0.472	Sample 28	mtc01	NA	NA	NA	GAM+
+28	C5	C	5	0.358	Sample 36	mtc01	barcodes	3h	NA	GAM+
+29	C6	C	6	0.411	Sample 44	mtc01	barcodes	6h	NA	GAM+
+30	C7	C	7	0.358	Sample 52	barcodes	NA	NA	NA	GAM-
+31	C8	C	8	0.379	Sample 60	barcodes	mtc01	3h	NA	GAM-
+32	C9	C	9	0.348	Sample 68	barcodes	mtc01	6h	NA	GAM-
+33	C10	C	10	0.449	Sample 76	mtc01	NA	NA	NA	GAM-
+34	C11	C	11	0.39	Sample 84	mtc01	barcodes	3h	NA	GAM-
+35	C12	C	12	0.4	Sample 92	mtc01	barcodes	6h	NA	GAM-
+36	D1	D	1	0.272	Sample 5	barcodes	NA	NA	NA	GAM+
+37	D2	D	2	0.327	Sample 13	barcodes	mtc01	3h	NA	GAM+
+38	D3	D	3	0.314	Sample 21	barcodes	mtc01	6h	NA	GAM+
+39	D4	D	4	0.428	Sample 29	mtc01	NA	NA	NA	GAM+
+40	D5	D	5	0.328	Sample 37	mtc01	barcodes	3h	NA	GAM+
+41	D6	D	6	0.397	Sample 45	mtc01	barcodes	6h	NA	GAM+
+42	D7	D	7	0.346	Sample 53	barcodes	NA	NA	NA	GAM-
+43	D8	D	8	0.362	Sample 61	barcodes	mtc01	3h	NA	GAM-
+44	D9	D	9	0.339	Sample 69	barcodes	mtc01	6h	NA	GAM-
+45	D10	D	10	0.751	Sample 77	mtc01	NA	NA	NA	GAM-
+46	D11	D	11	0.512	Sample 85	mtc01	barcodes	3h	NA	GAM-
+47	D12	D	12	0.412	Sample 93	mtc01	barcodes	6h	NA	GAM-
+48	E1	E	1	0.505	Sample 6	barcodes	NA	NA	CmR 20	GAM+
+49	E2	E	2	0.479	Sample 14	barcodes	mtc01	3h	CmR 20	GAM+
+50	E3	E	3	0.452	Sample 22	barcodes	mtc01	6h	CmR 20	GAM+
+51	E4	E	4	0.058	Sample 30	mtc01	NA	NA	CmR 20	GAM+
+52	E5	E	5	0.404	Sample 38	mtc01	barcodes	3h	CmR 20	GAM+
+53	E6	E	6	0.219	Sample 46	mtc01	barcodes	6h	CmR 20	GAM+
+54	E7	E	7	0.058	Sample 54	barcodes	NA	NA	CmR 20	GAM-
+55	E8	E	8	0.123	Sample 62	barcodes	mtc01	3h	CmR 20	GAM-
+56	E9	E	9	0.162	Sample 70	barcodes	mtc01	6h	CmR 20	GAM-
+57	E10	E	10	0.047	Sample 78	mtc01	NA	NA	CmR 20	GAM-
+58	E11	E	11	0.074	Sample 86	mtc01	barcodes	3h	CmR 20	GAM-
+59	E12	E	12	0.051	Sample 94	mtc01	barcodes	6h	CmR 20	GAM-
+60	F1	F	1	0.465	Sample 7	barcodes	NA	NA	CmR 20	GAM+
+61	F2	F	2	0.441	Sample 15	barcodes	mtc01	3h	CmR 20	GAM+
+62	F3	F	3	0.43	Sample 23	barcodes	mtc01	6h	CmR 20	GAM+
+63	F4	F	4	0.061	Sample 31	mtc01	NA	NA	CmR 20	GAM+
+64	F5	F	5	0.384	Sample 39	mtc01	barcodes	3h	CmR 20	GAM+
+65	F6	F	6	0.224	Sample 47	mtc01	barcodes	6h	CmR 20	GAM+
+66	F7	F	7	0.052	Sample 55	barcodes	NA	NA	CmR 20	GAM-
+67	F8	F	8	0.129	Sample 63	barcodes	mtc01	3h	CmR 20	GAM-
+68	F9	F	9	0.138	Sample 71	barcodes	mtc01	6h	CmR 20	GAM-
+69	F10	F	10	0.046	Sample 79	mtc01	NA	NA	CmR 20	GAM-
+70	F11	F	11	0.075	Sample 87	mtc01	barcodes	3h	CmR 20	GAM-
+71	F12	F	12	0.049	Sample 95	mtc01	barcodes	6h	CmR 20	GAM-
+72	G1	G	1	0.455	Sample 8	barcodes	NA	NA	CmR 20	GAM+
+73	G2	G	2	0.47	Sample 16	barcodes	mtc01	3h	CmR 20	GAM+
+74	G3	G	3	0.464	Sample 24	barcodes	mtc01	6h	CmR 20	GAM+
+75	G4	G	4	0.057	Sample 32	mtc01	NA	NA	CmR 20	GAM+
+76	G5	G	5	0.397	Sample 40	mtc01	barcodes	3h	CmR 20	GAM+
+77	G6	G	6	0.22	Sample 48	mtc01	barcodes	6h	CmR 20	GAM+
+78	G7	G	7	0.054	Sample 56	barcodes	NA	NA	CmR 20	GAM-
+79	G8	G	8	0.131	Sample 64	barcodes	mtc01	3h	CmR 20	GAM-
+80	G9	G	9	0.13	Sample 72	barcodes	mtc01	6h	CmR 20	GAM-
+81	G10	G	10	0.047	Sample 80	mtc01	NA	NA	CmR 20	GAM-
+82	G11	G	11	0.078	Sample 88	mtc01	barcodes	3h	CmR 20	GAM-
+83	G12	G	12	0.054	Sample 96	mtc01	barcodes	6h	CmR 20	GAM-
+84	H1	H	1	0.467	NA	barcodes	NA	NA	CmR 20	GAM+
+85	H2	H	2	0.437	NA	barcodes	mtc01	3h	CmR 20	GAM+
+86	H3	H	3	0.456	NA	barcodes	mtc01	6h	CmR 20	GAM+
+87	H4	H	4	0.056	NA	mtc01	NA	NA	CmR 20	GAM+
+88	H5	H	5	0.409	NA	mtc01	barcodes	3h	CmR 20	GAM+
+89	H6	H	6	0.237	NA	mtc01	barcodes	6h	CmR 20	GAM+
+90	H7	H	7	0.051	NA	barcodes	NA	NA	CmR 20	GAM-
+91	H8	H	8	0.128	NA	barcodes	mtc01	3h	CmR 20	GAM-
+92	H9	H	9	0.134	NA	barcodes	mtc01	6h	CmR 20	GAM-
+93	H10	H	10	0.047	NA	mtc01	NA	NA	CmR 20	GAM-
+94	H11	H	11	0.069	NA	mtc01	barcodes	3h	CmR 20	GAM-
+95	H12	H	12	0.047	NA	mtc01	barcodes	6h	CmR 20	GAM-

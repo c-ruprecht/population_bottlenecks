@@ -1,0 +1,67 @@
+project	sample_id	sample_type	date_collected	time_point_h	cage_id	mouse_type	pretreatment	mouse_id	gender	gavage_dose_200ul	strain_bcs	strains	tube_type	tube_weight_empty	tube_weight_full	stool_weight_mg	cfu_g_stool	cfu_incubation_time	dna_conc_ng_ul	dna_conc_ng_ul
+P4C3T2	s1	stool DNA		5 h	cage1	germ_free	None	mA	female	10^8	ST1a|ST2d	E. coli|E.coli	2ml_screwcap	1651.8	1693	41.2			#N/A	#N/A
+P4C3T2	s2	stool CFU		5 h	cage1	germ_free	None	mA	female	10^8	ST1a|ST2d	E. coli|E.coli	2ml_screwcap	#N/A	#N/A	#N/A			#N/A	#N/A
+P4C3T2	s3	stool DNA		5 h	cage2	germ_free	None	mA	female	10^8	ST1a|ST2d	E. coli|E.coli	2ml_screwcap	#N/A	#N/A	#N/A			#N/A	#N/A
+P4C3T2	s4	stool CFU		5 h	cage2	germ_free	None	mA	female	10^8	ST1a|ST2d	E. coli|E.coli	2ml_screwcap	#N/A	#N/A	#N/A			#N/A	#N/A
+P4C3T2	s5	stool DNA		5 h	cage3	germ_free	None	mA	female	10^6	ST1a|ST2d	E. coli|E.coli	2ml_screwcap	#N/A	#N/A	#N/A			#N/A	#N/A
+P4C3T2	s6	stool CFU		5 h	cage3	germ_free	None	mA	female	10^6	ST1a|ST2d	E. coli|E.coli	2ml_screwcap	#N/A	#N/A	#N/A			#N/A	#N/A
+P4C3T2	s7	stool DNA		5 h	cage4	germ_free	None	mA	female	10^6	ST1a|ST2d	E. coli|E.coli	2ml_screwcap	#N/A	#N/A	#N/A			#N/A	#N/A
+P4C3T2	s8	stool CFU		5 h	cage4	germ_free	None	mA	female	10^6	ST1a|ST2d	E. coli|E.coli	2ml_screwcap	#N/A	#N/A	#N/A			#N/A	#N/A
+P4C3T2	s9	stool DNA		5 h	cage5	germ_free	None	mA	female	10^4	ST1a|ST2d	E. coli|E.coli	2ml_screwcap	#N/A	#N/A	#N/A			#N/A	#N/A
+P4C3T2	s10	stool CFU		5 h	cage5	germ_free	None	mA	female	10^4	ST1a|ST2d	E. coli|E.coli	2ml_screwcap	#N/A	#N/A	#N/A			#N/A	#N/A
+P4C3T2	s11	stool DNA		5 h	cage6	germ_free	None	mA	female	10^4	ST1a|ST2d	E. coli|E.coli	2ml_screwcap	#N/A	#N/A	#N/A			#N/A	#N/A
+P4C3T2	s12	stool CFU		5 h	cage6	germ_free	None	mA	female	10^4	ST1a|ST2d	E. coli|E.coli	2ml_screwcap	#N/A	#N/A	#N/A			#N/A	#N/A
+P4C3T2	s13	stool DNA		24 h	cage1	germ_free	None	mA	female	10^8	ST1a|ST2d	E. coli|E.coli	2ml_screwcap	#N/A	#N/A	#N/A			#N/A	#N/A
+P4C3T2	s14	stool CFU		24 h	cage1	germ_free	None	mA	female	10^8	ST1a|ST2d	E. coli|E.coli	2ml_screwcap	#N/A	#N/A	#N/A			#N/A	#N/A
+P4C3T2	s15	stool DNA		24 h	cage2	germ_free	None	mA	female	10^8	ST1a|ST2d	E. coli|E.coli	2ml_screwcap	#N/A	#N/A	#N/A			#N/A	#N/A
+P4C3T2	s16	stool CFU		24 h	cage2	germ_free	None	mA	female	10^8	ST1a|ST2d	E. coli|E.coli	2ml_screwcap	#N/A	#N/A	#N/A			#N/A	#N/A
+P4C3T2	s17	stool DNA		24 h	cage3	germ_free	None	mA	female	10^6	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s18	stool CFU		24 h	cage3	germ_free	None	mA	female	10^6	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s19	stool DNA		24 h	cage4	germ_free	None	mA	female	10^6	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s20	stool CFU		24 h	cage4	germ_free	None	mA	female	10^6	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s21	stool DNA		24 h	cage5	germ_free	None	mA	female	10^4	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s22	stool CFU		24 h	cage5	germ_free	None	mA	female	10^4	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s23	stool DNA		24 h	cage6	germ_free	None	mA	female	10^4	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s24	stool CFU		24 h	cage6	germ_free	None	mA	female	10^4	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s25	SI DNA		24 h	cage1	germ_free	None	mA	female	10^8	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s26	SI CFU		24 h	cage1	germ_free	None	mA	female	10^8	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s27	SI DNA		24 h	cage2	germ_free	None	mA	female	10^8	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s28	SI CFU		24 h	cage2	germ_free	None	mA	female	10^8	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s29	SI DNA		24 h	cage3	germ_free	None	mA	female	10^6	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s30	SI CFU		24 h	cage3	germ_free	None	mA	female	10^6	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s31	SI DNA		24 h	cage4	germ_free	None	mA	female	10^6	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s32	SI CFU		24 h	cage4	germ_free	None	mA	female	10^6	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s33	SI DNA		24 h	cage5	germ_free	None	mA	female	10^4	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s34	SI CFU		24 h	cage5	germ_free	None	mA	female	10^4	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s35	SI DNA		24 h	cage6	germ_free	None	mA	female	10^4	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s36	SI CFU		24 h	cage6	germ_free	None	mA	female	10^4	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s37	Cecum DNA		24 h	cage1	germ_free	None	mA	female	10^8	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s38	Cecum CFU		24 h	cage1	germ_free	None	mA	female	10^8	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s39	Cecum DNA		24 h	cage2	germ_free	None	mA	female	10^8	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s40	Cecum CFU		24 h	cage2	germ_free	None	mA	female	10^8	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s41	Cecum DNA		24 h	cage3	germ_free	None	mA	female	10^6	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s42	Cecum CFU		24 h	cage3	germ_free	None	mA	female	10^6	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s43	Cecum DNA		24 h	cage4	germ_free	None	mA	female	10^6	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s44	Cecum CFU		24 h	cage4	germ_free	None	mA	female	10^6	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s45	Cecum DNA		24 h	cage5	germ_free	None	mA	female	10^4	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s46	Cecum CFU		24 h	cage5	germ_free	None	mA	female	10^4	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s47	Cecum DNA		24 h	cage6	germ_free	None	mA	female	10^4	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s48	Cecum CFU		24 h	cage6	germ_free	None	mA	female	10^4	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s49	Pr. Colon DNA		24 h	cage1	germ_free	None	mA	female	10^8	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s50	Pr. Colon CFU		24 h	cage1	germ_free	None	mA	female	10^8	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s51	Pr. Colon DNA		24 h	cage2	germ_free	None	mA	female	10^8	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s52	Pr. Colon CFU		24 h	cage2	germ_free	None	mA	female	10^8	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s53	Pr. Colon DNA		24 h	cage3	germ_free	None	mA	female	10^6	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s54	Pr. Colon CFU		24 h	cage3	germ_free	None	mA	female	10^6	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s55	Pr. Colon DNA		24 h	cage4	germ_free	None	mA	female	10^6	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s56	Pr. Colon CFU		24 h	cage4	germ_free	None	mA	female	10^6	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s57	Pr. Colon DNA		24 h	cage5	germ_free	None	mA	female	10^4	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s58	Pr. Colon CFU		24 h	cage5	germ_free	None	mA	female	10^4	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s59	Pr. Colon DNA		24 h	cage6	germ_free	None	mA	female	10^4	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s60	Pr. Colon CFU		24 h	cage6	germ_free	None	mA	female	10^4	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s61	Gavage DNA		24 h	gavage	NA	NA	NA	NA	10^8	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s62	Gavage DNA		24 h	gavage	NA	NA	NA	NA	10^8	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s63	Gavage DNA		24 h	gavage	NA	NA	NA	NA	10^6	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s64	Gavage DNA		24 h	gavage	NA	NA	NA	NA	10^6	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s65	Gavage DNA		24 h	gavage	NA	NA	NA	NA	10^4	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s66	Gavage DNA		24 h	gavage	NA	NA	NA	NA	10^4	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
