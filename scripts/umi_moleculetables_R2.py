@@ -108,7 +108,7 @@ def main():
     df_gpd.to_csv(args.output + '/' + sample_name + '_unique_umi_table.csv', index=False)
     
     df_strains = df_gpd.copy()
-    df_strains.drop(columns=['strain'], inplace = True)
+    #df_strains.drop(columns=['strain'], inplace = True)
     #Normalizing molecules
     df_st3_spike = df_strains[df_strains['umi_seq'] == 'ST3-TCACACATTGACCTATGG'].copy()
     if df_st3_spike.empty:
@@ -127,9 +127,9 @@ def main():
     df_strains = df_strains.sort_values(by='molecules', ascending=False)
     df_strains = df_strains.loc[df_strains['molecules'] > 0]
     #export molecules table
-    df_strains[['umi_seq', 'molecules']].to_csv(args.output + '/' + sample_name + '_total_moleculestable.csv', index=False)
+    df_strains[['strain','umi_seq', 'molecules']].to_csv(args.output + '/' + sample_name + '_total_moleculestable.csv', index=False)
 
-    df_strains = df_strains.sort_values(by=['strain', 'molecules'], ascending=True)
+    #df_strains = df_strains.sort_values(by=['strain', 'molecules'], ascending=True)
     # use defined color dictionary for STs
     color_dict = {'ST3-spike': 'black',
                     'ST3': 'grey',
