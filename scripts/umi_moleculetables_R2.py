@@ -127,7 +127,7 @@ def main():
     #df_strains['strain'] = df_strains['umi_seq'].apply(lambda x: 'ST3-spike' if x == 'ST3-TCACACATTGACCTATGG' else x.split('-')[0] )
     df_strains['umi_seq'] = df_strains['umi_seq'].replace('ST3-TCACACATTGACCTATGG', 'ST3-spike')
     df_strains = df_strains.sort_values(by='molecules', ascending=False)
-
+    df_strains = df_strains.loc[df_strains['molecules'] > 0]
     #export molecules table
     df_strains[['umi_seq', 'molecules']].to_csv(args.output + '/' + sample_name + '_total_moleculestable.csv', index=False)
 
