@@ -121,7 +121,8 @@ getFP <- function(ReadsTableName, CFUtable, WhereAreReferences, minweight, outpu
         if(newstart < start) {start <- newstart}
         start<<-start
       }
-      startvector <- replicate(20000, findmin())
+      #CR: increased from 10k because of issues with 0 vectors
+      startvector <- replicate(10000, findmin())
       decision <- which(x==start)[1]
     }
     
