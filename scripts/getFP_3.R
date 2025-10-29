@@ -24,8 +24,8 @@ getFP <- function(ReadsTableName, CFUtable, WhereAreReferences, minweight, outpu
   TableWithoutNoise <- data.frame(row.names = rownames(ReadsTable))
   
   
-  
-  ResiliencyIndices <- function(samplename, plots = TRUE, ResiliencyLimit = 20000, FractionSD = 20){
+  #limit 20k before
+  ResiliencyIndices <- function(samplename, plots = FALSE, ResiliencyLimit = 50000, FractionSD = 20){
     print('analyzing sample')
     print(samplename)
 

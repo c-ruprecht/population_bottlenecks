@@ -178,57 +178,80 @@ def find_population_breaks_mcmc(resiliency_curve, n_samples=10000):
     This uses a stochastic search to find local minima in the resiliency curve,
     which represent transitions between distinct barcode populations.
 
+    IMPORTANT: This matches R's algorithm which searches for VALUES, not indices.
+
     Parameters:
     -----------
     resiliency_curve : array
         Nb estimates across iterations
     n_samples : int
-        Number of MCMC samples
+        Number of MCMC samples (default 10000 to match R)
 
     Returns:
     --------
     break_points : array
         Indices of detected population breaks
     """
-    if len(resiliency_curve) == 0 or np.nanmean(resiliency_curve) == 1:
-        return [len(resiliency_curve)]
+    x = resiliency_curve
 
-    # Sample starting points logarithmically
-    n_points = len(resiliency_curve)
-    sample_indices = np.linspace(0, n_points - 1,
-                                  num=int(np.log(n_points) + 1),
-                                  dtype=int)
+    if len(x) == 0 or np.nanmean(x) == 1:
+        return np.array([len(x)])
 
-    break_points = []
+    # R line 140: q <- seq(1, length(na.omit(x)), length.out = log(length(na.omit(x))))
+    # Create starting indices logarithmically spaced
+    n_points = len(x)
+    num_starts = int(np.log(n_points))
+    sample_indices = np.linspace(0, n_points - 1, num=num_starts, dtype=int)
 
-    for start_idx in sample_indices:
-        if start_idx >= len(resiliency_curve):
-            continue
+    # R line 141: p <- x[q]  (get VALUES at those indices)
+    starting_values = x[sample_indices]
 
-        current_value = resiliency_curve[start_idx]
-        current_min = current_value
+    break_values = []
 
-        # Random walk to find local minimum
+    # R line 144: guesses <- sapply(p, scanformin)
+    for start_value in starting_values:
+        # R's scanformin function: search for minimum VALUE starting from start_value
+        current_min_value = start_value
+
+        # R line 136: replicate(10000, findmin())
         for _ in range(n_samples):
-            # Generate new position with normal distribution
-            sd = max(np.sum(resiliency_curve > 1) / 20, 1)
-            new_idx = int(abs(np.random.normal(start_idx, sd)))
+            # R line 127: where <- which(x == start)
+            # Find INDEX where current minimum value occurs
+            where_indices = np.where(x == current_min_value)[0]
+            if len(where_indices) == 0:
+                # If exact match not found, find closest
+                where = np.argmin(np.abs(x - current_min_value))
+            else:
+                where = where_indices[0]
 
-            # Boundary checks
-            if new_idx >= len(resiliency_curve) or new_idx < 0:
-                continue
+            # R line 128-129: newlocation <- abs(rnorm(1, mean = where, sd = sum(outvec>1)/FractionSD))
+            # Note: R uses length(na.omit(x))/10 which is equivalent to FractionSD=10
+            sd = len(x) / 10
+            new_location = abs(np.random.normal(where, sd))
 
-            new_value = resiliency_curve[new_idx]
-            if new_value < current_min:
-                current_min = new_value
-                start_idx = new_idx
+            # R line 130-131: Boundary checks
+            if new_location >= len(x):
+                new_location = where
+            if new_location < 1:
+                new_location = where
 
-        # Find first occurrence of minimum
-        min_indices = np.where(resiliency_curve == current_min)[0]
-        if len(min_indices) > 0:
-            break_points.append(min_indices[0])
+            # R line 132: newstart <- x[round(newlocation)]
+            new_idx = int(round(new_location))
+            if new_idx >= len(x):
+                new_idx = len(x) - 1
+            new_value = x[new_idx]
 
-    return np.unique(break_points)
+            # R line 133-134: if(newstart < start) {start <- newstart}
+            if new_value < current_min_value:
+                current_min_value = new_value
+
+        # R line 137: decision <- which(x==start)
+        # Find index where final minimum value is located
+        final_indices = np.where(x == current_min_value)[0]
+        if len(final_indices) > 0:
+            break_values.append(final_indices[0])
+
+    return np.array(break_values)
 
 
 def calculate_cumulative_fraction(output_vec, n_top_barcodes):
@@ -482,6 +505,9 @@ def analyze_sample(sample_name, input_vec, output_vec, cfu=None,
             print(f"[DEBUG {sample_name}] Merging top 1% breaks to {max_break}")
             break_points[top_1_percent_mask] = max_break
             break_points = np.unique(break_points)
+
+    # Ensure break_points are integers
+    break_points = break_points.astype(int)
 
     # Calculate population fractions
     fractions = []

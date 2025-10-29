@@ -113,7 +113,7 @@ def main():
     df_st3_spike = df_strains[df_strains['umi_seq'] == 'ST3-TCACACATTGACCTATGG'].copy()
     if df_st3_spike.empty:
         #Add an arbitrary count of 1 if ST3 has not been found
-        df_st3_spike = pd.DataFrame({'umi_seq': ['ST3-TCACACATTGACCTATGG'],'counts': [1]})
+        df_st3_spike = pd.DataFrame({'umi_seq': ['ST3-TCACACATTGACCTATGG'],'counts': [1000]})
         #write empty file to warn that this happend!
     else:
         pass
