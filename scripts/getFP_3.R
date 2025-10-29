@@ -211,7 +211,7 @@ getFP <- function(ReadsTableName, CFUtable, WhereAreReferences, minweight, outpu
     print(sum(outvecwithoutnoise))
     print(sum(ReferenceVector))
     FirstResample <- as.numeric(rmultinom(1, sum(outvecwithoutnoise), ReferenceVector/sum(ReferenceVector)))
-    print(FirstResample)
+    #print(FirstResample)
 
     GetNewBotTable <- function(n) {
       #vec <- as.numeric(rmvhyper(1, FirstResample, n))
