@@ -6,7 +6,7 @@ import glob
 
 
 # PATHS
-INPUT_DIR = '/sc/arion/work/ruprec02/population-bottlenecks/experiments/P4C1T8/'
+INPUT_DIR = '/sc/arion/work/ruprec02/population-bottlenecks/fp_inputs/P4C1T8/'
 OUTPUT_DIR = '/sc/arion/work/ruprec02/population-bottlenecks/experiments/P4C1T8/' 
 
 # Create main output directory structure
@@ -38,7 +38,7 @@ rule get_FP:
         ml R/4.2.0
         # Process single file with error handling
         echo "Processing {input.readstable} using getFP.R"
-        if Rscript {params.scripts_dir}/getFP_3.R {input.readstable} NULL "1" 0.03 {params.output_dir}; then
+        if Rscript {params.scripts_dir}/getFP_3.R {input.readstable} NULL "1" 0.1 {params.output_dir}; then
             echo "Successfully processed {input}" 
         else
             echo "WARNING: Error processing {input.readstable}, creating empty output file"
