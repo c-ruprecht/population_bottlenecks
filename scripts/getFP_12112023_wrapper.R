@@ -36,14 +36,27 @@ print(paste("output_dir:", output_dir))
 dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
 outputfilename <- file.path(output_dir, "TableOfEstimates.csv")
 
+# Change working directory to output_dir so FrequenciesWithoutNoise.csv is written there
+# The original function writes FrequenciesWithoutNoise.csv to the current working directory
+original_wd <- getwd()
+setwd(output_dir)
+
 # Call the getFP function with plots=FALSE
 # Note: The original getFP_12112023.R doesn't expose plots parameter to the main function,
 # but ResiliencyIndices has plots=FALSE as default, so we're good
-getFP(ReadsTable, CFUtable, WhereAreReferences, minweight, outputfilename)
+tryCatch({
+  getFP(ReadsTable, CFUtable, WhereAreReferences, minweight, outputfilename)
+}, finally = {
+  # Always restore the original working directory
+  setwd(original_wd)
+})
 
 # The function writes:
-# - TableOfEstimates.csv (using outputfilename parameter)
-# - FrequenciesWithoutNoise.csv (using same directory as outputfilename)
+# - TableOfEstimates.csv (using outputfilename parameter in output_dir)
+# - FrequenciesWithoutNoise.csv (to current working directory, which we set to output_dir)
 # Both files will be in output_dir
 
 print(paste("Analysis complete. Output written to:", output_dir))
+print(paste("Files created:"))
+print(paste("  -", file.path(output_dir, "TableOfEstimates.csv")))
+print(paste("  -", file.path(output_dir, "FrequenciesWithoutNoise.csv")))
