@@ -1,0 +1,103 @@
+[1] "Parsed arguments:"
+[1] "ReadsTable: /sc/arion/work/ruprec02/population-bottlenecks/fp_inputs/P4C1T8/c2_ST1_onlygavage_moleculestable.csv"
+[1] "CFUtable: "
+[1] "WhereAreReferences: 1"
+[1] "minweight: 0.1"
+[1] "output_dir: /sc/arion/work/ruprec02/population-bottlenecks/experiments/P4C1T8/FP/c2_ST1/"
+
+Attaching package: ‘EnvStats’
+
+The following objects are masked from ‘package:stats’:
+
+    predict, predict.lm
+
+[1] "analyzing sample"
+[1] "s101_SI.DNA"
+[1] 68766
+[1] 55072
+[1] "analyzing sample"
+[1] "s102_SI.DNA"
+[1] 4746
+[1] 55072
+[1] "analyzing sample"
+[1] "s111_Cecum.DNA"
+[1] 11353275
+[1] 55072
+[1] "analyzing sample"
+[1] "s112_Cecum.DNA"
+[1] 16845
+[1] 55072
+[1] "analyzing sample"
+[1] "s121_Pr..Colon.DNA"
+[1] 766774
+[1] 55072
+[1] "analyzing sample"
+[1] "s122_Pr..Colon.DNA"
+[1] 420513
+[1] 55072
+[1] "analyzing sample"
+[1] "s21_stool.DNA"
+[1] 73020
+[1] 55072
+[1] "analyzing sample"
+[1] "s22_stool.DNA"
+[1] 127298
+[1] 55072
+[1] "analyzing sample"
+[1] "s31_stool.DNA"
+[1] 3013710
+[1] 55072
+[1] "analyzing sample"
+[1] "s32_stool.DNA"
+[1] 3347620
+[1] 55072
+[1] "analyzing sample"
+[1] "s41_stool.DNA"
+[1] 408768
+[1] 55072
+[1] "analyzing sample"
+[1] "s42_stool.DNA"
+[1] 2279050
+[1] 55072
+[1] "analyzing sample"
+[1] "s51_stool.DNA"
+[1] 926248
+[1] 55072
+[1] "analyzing sample"
+[1] "s52_stool.DNA"
+[1] 721081
+[1] 55072
+[1] "analyzing sample"
+[1] "NTC_H3_NTC"
+[1] 21576
+[1] 55072
+[1] "analyzing sample"
+[1] "WATER_B3_WATER"
+[1] 3219
+[1] 55072
+[1] "analyzing sample"
+[1] "WATER_C6_WATER"
+[1] 56752
+[1] 55072
+[1] "analyzing sample"
+[1] "WATER_D2_WATER"
+[1] 71421
+[1] 55072
+[1] "analyzing sample"
+[1] "WATER_F9_WATER"
+[1] 7050
+[1] 55072
+     s101_SI.DNA s102_SI.DNA s111_Cecum.DNA s112_Cecum.DNA s121_Pr..Colon.DNA
+[1,] NULL        NULL        NULL           NULL           NULL              
+     s122_Pr..Colon.DNA s21_stool.DNA s22_stool.DNA s31_stool.DNA s32_stool.DNA
+[1,] NULL               NULL          NULL          NULL          NULL         
+     s41_stool.DNA s42_stool.DNA s51_stool.DNA s52_stool.DNA NTC_H3_NTC
+[1,] NULL          NULL          NULL          NULL          NULL      
+     WATER_B3_WATER WATER_C6_WATER WATER_D2_WATER WATER_F9_WATER
+[1,] NULL           NULL           NULL           NULL          
+Error in dimnames(x) <- dn : 
+  length of 'dimnames' [2] not equal to array extent
+Calls: getFP -> colnames<-
+In addition: There were 19 warnings (use warnings() to see them)
+Execution halted
+WARNING: Error processing /sc/arion/work/ruprec02/population-bottlenecks/fp_inputs/P4C1T8/c2_ST1_onlygavage_moleculestable.csv, creating empty output file
