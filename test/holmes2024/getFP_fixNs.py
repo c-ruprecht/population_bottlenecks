@@ -665,7 +665,7 @@ def main():
         results = analyze_sample(
             sample_name, reference_vec, output_vec,
             cfu=cfu, min_weight=args.min_weight,
-            output_dir=output_dir, make_plots=True
+            output_dir=output_dir, make_plots=False
         )
 
         all_results.append(results)

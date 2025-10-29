@@ -1,0 +1,30 @@
+name: r_python_env
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  # Python
+  - python=3.9
+  - numpy
+  - pandas
+  - scipy
+  - matplotlib
+  - seaborn
+  - jupyter
+  - ipython
+
+  # R and packages
+  - r-base=4.2
+  - r-essentials
+  - r-tidyverse
+  - r-envstats
+  - r-ggplot2
+  - r-data.table
+
+  # Development tools
+  - pip
+
+  # Pip packages
+  - pip:
+    - notebook
