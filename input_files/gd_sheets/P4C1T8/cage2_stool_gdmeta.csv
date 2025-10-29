@@ -1,0 +1,11 @@
+Sample,Group,Order,BioSample
+s21_stool.DNA,1,1,P4C1T8-cage1
+s22_stool.DNA,1,5,P4C1T8-cage1
+s31_stool.DNA,1,2,P4C1T8-cage1
+s32_stool.DNA,1,6,P4C1T8-cage1
+s41_stool.DNA,1,3,P4C1T8-cage1
+s42_stool.DNA,1,7,P4C1T8-cage1
+s51_stool.DNA,1,4,P4C1T8-cage1
+s52_stool.DNA,1,8,P4C1T8-cage1
+NTC_H3_NTC,1,9,P4C1T8-cage1
+WATER_B3_WATER,1,10,P4C1T8-cage1
