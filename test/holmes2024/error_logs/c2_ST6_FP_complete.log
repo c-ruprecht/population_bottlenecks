@@ -1,0 +1,26 @@
+Traceback (most recent call last):
+  File "/hpc/users/ruprec02/git/population_bottlenecks/scripts/getFP.py", line 705, in <module>
+    main()
+  File "/hpc/users/ruprec02/git/population_bottlenecks/scripts/getFP.py", line 665, in main
+    results = analyze_sample(
+              ^^^^^^^^^^^^^^^
+  File "/hpc/users/ruprec02/git/population_bottlenecks/scripts/getFP.py", line 472, in analyze_sample
+    noise_start = determine_noise_threshold(indices_df, min_weight)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/hpc/users/ruprec02/git/population_bottlenecks/scripts/getFP.py", line 335, in determine_noise_threshold
+    noise_start = indices_df['n_barcodes'].values[-1]
+                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^
+IndexError: index -1 is out of bounds for axis 0 with size 0
+
+ERROR conda.cli.main_run:execute(125): `conda run python /hpc/users/ruprec02/git/population_bottlenecks/scripts/getFP.py /sc/arion/work/ruprec02/population-bottlenecks/experiments/P4C1T8/c2_ST6_onlygavage_moleculestable.csv NULL 0 0.03 /sc/arion/work/ruprec02/population-bottlenecks/experiments/P4C1T8/python/FP/c2_ST6/` failed. (See above for error)
+
+Analyzing sample: s101_SI-DNA
+Results for s101_SI-DNA:
+  Nb = 1.82
+  Ns = 1.00
+  Average Frequency = 6.13
+  Ns at minweight = 1.00
+
+Analyzing sample: s102_SI-DNA
+
+WARNING: Error processing /sc/arion/work/ruprec02/population-bottlenecks/experiments/P4C1T8/c2_ST6_onlygavage_moleculestable.csv, creating empty output file

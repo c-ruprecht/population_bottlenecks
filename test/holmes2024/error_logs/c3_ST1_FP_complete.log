@@ -1,0 +1,162 @@
+
+Analyzing sample: s103_SI-DNA
+Results for s103_SI-DNA:
+  Nb = 2.27
+  Ns = 5761.64
+  Average Frequency = 7502.61
+  Ns at minweight = 1.00
+
+Analyzing sample: s104_SI-DNA
+Results for s104_SI-DNA:
+  Nb = 22.72
+  Ns = 6381.71
+  Average Frequency = 3895.39
+  Ns at minweight = 1.00
+
+Analyzing sample: s113_Cecum-DNA
+Results for s113_Cecum-DNA:
+  Nb = 21.88
+  Ns = 8501.95
+  Average Frequency = 18842.12
+  Ns at minweight = 1.00
+
+Analyzing sample: s114_Cecum-DNA
+Results for s114_Cecum-DNA:
+  Nb = 100.22
+  Ns = 9362.05
+  Average Frequency = 19706.00
+  Ns at minweight = 1.00
+
+Analyzing sample: s123_Pr.-Colon-DNA
+Results for s123_Pr.-Colon-DNA:
+  Nb = 20.98
+  Ns = 7681.86
+  Average Frequency = 11294.38
+  Ns at minweight = 1.00
+
+Analyzing sample: s124_Pr.-Colon-DNA
+Results for s124_Pr.-Colon-DNA:
+  Nb = 19.18
+  Ns = 5781.65
+  Average Frequency = 3782.80
+  Ns at minweight = 1.00
+
+Analyzing sample: s23_stool-DNA
+Results for s23_stool-DNA:
+  Nb = 2.94
+  Ns = 4021.45
+  Average Frequency = 3641.01
+  Ns at minweight = 1.00
+
+Analyzing sample: s24_stool-DNA
+Results for s24_stool-DNA:
+  Nb = 1.32
+  Ns = 24843.77
+  Average Frequency = 1433.72
+  Ns at minweight = 1.00
+
+Analyzing sample: s33_stool-DNA
+Results for s33_stool-DNA:
+  Nb = 21.65
+  Ns = 11282.26
+  Average Frequency = 51502.51
+  Ns at minweight = 1.00
+
+Analyzing sample: s34_stool-DNA
+Results for s34_stool-DNA:
+  Nb = 22.13
+  Ns = 8521.95
+  Average Frequency = 9581.10
+  Ns at minweight = 1.00
+
+Analyzing sample: s43_stool-DNA
+Results for s43_stool-DNA:
+  Nb = 21.89
+  Ns = 9022.01
+  Average Frequency = 25908.89
+  Ns at minweight = 1.00
+
+Analyzing sample: s44_stool-DNA
+Results for s44_stool-DNA:
+  Nb = 24.35
+  Ns = 7781.87
+  Average Frequency = 6352.82
+  Ns at minweight = 1.00
+
+Analyzing sample: s53_stool-DNA
+Results for s53_stool-DNA:
+  Nb = 21.50
+  Ns = 10362.16
+  Average Frequency = 44395.65
+  Ns at minweight = 1.00
+
+Analyzing sample: s54_stool-DNA
+Results for s54_stool-DNA:
+  Nb = 24.53
+  Ns = 7781.87
+  Average Frequency = 6301.30
+  Ns at minweight = 1.00
+
+Analyzing sample: NTC_H3_NTC
+Results for NTC_H3_NTC:
+  Nb = 3.33
+  Ns = 13682.53
+  Average Frequency = 9052.71
+  Ns at minweight = 1.00
+
+Analyzing sample: WATER_B3_WATER
+Results for WATER_B3_WATER:
+  Nb = 5.01
+  Ns = 861.10
+  Average Frequency = 1531.88
+  Ns at minweight = 1.00
+
+Analyzing sample: WATER_C6_WATER
+Results for WATER_C6_WATER:
+  Nb = 15.50
+  Ns = 6261.70
+  Average Frequency = 2026.36
+  Ns at minweight = 1.00
+
+Analyzing sample: WATER_D2_WATER
+Results for WATER_D2_WATER:
+  Nb = 5.35
+  Ns = 21023.35
+  Average Frequency = 16823.06
+  Ns at minweight = 1.00
+
+Analyzing sample: WATER_F9_WATER
+Results for WATER_F9_WATER:
+  Nb = 28.40
+  Ns = 441.05
+  Average Frequency = 1633.38
+  Ns at minweight = 1.00
+
+============================================================
+Analysis complete!
+Results saved to: /sc/arion/work/ruprec02/population-bottlenecks/experiments/P4C1T8/python/FP/c3_ST1
+============================================================
+
+Summary:
+            sample  TotalReads  Number of barcodes  Ns_MinCutoff         Nb           Ns  AverageFrequency  CFU  Log10Ns  Log10CFU  CFU/Ns
+       s103_SI-DNA   4328366.0                 548           1.0   2.271450  5761.643235       7502.606931    0 3.760546         0     0.0
+       s104_SI-DNA    268781.0                 585           1.0  22.724875  6381.712472       3895.388720    0 3.804937         0     0.0
+    s113_Cecum-DNA 160222793.0                 730           1.0  21.884497  8501.949218      18842.120462    0 3.929519         0     0.0
+    s114_Cecum-DNA   7013927.0                 780           1.0 100.216784  9362.045257      19706.001241    0 3.971371         0     0.0
+s123_Pr.-Colon-DNA   2437844.0                 672           1.0  20.983116  7681.857647      11294.375594    0 3.885466         0     0.0
+s124_Pr.-Colon-DNA  32273725.0                 570           1.0  19.182283  5781.645468       3782.801309    0 3.762051         0     0.0
+     s23_stool-DNA     20950.0                 434           1.0   2.935517  4021.448924       3641.011385    0 3.604383         0     0.0
+     s24_stool-DNA      3282.0                 421           1.0   1.318851 24843.773951       1433.722426    0 4.395218         0     0.0
+     s33_stool-DNA 136362520.0                 885           1.0  21.652659 11282.259669      51502.513966    0 4.052396         0     0.0
+     s34_stool-DNA    734934.0                 743           1.0  22.132124  8521.951452       9581.097134    0 3.930539         0     0.0
+     s43_stool-DNA 158717778.0                 765           1.0  21.885432  9022.007288      25908.889723    0 3.955303         0     0.0
+     s44_stool-DNA    828590.0                 681           1.0  24.353960  7781.868814       6352.817748    0 3.891084         0     0.0
+     s53_stool-DNA 322843944.0                 844           1.0  21.502186 10362.156930      44395.647921    0 4.015450         0     0.0
+     s54_stool-DNA   2390889.0                 685           1.0  24.533007  7781.868814       6301.297435    0 3.891084         0     0.0
+        NTC_H3_NTC     49013.0                 901           1.0   3.330646 13682.527683       9052.711338    0 4.136166         0     0.0
+    WATER_B3_WATER      5076.0                 174           1.0   5.013798   861.096039       1531.875553    0 2.935052         0     0.0
+    WATER_C6_WATER     62422.0                 566           1.0  15.496374  6261.699071       2026.358264    0 3.796692         0     0.0
+    WATER_D2_WATER     96257.0                1264           1.0   5.352538 21023.347361      16823.062845    0 4.322702         0     0.0
+    WATER_F9_WATER      8952.0                 133           1.0  28.398694   441.049136       1633.381219    0 2.644487         0     0.0
+
+Successfully processed /sc/arion/work/ruprec02/population-bottlenecks/experiments/P4C1T8/c3_ST1_onlygavage_moleculestable.csv

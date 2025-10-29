@@ -325,6 +325,10 @@ def determine_noise_threshold(indices_df, min_weight=0.5):
     noise_start : int
         Number of barcodes before noise begins
     """
+    # Handle empty DataFrame
+    if len(indices_df) == 0:
+        return 1  # Default to 1 barcode if no breakpoints found
+
     # Find largest weight drop
     log_weights = np.log(indices_df['fraction_reads'].values)
     weight_diff = log_weights[:-1] - log_weights[1:]
@@ -426,9 +430,11 @@ def analyze_sample(sample_name, input_vec, output_vec, cfu=None,
 
     # Find population breaks
     break_points = find_population_breaks_mcmc(resiliency_curve)
+    print(f"[DEBUG {sample_name}] MCMC breakpoints: {break_points}")
 
     # Add frequency-based breaks
     if greatest_freq_drop is not None:
+        print(f"[DEBUG {sample_name}] Adding greatest_freq_drop: {greatest_freq_drop}")
         break_points = np.append(break_points, greatest_freq_drop)
 
     # Add resiliency curve breaks
@@ -437,12 +443,26 @@ def analyze_sample(sample_name, input_vec, output_vec, cfu=None,
         res_diff = log_res[1:] - log_res[:-1]
         if len(res_diff) > 0 and np.max(res_diff) > 2.302585:
             greatest_res_break = np.argmax(res_diff)
+            print(f"[DEBUG {sample_name}] Adding greatest_res_break: {greatest_res_break}, max_diff: {np.max(res_diff):.4f}")
             break_points = np.append(break_points, greatest_res_break)
 
     # Finalize breaks
     break_points = np.append(break_points, len(resiliency_curve))
+    print(f"[DEBUG {sample_name}] Before unique/sort: {break_points}")
     break_points = np.unique(break_points[break_points > 0])
     break_points = np.sort(break_points)
+    print(f"[DEBUG {sample_name}] After unique/sort: {break_points}")
+
+    # R line 152-153: Remove last break if read count difference < 4
+    if len(break_points) >= 2:
+        sorted_output = np.sort(output_vec)[::-1]  # Descending
+        second_last_idx = int(break_points[-2]) - 1  # Convert to 0-indexed
+        last_idx = int(break_points[-1]) - 1
+        if second_last_idx < len(sorted_output) and last_idx < len(sorted_output):
+            read_diff = sorted_output[second_last_idx] - sorted_output[last_idx]
+            if read_diff < 4:
+                print(f"[DEBUG {sample_name}] Removing last break (read_diff={read_diff} < 4)")
+                break_points = break_points[:-1]
 
     # Remove adjacent breaks
     if len(break_points) > 1:
@@ -450,7 +470,18 @@ def analyze_sample(sample_name, input_vec, output_vec, cfu=None,
         if np.min(diff_breaks) == 1 and cfu > 2:
             to_remove = np.where(diff_breaks == 1)[0]
             if len(to_remove) > 0:
+                print(f"[DEBUG {sample_name}] Removing adjacent break at index: {to_remove[-1]}")
                 break_points = np.delete(break_points, to_remove[-1])
+
+    # R line 173: Merge breaks in top 1%
+    if len(break_points) > 0:
+        max_break = np.max(break_points)
+        threshold = max_break - 0.01 * len(resiliency_curve)
+        top_1_percent_mask = break_points > threshold
+        if np.any(top_1_percent_mask):
+            print(f"[DEBUG {sample_name}] Merging top 1% breaks to {max_break}")
+            break_points[top_1_percent_mask] = max_break
+            break_points = np.unique(break_points)
 
     # Calculate population fractions
     fractions = []
@@ -468,8 +499,14 @@ def analyze_sample(sample_name, input_vec, output_vec, cfu=None,
         'fraction_reads': subtracted
     })
 
+    # DEBUG: Print indices table
+    print(f"\n[DEBUG {sample_name}] Indices table:")
+    print(indices_df)
+    print(f"[DEBUG {sample_name}] Total breakpoints found: {len(break_points)}")
+
     # Determine noise threshold
     noise_start = determine_noise_threshold(indices_df, min_weight)
+    print(f"[DEBUG {sample_name}] Selected noise_start: {noise_start}")
 
     # Filter noise
     output_vec_clean = output_vec.copy()

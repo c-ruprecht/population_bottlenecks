@@ -1,0 +1,145 @@
+Traceback (most recent call last):
+  File "/hpc/users/ruprec02/git/population_bottlenecks/scripts/getFP.py", line 705, in <module>
+    main()
+  File "/hpc/users/ruprec02/git/population_bottlenecks/scripts/getFP.py", line 665, in main
+    results = analyze_sample(
+              ^^^^^^^^^^^^^^^
+  File "/hpc/users/ruprec02/git/population_bottlenecks/scripts/getFP.py", line 472, in analyze_sample
+    noise_start = determine_noise_threshold(indices_df, min_weight)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/hpc/users/ruprec02/git/population_bottlenecks/scripts/getFP.py", line 335, in determine_noise_threshold
+    noise_start = indices_df['n_barcodes'].values[-1]
+                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^
+IndexError: index -1 is out of bounds for axis 0 with size 0
+
+ERROR conda.cli.main_run:execute(125): `conda run python /hpc/users/ruprec02/git/population_bottlenecks/scripts/getFP.py /sc/arion/work/ruprec02/population-bottlenecks/experiments/P4C1T8/c1_ST2_onlygavage_moleculestable.csv NULL 0 0.03 /sc/arion/work/ruprec02/population-bottlenecks/experiments/P4C1T8/python/FP/c1_ST2/` failed. (See above for error)
+
+Analyzing sample: s100_SI-DNA
+Results for s100_SI-DNA:
+  Nb = 1.97
+  Ns = 721.00
+  Average Frequency = 2.31
+  Ns at minweight = 1.00
+
+Analyzing sample: s109_Cecum-DNA
+Results for s109_Cecum-DNA:
+  Nb = 0.78
+  Ns = 41.00
+  Average Frequency = 340.38
+  Ns at minweight = 1.00
+
+Analyzing sample: s110_Cecum-DNA
+Results for s110_Cecum-DNA:
+  Nb = 2.61
+  Ns = 21.00
+  Average Frequency = 78.14
+  Ns at minweight = 1.00
+
+Analyzing sample: s119_Pr.-Colon-DNA
+Results for s119_Pr.-Colon-DNA:
+  Nb = 0.04
+  Ns = 21.00
+  Average Frequency = 1016.96
+  Ns at minweight = 1.00
+
+Analyzing sample: s120_Pr.-Colon-DNA
+Results for s120_Pr.-Colon-DNA:
+  Nb = 2.87
+  Ns = 481.00
+  Average Frequency = 16.67
+  Ns at minweight = 1.00
+
+Analyzing sample: s19_stool-DNA
+Results for s19_stool-DNA:
+  Nb = 227.10
+  Ns = 5321.02
+  Average Frequency = 5469.96
+  Ns at minweight = 1.00
+
+Analyzing sample: s20_stool-DNA
+Results for s20_stool-DNA:
+  Nb = 4389.55
+  Ns = 3101.01
+  Average Frequency = 2858.86
+  Ns at minweight = 1.00
+
+Analyzing sample: s29_stool-DNA
+Results for s29_stool-DNA:
+  Nb = 3.93
+  Ns = 41.00
+  Average Frequency = 175.89
+  Ns at minweight = 1.00
+
+Analyzing sample: s30_stool-DNA
+Results for s30_stool-DNA:
+  Nb = 13.84
+  Ns = 41.00
+  Average Frequency = 17.00
+  Ns at minweight = 1.00
+
+Analyzing sample: s39_stool-DNA
+Results for s39_stool-DNA:
+  Nb = 2.89
+  Ns = 121.00
+  Average Frequency = 331.62
+  Ns at minweight = 1.00
+
+Analyzing sample: s40_stool-DNA
+Results for s40_stool-DNA:
+  Nb = 39.87
+  Ns = 121.00
+  Average Frequency = 79.13
+  Ns at minweight = 1.00
+
+Analyzing sample: s49_stool-DNA
+Results for s49_stool-DNA:
+  Nb = 1.31
+  Ns = 21.00
+  Average Frequency = 519.19
+  Ns at minweight = 1.00
+
+Analyzing sample: s50_stool-DNA
+Results for s50_stool-DNA:
+  Nb = 12.23
+  Ns = 41.00
+  Average Frequency = 28.21
+  Ns at minweight = 1.00
+
+Analyzing sample: s99_SI-DNA
+Results for s99_SI-DNA:
+  Nb = 0.53
+  Ns = 21.00
+  Average Frequency = 15.37
+  Ns at minweight = 1.00
+
+Analyzing sample: NTC_H3_NTC
+Results for NTC_H3_NTC:
+  Nb = 3.93
+  Ns = 441.00
+  Average Frequency = 4.83
+  Ns at minweight = 1.00
+
+Analyzing sample: WATER_B3_WATER
+Results for WATER_B3_WATER:
+  Nb = 9.14
+  Ns = 1.00
+  Average Frequency = 19.75
+  Ns at minweight = 1.00
+
+Analyzing sample: WATER_C6_WATER
+Results for WATER_C6_WATER:
+  Nb = 6.45
+  Ns = 1621.01
+  Average Frequency = 4.20
+  Ns at minweight = 1.00
+
+Analyzing sample: WATER_D2_WATER
+Results for WATER_D2_WATER:
+  Nb = 21.85
+  Ns = 1021.00
+  Average Frequency = 9.00
+  Ns at minweight = 1.00
+
+Analyzing sample: WATER_F9_WATER
+
+WARNING: Error processing /sc/arion/work/ruprec02/population-bottlenecks/experiments/P4C1T8/c1_ST2_onlygavage_moleculestable.csv, creating empty output file

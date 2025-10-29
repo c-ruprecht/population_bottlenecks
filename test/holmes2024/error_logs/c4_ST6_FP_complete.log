@@ -1,0 +1,68 @@
+Traceback (most recent call last):
+  File "/hpc/users/ruprec02/git/population_bottlenecks/scripts/getFP.py", line 705, in <module>
+    main()
+  File "/hpc/users/ruprec02/git/population_bottlenecks/scripts/getFP.py", line 665, in main
+    results = analyze_sample(
+              ^^^^^^^^^^^^^^^
+  File "/hpc/users/ruprec02/git/population_bottlenecks/scripts/getFP.py", line 472, in analyze_sample
+    noise_start = determine_noise_threshold(indices_df, min_weight)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/hpc/users/ruprec02/git/population_bottlenecks/scripts/getFP.py", line 335, in determine_noise_threshold
+    noise_start = indices_df['n_barcodes'].values[-1]
+                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^
+IndexError: index -1 is out of bounds for axis 0 with size 0
+
+ERROR conda.cli.main_run:execute(125): `conda run python /hpc/users/ruprec02/git/population_bottlenecks/scripts/getFP.py /sc/arion/work/ruprec02/population-bottlenecks/experiments/P4C1T8/c4_ST6_onlygavage_moleculestable.csv NULL 0 0.03 /sc/arion/work/ruprec02/population-bottlenecks/experiments/P4C1T8/python/FP/c4_ST6/` failed. (See above for error)
+
+Analyzing sample: s105_SI-DNA
+Results for s105_SI-DNA:
+  Nb = 0.21
+  Ns = 1.00
+  Average Frequency = 14.14
+  Ns at minweight = 1.00
+
+Analyzing sample: s106_SI-DNA
+Results for s106_SI-DNA:
+  Nb = 1.17
+  Ns = 21.01
+  Average Frequency = 13.48
+  Ns at minweight = 1.00
+
+Analyzing sample: s115_Cecum-DNA
+Results for s115_Cecum-DNA:
+  Nb = 0.31
+  Ns = 81.03
+  Average Frequency = 260.33
+  Ns at minweight = 1.00
+
+Analyzing sample: s116_Cecum-DNA
+Results for s116_Cecum-DNA:
+  Nb = 162.57
+  Ns = 41.01
+  Average Frequency = 272.80
+  Ns at minweight = 1.00
+
+Analyzing sample: s125_Pr.-Colon-DNA
+Results for s125_Pr.-Colon-DNA:
+  Nb = 0.25
+  Ns = 61.02
+  Average Frequency = 164.20
+  Ns at minweight = 1.00
+
+Analyzing sample: s126_Pr.-Colon-DNA
+Results for s126_Pr.-Colon-DNA:
+  Nb = 1.68
+  Ns = 41.01
+  Average Frequency = 25.81
+  Ns at minweight = 1.00
+
+Analyzing sample: s25_stool-DNA
+Results for s25_stool-DNA:
+  Nb = 0.25
+  Ns = 21.01
+  Average Frequency = 394.44
+  Ns at minweight = 1.00
+
+Analyzing sample: s26_stool-DNA
+
+WARNING: Error processing /sc/arion/work/ruprec02/population-bottlenecks/experiments/P4C1T8/c4_ST6_onlygavage_moleculestable.csv, creating empty output file

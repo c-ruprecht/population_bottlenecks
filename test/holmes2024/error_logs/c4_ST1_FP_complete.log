@@ -1,0 +1,162 @@
+
+Analyzing sample: s105_SI-DNA
+Results for s105_SI-DNA:
+  Nb = 2113.29
+  Ns = 4641.24
+  Average Frequency = 53630.89
+  Ns at minweight = 1.00
+
+Analyzing sample: s106_SI-DNA
+Results for s106_SI-DNA:
+  Nb = 288.60
+  Ns = 5141.27
+  Average Frequency = 94455.66
+  Ns at minweight = 1.00
+
+Analyzing sample: s115_Cecum-DNA
+Results for s115_Cecum-DNA:
+  Nb = 1502.44
+  Ns = 8961.47
+  Average Frequency = 1111419.69
+  Ns at minweight = 1.00
+
+Analyzing sample: s116_Cecum-DNA
+Results for s116_Cecum-DNA:
+  Nb = 1616.15
+  Ns = 15281.80
+  Average Frequency = 1892438.43
+  Ns at minweight = 1.00
+
+Analyzing sample: s125_Pr.-Colon-DNA
+Results for s125_Pr.-Colon-DNA:
+  Nb = 1712.25
+  Ns = 10581.55
+  Average Frequency = 1005546.81
+  Ns at minweight = 1.00
+
+Analyzing sample: s126_Pr.-Colon-DNA
+Results for s126_Pr.-Colon-DNA:
+  Nb = 1602.79
+  Ns = 17281.90
+  Average Frequency = 2003500.64
+  Ns at minweight = 1.00
+
+Analyzing sample: s25_stool-DNA
+Results for s25_stool-DNA:
+  Nb = 61.62
+  Ns = 15181.79
+  Average Frequency = 70222.84
+  Ns at minweight = 1.00
+
+Analyzing sample: s26_stool-DNA
+Results for s26_stool-DNA:
+  Nb = 85.87
+  Ns = 221.01
+  Average Frequency = 2196.97
+  Ns at minweight = 1.00
+
+Analyzing sample: s35_stool-DNA
+Results for s35_stool-DNA:
+  Nb = 1466.49
+  Ns = 18381.96
+  Average Frequency = 2099427.84
+  Ns at minweight = 1.00
+
+Analyzing sample: s36_stool-DNA
+Results for s36_stool-DNA:
+  Nb = 1697.86
+  Ns = 3881.20
+  Average Frequency = 168097.85
+  Ns at minweight = 1.00
+
+Analyzing sample: s45_stool-DNA
+Results for s45_stool-DNA:
+  Nb = 1462.59
+  Ns = 16541.87
+  Average Frequency = 2099440.68
+  Ns at minweight = 1.00
+
+Analyzing sample: s46_stool-DNA
+Results for s46_stool-DNA:
+  Nb = 1757.90
+  Ns = 16821.88
+  Average Frequency = 2093563.36
+  Ns at minweight = 1.00
+
+Analyzing sample: s55_stool-DNA
+Results for s55_stool-DNA:
+  Nb = 1675.96
+  Ns = 15681.82
+  Average Frequency = 1888152.22
+  Ns at minweight = 1.00
+
+Analyzing sample: s56_stool-DNA
+Results for s56_stool-DNA:
+  Nb = 1602.33
+  Ns = 16521.86
+  Average Frequency = 1854769.07
+  Ns at minweight = 1.00
+
+Analyzing sample: NTC_H3_NTC
+Results for NTC_H3_NTC:
+  Nb = 6.09
+  Ns = 8621.45
+  Average Frequency = 12419.48
+  Ns at minweight = 1.00
+
+Analyzing sample: WATER_B3_WATER
+Results for WATER_B3_WATER:
+  Nb = 19.06
+  Ns = 1321.07
+  Average Frequency = 2441.08
+  Ns at minweight = 1.00
+
+Analyzing sample: WATER_C6_WATER
+Results for WATER_C6_WATER:
+  Nb = 12.36
+  Ns = 10941.57
+  Average Frequency = 7319.44
+  Ns at minweight = 1.00
+
+Analyzing sample: WATER_D2_WATER
+Results for WATER_D2_WATER:
+  Nb = 6.49
+  Ns = 20622.08
+  Average Frequency = 32038.35
+  Ns at minweight = 1.00
+
+Analyzing sample: WATER_F9_WATER
+Results for WATER_F9_WATER:
+  Nb = 48.86
+  Ns = 161.01
+  Average Frequency = 657.97
+  Ns at minweight = 1.00
+
+============================================================
+Analysis complete!
+Results saved to: /sc/arion/work/ruprec02/population-bottlenecks/experiments/P4C1T8/python/FP/c4_ST1
+============================================================
+
+Summary:
+            sample  TotalReads  Number of barcodes  Ns_MinCutoff          Nb           Ns  AverageFrequency  CFU  Log10Ns  Log10CFU  CFU/Ns
+       s105_SI-DNA  27265881.0                1025           1.0 2113.290411  4641.242718      5.363089e+04    0 3.666634         0     0.0
+       s106_SI-DNA    995661.0                1121           1.0  288.602538  5141.268873      9.445566e+04    0 3.711070         0     0.0
+    s115_Cecum-DNA  41776772.0                1777           1.0 1502.436401  8961.468697      1.111420e+06    0 3.952379         0     0.0
+    s116_Cecum-DNA 256393252.0                2794           1.0 1616.153621 15281.799295      1.892438e+06    0 4.184174         0     0.0
+s125_Pr.-Colon-DNA  13471037.0                2035           1.0 1712.252095 10581.553439      1.005547e+06    0 4.024549         0     0.0
+s126_Pr.-Colon-DNA 866058250.0                3058           1.0 1602.786648 17281.903915      2.003501e+06    0 4.237592         0     0.0
+     s25_stool-DNA   1723854.0                2763           1.0   61.615674 15181.794064      7.022284e+04    0 4.181323         0     0.0
+     s26_stool-DNA     12737.0                 116           1.0   85.874448   221.011508      2.196971e+03    0 2.344415         0     0.0
+     s35_stool-DNA 424311758.0                3242           1.0 1466.486386 18381.961456      2.099428e+06    0 4.264392         0     0.0
+     s36_stool-DNA    633218.0                 890           1.0 1697.855519  3881.202962      1.680978e+05    0 3.588966         0     0.0
+     s45_stool-DNA 705981782.0                2953           1.0 1462.593228 16541.865206      2.099441e+06    0 4.218584         0     0.0
+     s46_stool-DNA 392197872.0                3019           1.0 1757.895377 16821.879852      2.093563e+06    0 4.225875         0     0.0
+     s55_stool-DNA  17760209.0                2827           1.0 1675.964528 15681.820219      1.888152e+06    0 4.195396         0     0.0
+     s56_stool-DNA  92909799.0                2959           1.0 1602.334413 16521.864159      1.854769e+06    0 4.218059         0     0.0
+        NTC_H3_NTC     60549.0                1626           1.0    6.089045  8621.450911      1.241948e+04    0 3.935580         0     0.0
+    WATER_B3_WATER      6339.0                 343           1.0   19.059239  1321.069049      2.441076e+03    0 3.120926         0     0.0
+    WATER_C6_WATER    103640.0                2029           1.0   12.358570 10941.572270      7.319439e+03    0 4.039080         0     0.0
+    WATER_D2_WATER    138584.0                3352           1.0    6.488898 20622.078630      3.203835e+04    0 4.314332         0     0.0
+    WATER_F9_WATER      9303.0                  91           1.0   48.860744   161.008370      6.579712e+02    0 2.206848         0     0.0
+
+Successfully processed /sc/arion/work/ruprec02/population-bottlenecks/experiments/P4C1T8/c4_ST1_onlygavage_moleculestable.csv
