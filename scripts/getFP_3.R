@@ -209,8 +209,10 @@ getFP <- function(ReadsTableName, CFUtable, WhereAreReferences, minweight, outpu
     ##Removing least abundant barcode if it is too nonabundant compared to the second least abundant barcode
     as.numeric(head(sort(outvecwithoutnoise, decreasing = TRUE)))
     print(sum(outvecwithoutnoise))
+    print(sum(ReferenceVector))
     FirstResample <- as.numeric(rmultinom(1, sum(outvecwithoutnoise), ReferenceVector/sum(ReferenceVector)))
-    
+    print(FirstResample)
+
     GetNewBotTable <- function(n) {
       #vec <- as.numeric(rmvhyper(1, FirstResample, n))
       vec <- rmultinom(5, n, FirstResample/sum(FirstResample))
