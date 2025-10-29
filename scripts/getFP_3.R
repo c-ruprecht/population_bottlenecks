@@ -210,6 +210,7 @@ getFP <- function(ReadsTableName, CFUtable, WhereAreReferences, minweight, outpu
     as.numeric(head(sort(outvecwithoutnoise, decreasing = TRUE)))
     print(sum(outvecwithoutnoise))
     print(sum(ReferenceVector))
+    #CR: rmultinorm will fail if machineinteer max is exceeded!
     FirstResample <- as.numeric(rmultinom(1, sum(outvecwithoutnoise), ReferenceVector/sum(ReferenceVector)))
     #print(FirstResample)
 

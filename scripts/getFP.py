@@ -402,7 +402,7 @@ def analyze_sample(sample_name, input_vec, output_vec, cfu=None,
     output_vec = remove_low_frequency_noise(output_vec)
 
     # Handle CFU
-    if cfu is None or cfu == 0:
+    if cfu is None or cfu == 0 or (isinstance(cfu, float) and np.isnan(cfu)):
         cfu = 1e20
 
     # Determine iteration limit based on singleton ratio
@@ -636,7 +636,9 @@ def main():
     cfu_dict = {}
     if args.cfu_table != "NULL":
         cfu_table = pd.read_csv(args.cfu_table)
-        cfu_dict = dict(zip(cfu_table.iloc[:, 0], cfu_table.iloc[:, 1]))
+        # Convert CFU column to numeric, coercing errors (like "-") to NaN
+        cfu_values = pd.to_numeric(cfu_table.iloc[:, 1], errors='coerce')
+        cfu_dict = dict(zip(cfu_table.iloc[:, 0], cfu_values))
 
     # Parse reference columns
     ref_cols = [int(x) for x in args.reference_columns.split(',')]
