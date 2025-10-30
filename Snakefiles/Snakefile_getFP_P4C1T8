@@ -6,7 +6,7 @@ import glob
 
 
 # PATHS
-INPUT_DIR = '/sc/arion/work/ruprec02/population-bottlenecks/fp_inputs/P4C1T8/'
+INPUT_DIR = '/sc/arion/work/ruprec02/population-bottlenecks/fp_inputs/P4C1T8/test/'
 OUTPUT_DIR = '/sc/arion/work/ruprec02/population-bottlenecks/experiments/P4C1T8/' 
 
 # Create main output directory structure
