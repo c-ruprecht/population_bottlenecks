@@ -25,7 +25,7 @@ rule get_FP:
     input:
         readstable = INPUT_DIR + "{strain}_onlygavage_moleculestable.csv"
     output:
-        OUTPUT_DIR + "FP/{strain}/{strain}.FP_complete.done"
+        OUTPUT_DIR + "FP/{strain}/TableOfEstimates.csv"
     params:
         output_dir=directory(OUTPUT_DIR + "FP/{strain}/"),
         scripts_dir = '/hpc/users/ruprec02/git/population_bottlenecks/scripts'
