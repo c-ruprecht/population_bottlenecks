@@ -40,6 +40,7 @@ snakemake \
   --cores 1 \
   --rerun-incomplete \
   --latency-wait 240 \
+  --keep-going \
   --executor lsf \
   --default-resources \
     mem_mb=64000 \
