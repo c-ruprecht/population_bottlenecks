@@ -1,0 +1,41 @@
+import os
+from snakemake.io import expand, directory
+import re
+# First, add this import at the top of your file
+import glob
+
+
+# PATHS
+INPUT_DIR = '/sc/arion/work/ruprec02/population-bottlenecks/fp_inputs/P4C2T4T5/'
+OUTPUT_DIR = '/sc/arion/work/ruprec02/population-bottlenecks/experiments/P4C2T4T5/' 
+
+# Create main output directory structure
+os.makedirs(OUTPUT_DIR + "FP", exist_ok=True)
+
+FILES = [i  for i in os.listdir(INPUT_DIR) if i.endswith('_onlygavage_moleculestable.csv') and not i.startswith('._')]
+SAMPLE_NAMES = list(set([re.split(r'_onlygavage_moleculestable.csv', i)[0] for i in sorted(FILES)]))
+print(SAMPLE_NAMES)
+
+rule all:
+    input:
+        expand(OUTPUT_DIR + "FP/{strain}/{strain}.FP_complete.done", strain=SAMPLE_NAMES),
+
+#runs getFP using column 1 as gavage column        
+rule get_FP:
+    input:
+        readstable = INPUT_DIR + "{strain}_onlygavage_moleculestable.csv"
+    output:
+        OUTPUT_DIR + "FP/{strain}/{strain}.FP_complete.done"
+    params:
+        output_dir=directory(OUTPUT_DIR + "FP/{strain}/"),
+        scripts_dir = '/hpc/users/ruprec02/git/population_bottlenecks/scripts'
+    log:
+        OUTPUT_DIR + "logs/FP/{strain}_FP_complete.log"
+    shell:
+        """
+        mkdir -p {params.output_dir}
+        mkdir -p $(dirname {log})
+        ml R/4.2.0
+        Rscript {params.scripts_dir}/getFP_12112023_wrapper.R {input.readstable} NULL "1,2,3,4,5,6" 0.03 {params.output_dir} &> {log}
+        """
+
