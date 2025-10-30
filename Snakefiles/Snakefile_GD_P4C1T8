@@ -13,16 +13,22 @@ OUTPUT_DIR = '/sc/arion/work/ruprec02/population-bottlenecks/experiments/P4C1T8/
 os.makedirs(OUTPUT_DIR + "GD", exist_ok=True)
 
 
-SAMPLE_NAMES = {'c2_ST1': '/hpc/users/ruprec02/git/population_bottlenecks/input_files/gd_sheets/cage2_stool_gdmeta.csv',
-                'c2_ST5':'/hpc/users/ruprec02/git/population_bottlenecks/input_files/gd_sheets/cage2_stool_gdmeta.csv',
-                'c5_ST1':'/hpc/users/ruprec02/git/population_bottlenecks/input_files/gd_sheets/cage5_stool_gdmeta.csv',
-                'c5_ST4':'/hpc/users/ruprec02/git/population_bottlenecks/input_files/gd_sheets/cage5_stool_gdmeta.csv',
+SAMPLE_NAMES = {'c2_ST1': '/hpc/users/ruprec02/git/population_bottlenecks/input_files/gd_sheets/P4C1T8/cage2_stool_gdmeta.csv',
+                'c2_ST5':'/hpc/users/ruprec02/git/population_bottlenecks/input_files/gd_sheets/P4C1T8/cage2_stool_gdmeta.csv',
+                'c5_ST1':'/hpc/users/ruprec02/git/population_bottlenecks/input_files/gd_sheets/P4C1T8/cage5_stool_gdmeta.csv',
+                'c5_ST4':'/hpc/users/ruprec02/git/population_bottlenecks/input_files/gd_sheets/P4C1T8/cage5_stool_gdmeta.csv',
                 }
 
 
 rule all:
     input:
         expand(OUTPUT_DIR + "GD/{strain}/GD_{strain}.csv", strain=SAMPLE_NAMES.keys()),
+        expand(OUTPUT_DIR + "GD/{strain}/CorrectedRD_{strain}.csv", strain=SAMPLE_NAMES.keys()),
+        expand(OUTPUT_DIR + "GD/{strain}/CorrectedFRD_{strain}.csv", strain=SAMPLE_NAMES.keys()),
+        expand(OUTPUT_DIR + "GD/{strain}/heatmaps/{strain}_heatmap_GD.html", strain=SAMPLE_NAMES.keys()),
+        expand(OUTPUT_DIR + "GD/{strain}/heatmaps/{strain}_heatmap_corrRD.html", strain=SAMPLE_NAMES.keys()),
+        expand(OUTPUT_DIR + "GD/{strain}/heatmaps/{strain}_heatmap_corrFRD.html", strain=SAMPLE_NAMES.keys())
+
 rule get_GD:
     input:
         freq = INPUT_DIR + "/{strain}/FrequenciesWithoutNoise.csv"
@@ -49,5 +55,30 @@ rule get_GD:
             {params.metadata} \
             {params.limit} \
             {params.output_dir} &> {log}
+        """
+
+
+rule create_heatmaps:
+    input:
+        gd = OUTPUT_DIR + "GD/{strain}/GD_{strain}.csv",
+        corrected_rd = OUTPUT_DIR + "GD/{strain}/CorrectedRD_{strain}.csv",
+        corrected_frd = OUTPUT_DIR + "GD/{strain}/CorrectedFRD_{strain}.csv"
+    output:
+        gd_heatmap = OUTPUT_DIR + "GD/{strain}/heatmaps/{strain}_heatmap_GD.html",
+        corrected_rd_heatmap = OUTPUT_DIR + "GD/{strain}/heatmaps/{strain}_heatmap_corrRD.html",
+        corrected_frd_heatmap = OUTPUT_DIR + "GD/{strain}/heatmaps/{strain}_heatmap_corrFRD.html"
+    params:
+        input_dir = OUTPUT_DIR + "GD/{strain}/",
+        output_dir = OUTPUT_DIR + "GD/{strain}/heatmaps/",
+        scripts_dir = '/hpc/users/ruprec02/git/population_bottlenecks/scripts'
+    log:
+        OUTPUT_DIR + "GD/{strain}/heatmaps/create_heatmaps.log"
+    shell:
+        """
+        mkdir -p {params.output_dir}
+        ml anaconda3
+        python {params.scripts_dir}/create_heatmaps.py \
+            -i {params.input_dir} \
+            -o {params.output_dir} &> {log}
         """
 
