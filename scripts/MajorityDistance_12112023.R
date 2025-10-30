@@ -1,4 +1,4 @@
-ResiliencyGeneticDistance <- function(ReadsTableName, expname, ComparisonMetaDataName, limit, output_dir) {
+ResiliencyGeneticDistance <- function(ReadsTableName, expname, ComparisonMetaDataName, limit) {
 
   ReadsTable <- read.csv(ReadsTableName, row.names = 1)
   MetaData <- read.csv(ComparisonMetaDataName)
@@ -127,10 +127,10 @@ ResiliencyGeneticDistance <- function(ReadsTableName, expname, ComparisonMetaDat
   rownames(CorrectedFRDvector) <- SampleNames
   
   
-  # Write the output files to the specified output directory
-  write.csv(CorrectedRDvector, file.path(output_dir, paste("CorrectedRD_", expname, ".csv", sep = "")))
-  write.csv(GDvector, file.path(output_dir, paste("GD_", expname, ".csv", sep = "")))
-  write.csv(CorrectedFRDvector, file.path(output_dir, paste("CorrectedFRD_", expname, ".csv", sep = "")))
+
+  write.csv(CorrectedRDvector, paste("CorrectedRD_", expname, ".csv", sep = ""))
+  write.csv(GDvector, paste("GD_", expname, ".csv", sep = ""))
+  write.csv(CorrectedFRDvector, paste("CorrectedFRD_", expname, ".csv", sep = ""))
   
   RDtable <<- RDtable
   RDvector <<- RDvector
@@ -199,17 +199,3 @@ ResilientGD <- function(vector1, vector2, limit) {
   print(paste(vec1name, "to", vec2name, "=", log(rd + 1)/log(sum(vec2!=0) + 1)))
   print(paste(vec2name, "to", vec1name, "=", log(rd + 1)/log(sum(vec1!=0) + 1)))
 }
-
-cmd_args <- commandArgs(trailingOnly = TRUE)
-if (length(cmd_args) != 5) {
-  stop("Usage: Rscript MajorityDistance.R <ReadsTable> <expname> <ComparisonMetaDataName> <limit> <output_dir>")
-}
-
-ReadsTable <- cmd_args[1]
-expname <- cmd_args[2]
-ComparisonMetaDataName <- cmd_args[3]
-limit <- as.numeric(cmd_args[4])
-output_dir <- cmd_args[5]
-
-# Call the ResiliencyGeneticDistance function with the provided arguments
-ResiliencyGeneticDistance(ReadsTable, expname, ComparisonMetaDataName, limit, output_dir)

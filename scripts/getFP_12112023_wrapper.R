@@ -4,7 +4,7 @@
 # Usage: Rscript getFP_12112023_wrapper.R <ReadsTable> <CFUtable> <WhereAreReferences> <minweight> <output_dir>
 
 # Source the original getFP function
-source("/hpc/users/ruprec02/git/population_bottlenecks/test/holmes2024/getFP_12112023.R")
+source("/hpc/users/ruprec02/git/population_bottlenecks/scripts/getFP_12112023.R")
 
 # Parse command-line arguments
 cmd_args <- commandArgs(trailingOnly = TRUE)

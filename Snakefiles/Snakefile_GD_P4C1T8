@@ -1,0 +1,53 @@
+import os
+from snakemake.io import expand, directory
+import re
+# First, add this import at the top of your file
+import glob
+
+
+# PATHS
+INPUT_DIR = '/sc/arion/work/ruprec02/population-bottlenecks/experiments/P4C1T8/c1gavageFP'
+OUTPUT_DIR = '/sc/arion/work/ruprec02/population-bottlenecks/experiments/P4C1T8/' 
+
+# Create main output directory structure
+os.makedirs(OUTPUT_DIR + "GD", exist_ok=True)
+
+
+SAMPLE_NAMES = {'c2_ST1': '/hpc/users/ruprec02/git/population_bottlenecks/input_files/gd_sheets/cage2_stool_gdmeta.csv',
+                'c2_ST5':'/hpc/users/ruprec02/git/population_bottlenecks/input_files/gd_sheets/cage2_stool_gdmeta.csv',
+                'c5_ST1':'/hpc/users/ruprec02/git/population_bottlenecks/input_files/gd_sheets/cage5_stool_gdmeta.csv',
+                'c5_ST4':'/hpc/users/ruprec02/git/population_bottlenecks/input_files/gd_sheets/cage5_stool_gdmeta.csv',
+                }
+
+
+rule all:
+    input:
+        expand(OUTPUT_DIR + "GD/{strain}/GD_{strain}.csv", strain=SAMPLE_NAMES.keys()),
+rule get_GD:
+    input:
+        freq = INPUT_DIR + "/{strain}/FrequenciesWithoutNoise.csv"
+    output:
+        corrected_rd = OUTPUT_DIR + "GD/{strain}/CorrectedRD_{strain}.csv",
+        gd = OUTPUT_DIR + "GD/{strain}/GD_{strain}.csv",
+        corrected_frd = OUTPUT_DIR + "GD/{strain}/CorrectedFRD_{strain}.csv"
+    params:
+        output_dir = OUTPUT_DIR + "GD/{strain}/",
+        scripts_dir = '/hpc/users/ruprec02/git/population_bottlenecks/scripts',
+        metadata = lambda wildcards: SAMPLE_NAMES[wildcards.strain],
+        expname = "{strain}",
+        limit = 10000
+    log:
+        OUTPUT_DIR + "GD/{strain}/GD_complete.log"
+    shell:
+        """
+        mkdir -p {params.output_dir}
+        mkdir -p $(dirname {log})
+        ml R/4.2.0
+        Rscript {params.scripts_dir}/MajorityDistance_12112023_wrapper.R \
+            {input.freq} \
+            {params.expname} \
+            {params.metadata} \
+            {params.limit} \
+            {params.output_dir} &> {log}
+        """
+
