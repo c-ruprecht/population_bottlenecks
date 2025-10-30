@@ -30,7 +30,7 @@ rule get_FP:
         output_dir=directory(OUTPUT_DIR + "FP/{strain}/"),
         scripts_dir = '/hpc/users/ruprec02/git/population_bottlenecks/scripts'
     log:
-        OUTPUT_DIR + "logs/FP/{strain}_FP_complete.log"
+        OUTPUT_DIR + "FP/{strain}/FP_complete.log"
     shell:
         """
         mkdir -p {params.output_dir}
