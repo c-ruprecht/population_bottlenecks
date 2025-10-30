@@ -18,7 +18,7 @@ print(SAMPLE_NAMES)
 
 rule all:
     input:
-        expand(OUTPUT_DIR + "FP/{strain}/{strain}.FP_complete.done", strain=SAMPLE_NAMES),
+        expand(OUTPUT_DIR + "FP/{strain}/TableOfEstimates.csv", strain=SAMPLE_NAMES),
 
 #runs getFP using column 1 as gavage column        
 rule get_FP:
