@@ -25,9 +25,9 @@ rule all:
         expand(OUTPUT_DIR + "GD/{strain}/GD_{strain}.csv", strain=SAMPLE_NAMES.keys()),
         expand(OUTPUT_DIR + "GD/{strain}/CorrectedRD_{strain}.csv", strain=SAMPLE_NAMES.keys()),
         expand(OUTPUT_DIR + "GD/{strain}/CorrectedFRD_{strain}.csv", strain=SAMPLE_NAMES.keys()),
-        expand(OUTPUT_DIR + "GD/{strain}/heatmaps/GD_{strain}_heatmap_GD.html", strain=SAMPLE_NAMES.keys()),
-        expand(OUTPUT_DIR + "GD/{strain}/heatmaps/CorrectedFRD_{strain}_heatmap_corrRD.html", strain=SAMPLE_NAMES.keys()),
-        expand(OUTPUT_DIR + "GD/{strain}/heatmaps/CorrectedRD_{strain}_heatmap_corrFRD.html", strain=SAMPLE_NAMES.keys())
+        expand(OUTPUT_DIR + "GD/{strain}/heatmaps/GD_{strain}_heatmap_GD.png", strain=SAMPLE_NAMES.keys()),
+        expand(OUTPUT_DIR + "GD/{strain}/heatmaps/CorrectedFRD_{strain}_heatmap_corrRD.png", strain=SAMPLE_NAMES.keys()),
+        expand(OUTPUT_DIR + "GD/{strain}/heatmaps/CorrectedRD_{strain}_heatmap_corrFRD.png", strain=SAMPLE_NAMES.keys())
 
 rule get_GD:
     input:
@@ -64,9 +64,9 @@ rule create_heatmaps:
         corrected_rd = OUTPUT_DIR + "GD/{strain}/CorrectedRD_{strain}.csv",
         corrected_frd = OUTPUT_DIR + "GD/{strain}/CorrectedFRD_{strain}.csv"
     output:
-        gd_heatmap = OUTPUT_DIR + "GD/{strain}/heatmaps/{strain}_heatmap_GD.html",
-        corrected_rd_heatmap = OUTPUT_DIR + "GD/{strain}/heatmaps/{strain}_heatmap_corrRD.html",
-        corrected_frd_heatmap = OUTPUT_DIR + "GD/{strain}/heatmaps/{strain}_heatmap_corrFRD.html"
+        gd_heatmap = OUTPUT_DIR + "GD/{strain}/heatmaps/GD_{strain}_heatmap_GD.png",
+        corrected_rd_heatmap = OUTPUT_DIR + "GD/{strain}/heatmaps/CorrectedRD_{strain}_heatmap_corrRD.png",
+        corrected_frd_heatmap = OUTPUT_DIR + "GD/{strain}/heatmaps/CorrectedFRD_{strain}_heatmap_corrFRD.png"
     params:
         input_dir = OUTPUT_DIR + "GD/{strain}/",
         output_dir = OUTPUT_DIR + "GD/{strain}/heatmaps/",
