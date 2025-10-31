@@ -36,7 +36,9 @@ def main():
                     fig = px.imshow(
                         df,
                         color_continuous_scale=px.colors.sequential.Blues,
-                        range_color=[0, 1]
+                        range_color=[0, 1],
+                        width = 800,
+                        height = 600,
                     )
                     fig.update_layout(
                         title="Genetic Distance: " + file_name,
@@ -49,7 +51,9 @@ def main():
                     fig = px.imshow(
                         df,
                         color_continuous_scale=px.colors.sequential.Blues,
-                        range_color=[0, 1]
+                        range_color=[0, 1],
+                        width = 800,
+                        height = 600,
                     )
                     fig.update_layout(
                         title="Corrected FRD: " + file_name,
@@ -63,7 +67,9 @@ def main():
                     fig = px.imshow(
                         df,
                         color_continuous_scale=px.colors.sequential.Blues,
-                        range_color=[0, max_value]
+                        range_color=[0, max_value],
+                        width = 800,
+                        height = 600,
                     )
                     fig.update_layout(
                         title="Corrected RD: " + file_name,
@@ -78,6 +84,7 @@ def main():
                 
                 # Save the heatmap
                 fig.write_html(output_file)
+                fig.write_image(str(output_file).replace('.html', '.png'), scale = 2)
                 print(f"Created heatmap: {output_file}")
                 
             except Exception as e:
