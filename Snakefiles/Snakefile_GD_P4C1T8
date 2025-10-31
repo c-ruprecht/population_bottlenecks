@@ -43,7 +43,7 @@ rule get_GD:
         scripts_dir = '/hpc/users/ruprec02/git/population_bottlenecks/scripts',
         metadata = lambda wildcards: SAMPLE_NAMES[wildcards.strain],
         expname = "{strain}",
-        limit = 10000
+        limit = 1000#10000
     log:
         OUTPUT_DIR + "GD/{strain}/GD_complete.log"
     shell:
@@ -79,8 +79,7 @@ rule create_heatmaps:
     shell:
         """
         mkdir -p {params.output_dir}
-        ml anaconda3
-        python {params.scripts_dir}/create_heatmaps.py \
+        conda -n umi_tools_env run python {params.scripts_dir}/create_heatmaps.py \
             -i {params.input_dir} \
             -o {params.output_dir} &> {log}
         touch {output}
