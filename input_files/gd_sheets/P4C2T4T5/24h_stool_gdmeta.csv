@@ -1,20 +1,20 @@
 Sample,Group,Order,BioSample
-P4C2T4_s27.F2_stool.DNA,1,1,P4C2T4 SPF NA
-P4C2T4_s29.G2_stool.DNA,1,2,P4C2T4 SPF NA
-P4C2T4_s25.E2_stool.DNA,1,3,P4C2T4 SPF antibiotic_vancomycin
-P4C2T4_s17.H1_stool.DNA,1,4,P4C2T4 germ_free NA
-P4C2T4_s19.B2_stool.DNA,1,5,P4C2T4 germ_free NA
-P4C2T4_s21.C2_stool.DNA,1,6,P4C2T4 germ_free donor_BSD2780
-P4C2T4_s23.D2_stool.DNA,1,7,P4C2T4 germ_free donor_BSD2780
-P4C2T5_s43.G3_stool.DNA,1,8,P4C2T5 SPF NA
-P4C2T5_s45.H3_stool.DNA,1,9,P4C2T5 SPF NA
-P4C2T5_s47.A4_stool.DNA,1,10,P4C2T5 SPF NA
-P4C2T5_s37.C3_stool.DNA,1,11,P4C2T5 SPF antibiotic_vancomycin
-P4C2T5_s39.D3_stool.DNA,1,12,P4C2T5 SPF antibiotic_vancomycin
-P4C2T5_s41.E3_stool.DNA,1,13,P4C2T5 SPF antibiotic_vancomycin
-P4C2T5_s25.E2_stool.DNA,1,14,P4C2T5 germ_free NA
-P4C2T5_s27.F2_stool.DNA,1,15,P4C2T5 germ_free NA
-P4C2T5_s29.G2_stool.DNA,1,16,P4C2T5 germ_free NA
-P4C2T5_s31.H2_stool.DNA,1,17,P4C2T5 germ_free donor_BSD2780
-P4C2T5_s33.A3_stool.DNA,1,18,P4C2T5 germ_free donor_BSD2780
-P4C2T5_s35.B3_stool.DNA,1,19,P4C2T5 germ_free donor_BSD2780
+P4C2T4_s27.F2_stool.DNA,1,1,P4C2T4 SPF NA cage6
+P4C2T4_s29.G2_stool.DNA,1,2,P4C2T4 SPF NA cage7
+P4C2T4_s25.E2_stool.DNA,1,3,P4C2T4 SPF antibiotic_vancomycin cage5
+P4C2T4_s17.H1_stool.DNA,1,4,P4C2T4 germ_free NA cage1
+P4C2T4_s19.B2_stool.DNA,1,5,P4C2T4 germ_free NA cage2
+P4C2T4_s21.C2_stool.DNA,1,6,P4C2T4 germ_free donor_BSD2780 cage3
+P4C2T4_s23.D2_stool.DNA,1,7,P4C2T4 germ_free donor_BSD2780 cage4
+P4C2T5_s43.G3_stool.DNA,1,8,P4C2T5 SPF NA cage10
+P4C2T5_s45.H3_stool.DNA,1,9,P4C2T5 SPF NA cage11
+P4C2T5_s47.A4_stool.DNA,1,10,P4C2T5 SPF NA cage12
+P4C2T5_s37.C3_stool.DNA,1,11,P4C2T5 SPF antibiotic_vancomycin cage7
+P4C2T5_s39.D3_stool.DNA,1,12,P4C2T5 SPF antibiotic_vancomycin cage8
+P4C2T5_s41.E3_stool.DNA,1,13,P4C2T5 SPF antibiotic_vancomycin cage9
+P4C2T5_s25.E2_stool.DNA,1,14,P4C2T5 germ_free NA cage1
+P4C2T5_s27.F2_stool.DNA,1,15,P4C2T5 germ_free NA cage2
+P4C2T5_s29.G2_stool.DNA,1,16,P4C2T5 germ_free NA cage3
+P4C2T5_s31.H2_stool.DNA,1,17,P4C2T5 germ_free donor_BSD2780 cage4
+P4C2T5_s33.A3_stool.DNA,1,18,P4C2T5 germ_free donor_BSD2780 cage5
+P4C2T5_s35.B3_stool.DNA,1,19,P4C2T5 germ_free donor_BSD2780 cage6

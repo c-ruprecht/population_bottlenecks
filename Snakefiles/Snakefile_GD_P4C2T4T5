@@ -7,7 +7,7 @@ import glob
 
 # PATHS
 INPUT_DIR = '/sc/arion/work/ruprec02/population-bottlenecks/experiments/P4C2T4T5/FP/'
-OUTPUT_DIR = '/sc/arion/work/ruprec02/population-bottlenecks/experiments/P4C2T4T5' 
+OUTPUT_DIR = '/sc/arion/work/ruprec02/population-bottlenecks/experiments/P4C2T4T5/' 
 
 # Create main output directory structure
 os.makedirs(OUTPUT_DIR + "GD", exist_ok=True)
