@@ -10,7 +10,6 @@ present in gavage samples.
 import pandas as pd
 import os
 import argparse
-import sys
 
 
 def parse_arguments():
@@ -140,9 +139,8 @@ def gavage_only_readtables(indir, outdir):
             df = df[df[li_gavage].sum(axis=1) > 0].copy()
 
             # Check total reads across all numeric columns
-            numeric_cols = df.select_dtypes(include=['int64', 'float64']).columns
-
             # Calculate max total for any single sample column
+            numeric_cols = df.select_dtypes(include=['int64', 'float64']).columns
             max_sample_total = df[numeric_cols].sum(axis=0).max()
 
             print(f"  Max sample total: {max_sample_total:,.0f}")
@@ -172,14 +170,14 @@ def gavage_only_readtables(indir, outdir):
             print(f"  Saved: {output_file}")
 
 
-def load_ill_metadata(ill_sheet_paths, metadata_paths, project):
+def load_ill_metadata(ill_sheet_paths, metadata_paths, project_name=None):
     """
     Load and merge ILL sequencing sheets with sample metadata.
 
     Args:
         ill_sheet_paths (list): List of paths to ILL Excel files
         metadata_paths (list): List of paths to metadata TSV files
-        project (str): Project name for filtering
+        project_name (str): Project name for filtering (optional, currently unused)
 
     Returns:
         tuple: (merged_df, ntc_df) - merged sample info and NTC samples
@@ -285,7 +283,7 @@ def process_ntc_samples(df_ntc, basepath):
     """
     df_ntc_reads = pd.DataFrame()
 
-    for idx, row in df_ntc.iterrows():
+    for _, row in df_ntc.iterrows():
         try:
             df = load_molecule_table(basepath, row['ill'], row['file_name'])
             df['sample'] = f"{row['Sample Name/Pool Name*']}_{row['sample_id']}"
@@ -298,8 +296,11 @@ def process_ntc_samples(df_ntc, basepath):
         print("  WARNING: No NTC data found, returning empty dataframe")
         return pd.DataFrame()
 
+    # Aggregate duplicates (sum molecules for duplicate strain/umi_seq/sample combinations)
+    df_ntc_agg = df_ntc_reads.groupby(['strain', 'umi_seq', 'sample'], as_index=False)['molecules'].sum()
+
     # Pivot to wide format
-    df_ntc_pivot = df_ntc_reads.pivot(
+    df_ntc_pivot = df_ntc_agg.pivot(
         index=['strain', 'umi_seq'],
         columns='sample',
         values='molecules'
@@ -313,7 +314,7 @@ def process_ntc_samples(df_ntc, basepath):
     return df_ntc_pivot
 
 
-def process_sample_group(df_samples, basepath, gavage_sample_type, project_name):
+def process_sample_group(df_samples, basepath, gavage_sample_type, project_name=None):
     """
     Load and pivot sample data for a group (gavage or experimental).
 
@@ -321,14 +322,14 @@ def process_sample_group(df_samples, basepath, gavage_sample_type, project_name)
         df_samples (pd.DataFrame): DataFrame with sample info
         basepath (str): Base directory path
         gavage_sample_type (str): Sample type identifier for gavage
-        project_name (str): Project name for column naming
+        project_name (str): Project name for column naming (optional)
 
     Returns:
         pd.DataFrame: Pivoted data indexed by [strain, umi_seq]
     """
     df_reads = pd.DataFrame()
 
-    for idx, row in df_samples.iterrows():
+    for _, row in df_samples.iterrows():
         try:
             df = load_molecule_table(basepath, row['ill'], row['file_name'])
 
@@ -348,8 +349,11 @@ def process_sample_group(df_samples, basepath, gavage_sample_type, project_name)
     if df_reads.empty:
         return pd.DataFrame()
 
+    # Aggregate duplicates (sum molecules for duplicate strain/umi_seq/sample combinations)
+    df_reads_agg = df_reads.groupby(['strain', 'umi_seq', 'sample'], as_index=False)['molecules'].sum()
+
     # Pivot to wide format
-    df_pivot = df_reads.pivot(
+    df_pivot = df_reads_agg.pivot(
         index=['strain', 'umi_seq'],
         columns='sample',
         values='molecules'
@@ -657,7 +661,7 @@ def process_c1gavage_mode(df_merge, df_ntc, args):
         )
 
 
-def process_invitro_mode(df_merge, df_ntc, args):
+def process_invitro_mode(df_merge, _df_ntc, args):
     """
     Process P4C4T1 in vitro experiment (no gavage, imported later).
 

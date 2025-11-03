@@ -6,8 +6,8 @@ import glob
 
 
 # PATHS
-INPUT_DIR = '/sc/arion/work/ruprec02/population-bottlenecks/P4C1T8/c1gavage/'
-OUTPUT_DIR = '/sc/arion/work/ruprec02/population-bottlenecks/experiments/P4C1T8/c1gavage' 
+INPUT_DIR = '/sc/arion/work/ruprec02/population-bottlenecks/fp_inputs/P4C1T8-c1gavage/'
+OUTPUT_DIR = '/sc/arion/work/ruprec02/population-bottlenecks/experiments/P4C1T8-c1gavage' 
 
 # Create main output directory structure
 os.makedirs(OUTPUT_DIR + "FP", exist_ok=True)
@@ -20,7 +20,8 @@ rule all:
     input:
         expand(OUTPUT_DIR + "FP/{strain}/TableOfEstimates.csv", strain=SAMPLE_NAMES),
 
-#runs getFP using column 1 as gavage column        
+# runs getNrNb (FinalResiliencyWithCFU) using column 1 as gavage column
+# Parameters: ReadsTable CFUtable InocCFU WhereAreReferences minweight CorrectForNoise output_dir CalibrationFile
 rule get_FP:
     input:
         readstable = INPUT_DIR + "{strain}_onlygavage_moleculestable.csv"
@@ -28,7 +29,11 @@ rule get_FP:
         OUTPUT_DIR + "FP/{strain}/TableOfEstimates.csv"
     params:
         output_dir=directory(OUTPUT_DIR + "FP/{strain}/"),
-        scripts_dir = '/hpc/users/ruprec02/git/population_bottlenecks/scripts'
+        scripts_dir = '/hpc/users/ruprec02/git/population_bottlenecks/scripts',
+        inoc_cfu = 1000000,  # Adjust this value based on your experimental inoculum CFU
+        where_refs = "1",     # Column 1 as gavage/reference column
+        minweight = 0.03,     # Minimum weight threshold (3%)
+        correct_noise = 0.001     # Noise correction factor (0 = no correction)
     log:
         OUTPUT_DIR + "FP/{strain}/FP_complete.log"
     shell:
@@ -36,6 +41,14 @@ rule get_FP:
         mkdir -p {params.output_dir}
         mkdir -p $(dirname {log})
         ml R/4.2.0
-        Rscript {params.scripts_dir}/getFP_12112023_wrapper.R {input.readstable} NULL "1" 0.03 {params.output_dir} &> {log}
+        Rscript {params.scripts_dir}/FinalResiliencyWithCFU_wrapper.R \
+            {input.readstable} \
+            NULL \
+            {params.inoc_cfu} \
+            {params.where_refs} \
+            {params.minweight} \
+            {params.correct_noise} \
+            {params.output_dir} \
+            NULL &> {log}
         """
 
