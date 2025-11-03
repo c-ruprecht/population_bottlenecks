@@ -11,26 +11,34 @@ getNrNb <- function(ReadsTable, CFUtable, InocCFU, WhereAreReferences, minweight
   ReferenceVector <- rowMeans(cbind(ReadsTable[,WhereAreReferences]))
   TestNames <- colnames(ReadsTable)[-WhereAreReferences]
   TableWithoutNoise <- data.frame(row.names = rownames(ReadsTable))
-  
+
+  print(paste("Found", length(TestNames), "samples to process"))
+  print(paste("Reference barcodes:", length(ReferenceVector)))
+
  #Makes a table for estimating bottleneck from fraction of barcodes that are identified
-  
+
   library(extraDistr)
+  print("Building simulation table...")
   RoundedRefVector <-unname(round(round(ReferenceVector) * InocCFU / sum(round(ReferenceVector))))
   steps <- seq(from = 1, to = length(RoundedRefVector)*10, by = 10)
-  
+
   GetBotTable <- function(n) {
     vec <- as.numeric(rmvhyper(1, RoundedRefVector, n))
     sum(vec!=0)
   }
-  
+
   y <- unlist(lapply(steps, GetBotTable))
-  
+
   dfxy <- sortedXyData(steps, y)
   colnames(dfxy) <- c("x", "y")
+  print("Simulation table complete. Starting sample processing...")
+  print("---")
   
   #Internal Resiliency Function - this is the bulk of the script. The function gets applied on the vector of sample names (TestNames above), so this is run for every noninput sample in your dataset
   ResiliencyIndices <- function(samplename, plots = FALSE){
-    
+
+    print(paste("Processing sample:", samplename))
+
     #Specifies input vector (which is the average of your inputs), output (the row which corresponds to the particular sample name), and CFU (a single value corresponding to the name of the sample)
     invec <- ReferenceVector
     outvec <- ReadsTable[,colnames(ReadsTable) == samplename]
