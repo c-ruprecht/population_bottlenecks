@@ -41,6 +41,7 @@ snakemake \
   --rerun-incomplete \
   --latency-wait 240 \
   --keep-going \
+  --use-conda \
   --executor lsf \
   --default-resources \
     mem_mb=100000 \
