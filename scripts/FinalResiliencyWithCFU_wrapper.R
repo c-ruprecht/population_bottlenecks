@@ -3,7 +3,15 @@
 # Wrapper script for FinalResiliencyWithCFU.R to enable command-line usage
 # Usage: Rscript FinalResiliencyWithCFU_wrapper.R <ReadsTable> <CFUtable> <InocCFU> <WhereAreReferences> <minweight> <CorrectForNoise> <output_dir> [CalibrationFile]
 
-# Load required packages
+# Load required packages (install if missing)
+if (!require("extraDistr", quietly = TRUE)) {
+  install.packages("extraDistr", repos = "https://cloud.r-project.org/")
+  library(extraDistr)
+}
+if (!require("EnvStats", quietly = TRUE)) {
+  install.packages("EnvStats", repos = "https://cloud.r-project.org/")
+  library(EnvStats)
+}
 library(extraDistr)
 library(EnvStats)
 
