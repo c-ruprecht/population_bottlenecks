@@ -1,6 +1,8 @@
 ### Clustering of UMIs in a molecule table using Gavage columns.
 ### Creates sums for all samples
 from umi_tools import UMIClusterer
+import argparse
+import pandas as pd
 
 
 def parse_arguments():
