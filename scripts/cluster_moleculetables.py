@@ -14,6 +14,7 @@ def parse_arguments():
 
 
 def cluster_umis(moleculetable, cluster_method = "directional", threshold = 1):
+    df = pd.read_csv(moleculetable)
     df.set_index('umi_seq', inplace = True)
     #get gavage columns, create sum value and :
     df_gavage = df[[col for col in df.columns if 'gavage' in str(col).lower()]].copy()
