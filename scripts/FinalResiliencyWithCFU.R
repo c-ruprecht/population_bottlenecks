@@ -29,7 +29,7 @@ getNrNb <- function(ReadsTable, CFUtable, InocCFU, WhereAreReferences, minweight
   colnames(dfxy) <- c("x", "y")
   
   #Internal Resiliency Function - this is the bulk of the script. The function gets applied on the vector of sample names (TestNames above), so this is run for every noninput sample in your dataset
-  ResiliencyIndices <- function(samplename, plots = TRUE){
+  ResiliencyIndices <- function(samplename, plots = FALSE){
     
     #Specifies input vector (which is the average of your inputs), output (the row which corresponds to the particular sample name), and CFU (a single value corresponding to the name of the sample)
     invec <- ReferenceVector

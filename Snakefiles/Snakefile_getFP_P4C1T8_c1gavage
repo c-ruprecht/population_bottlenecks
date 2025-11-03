@@ -35,7 +35,7 @@ rule get_FP:
         minweight = 0.03,     # Minimum weight threshold (3%)
         correct_noise = 0.001     # Noise correction factor (0 = no correction)
     conda:
-        "../envs/r_bottleneck.yaml"
+        "../environments/r_bottleneck.yaml"
     log:
         OUTPUT_DIR + "FP/{strain}/FP_complete.log"
     shell:
