@@ -3,6 +3,10 @@
 # Wrapper script for FinalResiliencyWithCFU.R to enable command-line usage
 # Usage: Rscript FinalResiliencyWithCFU_wrapper.R <ReadsTable> <CFUtable> <InocCFU> <WhereAreReferences> <minweight> <CorrectForNoise> <output_dir> [CalibrationFile]
 
+# Load required packages
+library(extraDistr)
+library(EnvStats)
+
 # Source the original getNrNb function
 source("/hpc/users/ruprec02/git/population_bottlenecks/scripts/FinalResiliencyWithCFU.R")
 
