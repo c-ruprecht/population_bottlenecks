@@ -1,0 +1,59 @@
+import os
+from snakemake.io import expand, directory
+import re
+import glob
+
+# PATHS
+INPUT_DIR = '/sc/arion/work/ruprec02/population-bottlenecks/fp_inputs/'
+OUTPUT_DIR = '/sc/arion/work/ruprec02/population-bottlenecks/fp_inputs_clustered/'
+
+# Create main output directory structure
+os.makedirs(OUTPUT_DIR, exist_ok=True)
+
+# Find all moleculetable files in subdirectories of INPUT_DIR
+# Pattern: INPUT_DIR/{experiment}/{strain}_onlygavage_moleculestable.csv
+all_files = glob.glob(os.path.join(INPUT_DIR, '*/*_onlygavage_moleculestable.csv'))
+
+# Extract (experiment, strain) tuples from file paths
+SAMPLES = []
+for filepath in all_files:
+    # Get relative path from INPUT_DIR
+    rel_path = os.path.relpath(filepath, INPUT_DIR)
+    # Split into experiment/filename
+    experiment, filename = os.path.split(rel_path)
+    # Extract strain name by removing suffix
+    strain = re.sub(r'_onlygavage_moleculestable\.csv$', '', filename)
+    SAMPLES.append((experiment, strain))
+
+print(f"Found {len(SAMPLES)} samples to process:")
+for exp, strain in SAMPLES[:5]:  # Print first 5 as example
+    print(f"  {exp}/{strain}")
+if len(SAMPLES) > 5:
+    print(f"  ... and {len(SAMPLES) - 5} more")
+
+rule all:
+    input:
+        expand(OUTPUT_DIR + "{experiment}/{strain}_clustered.csv",
+               zip, experiment=[s[0] for s in SAMPLES], strain=[s[1] for s in SAMPLES])
+
+rule cluster_moleculetables:
+    input:
+        readstable = INPUT_DIR + "{experiment}/{strain}_onlygavage_moleculestable.csv"
+    output:
+        OUTPUT_DIR + "{experiment}/{strain}_clustered.csv"
+    params:
+        scripts_dir = '/hpc/users/ruprec02/git/population_bottlenecks/scripts',
+        output_prefix = OUTPUT_DIR + "{experiment}/{strain}"
+    log:
+        OUTPUT_DIR + "{experiment}/logs/{strain}_clustering.log"
+    conda:
+        "../environments/umi_tools_env.yaml"
+    shell:
+        """
+        mkdir -p $(dirname {output})
+        mkdir -p $(dirname {log})
+        python {params.scripts_dir}/cluster_moleculetables.py \
+            --input {input.readstable} \
+            --output {params.output_prefix} &> {log}
+        """
+
