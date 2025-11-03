@@ -34,14 +34,14 @@ rule get_FP:
         where_refs = "1",     # Column 1 as gavage/reference column
         minweight = 0.03,     # Minimum weight threshold (3%)
         correct_noise = 0.001     # Noise correction factor (0 = no correction)
+    conda:
+        "../envs/r_bottleneck.yaml"
     log:
         OUTPUT_DIR + "FP/{strain}/FP_complete.log"
     shell:
         """
         mkdir -p {params.output_dir}
         mkdir -p $(dirname {log})
-        ml R/4.2.0
-        Rscript -e 'install.packages(c("extraDistr", "EnvStats"), repos="https://cloud.r-project.org/", quiet=TRUE)'
         Rscript {params.scripts_dir}/FinalResiliencyWithCFU_wrapper.R \
             {input.readstable} \
             NULL \
