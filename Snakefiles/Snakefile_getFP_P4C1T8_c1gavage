@@ -41,6 +41,7 @@ rule get_FP:
         mkdir -p {params.output_dir}
         mkdir -p $(dirname {log})
         ml R/4.2.0
+        Rscript -e 'install.packages(c("extraDistr", "EnvStats"), repos="https://cloud.r-project.org/", quiet=TRUE)'
         Rscript {params.scripts_dir}/FinalResiliencyWithCFU_wrapper.R \
             {input.readstable} \
             NULL \

@@ -3,23 +3,12 @@
 # Wrapper script for FinalResiliencyWithCFU.R to enable command-line usage
 # Usage: Rscript FinalResiliencyWithCFU_wrapper.R <ReadsTable> <CFUtable> <InocCFU> <WhereAreReferences> <minweight> <CorrectForNoise> <output_dir> [CalibrationFile]
 
-# Load required packages (install if missing to user library)
-# Set user library path for cluster environment
-user_lib <- Sys.getenv("R_LIBS_USER")
-if (user_lib == "") {
-  user_lib <- file.path(Sys.getenv("HOME"), "R", "x86_64-pc-linux-gnu-library", paste(R.Version()$major, strsplit(R.Version()$minor, "\\.")[[1]][1], sep="."))
-}
-dir.create(user_lib, recursive = TRUE, showWarnings = FALSE)
-.libPaths(c(user_lib, .libPaths()))
-
-if (!require("extraDistr", quietly = TRUE)) {
-  install.packages("extraDistr", repos = "https://cloud.r-project.org/", lib = user_lib)
-  library(extraDistr)
-}
-if (!require("EnvStats", quietly = TRUE)) {
-  install.packages("EnvStats", repos = "https://cloud.r-project.org/", lib = user_lib)
-  library(EnvStats)
-}
+# Load required packages
+# Note: These packages must be pre-installed in your user library
+# To install them, run on the login node:
+#   ml R/4.2.0
+#   R
+#   install.packages(c("extraDistr", "EnvStats"))
 library(extraDistr)
 library(EnvStats)
 
