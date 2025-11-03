@@ -46,13 +46,11 @@ rule cluster_moleculetables:
         output_prefix = OUTPUT_DIR + "{experiment}/{strain}"
     log:
         OUTPUT_DIR + "{experiment}/logs/{strain}_clustering.log"
-    conda:
-        "../environments/umi_tools_env.yaml"
     shell:
         """
         mkdir -p $(dirname {output})
         mkdir -p $(dirname {log})
-        python {params.scripts_dir}/cluster_moleculetables.py \
+        conda -n umi_tools_env run python {params.scripts_dir}/cluster_moleculetables.py \
             --input {input.readstable} \
             --output {params.output_prefix} &> {log}
         """
