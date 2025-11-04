@@ -80,7 +80,7 @@ def main():
     
     # Convert numeric columns to integers to save space
     df_cluster[numeric_cols] = df_cluster[numeric_cols].astype(int)
-    df_cluster.to_csv(args.output + '_clustered.csv')
+    df_cluster.to_csv(args.output + '_clustered.csv', index = False)
 
     
 if __name__ == "__main__":
