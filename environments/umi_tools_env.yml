@@ -13,4 +13,5 @@ dependencies:
   - plotly
   - pip
   - python-kaleido
+  - xlrd
   

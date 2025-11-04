@@ -15,9 +15,10 @@ def parse_arguments():
 
 def cluster_umis(df, cluster_method = "directional", threshold = 1):
     df.set_index('umi_seq', inplace = True)
-    #get gavage columns, create sum value and :
+    #get gavage columns, create sum value
     df_gavage = df[[col for col in df.columns if 'gavage' in str(col).lower()]].copy()
     dict_gavage = df_gavage.sum(axis=1).to_dict()
+    dict_gavage = {k: v for k, v in dict_gavage.items() if v > 0}
 
     # Encode keys for umi_tools cluster
     umi_dict = {key.encode(): value for key, value in dict_gavage.items()}
@@ -59,6 +60,26 @@ def main():
 
     df = pd.read_csv(args.input)
     df_cluster = cluster_umis(df, cluster_method = "directional", threshold = 1)
+
+    #downscale reads if neccessary to stay in integer R limit
+    SAFE_THRESHOLD = 2e9
+    numeric_cols = df_cluster.select_dtypes(include=['int64', 'float64']).columns
+    max_sample_total = df_cluster[numeric_cols].sum(axis=0).max()
+    print(f"  Max molecules per sample: {max_sample_total:,.0f}")
+    if max_sample_total > SAFE_THRESHOLD:
+        scale_factor = max_sample_total / SAFE_THRESHOLD
+        print(f"  WARNING: Exceeds safe threshold!")
+        print(f"  Scaling down by factor: {scale_factor:.2f}")
+        
+        # Downsample all numeric columns proportionally
+        df_cluster[numeric_cols] = (df_cluster[numeric_cols] / scale_factor).round().astype(int)
+        
+        # Verify new max
+        new_max = df_cluster[numeric_cols].sum(axis=0).max()
+        print(f"  New max sample total: {new_max:,.0f}")
+    
+    # Convert numeric columns to integers to save space
+    df_cluster[numeric_cols] = df_cluster[numeric_cols].astype(int)
     df_cluster.to_csv(args.output + '_clustered.csv')
 
     
