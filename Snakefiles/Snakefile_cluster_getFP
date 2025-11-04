@@ -101,7 +101,7 @@ rule get_resilient_FP:
         mkdir -p $(dirname {log})
 
         # Dynamically find gavage column indices (1-indexed for R)
-        WHERE_REFS=$(python -c "
+        WHERE_REFS=$(conda run -n umi_tools_env python -c "
                             import pandas as pd
                             import sys
                             df = pd.read_csv('{input.readstable}')
