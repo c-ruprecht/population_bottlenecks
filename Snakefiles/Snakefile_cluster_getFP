@@ -93,7 +93,8 @@ rule get_resilient_FP:
         inoc_cfu = 1000000,  # Adjust this value based on your experimental inoculum CFU
         minweight = 0.03,     # Minimum weight threshold (3%)
         correct_noise = 0.001     # Noise correction factor (0 = no correction)
-
+    conda:
+        "../environments/r_bottleneck.yaml"
     log:
         OUTPUT_DIR + "logs/{experiment}/{strain}_FP.log"
     shell:
@@ -106,13 +107,13 @@ rule get_resilient_FP:
 import pandas as pd
 import sys
 df = pd.read_csv('{input.readstable}')
-gavage_cols = [i+1 for i, col in enumerate(df.columns) if 'gavage' in str(col).lower()]
+gavage_cols = [i for i, col in enumerate(df.columns) if 'gavage' in str(col).lower()]
 print(','.join(map(str, gavage_cols)) if gavage_cols else '1')
 ")
 
         echo "Using gavage columns: $WHERE_REFS" >> {log}
 
-        conda run -n r_bottleneck Rscript {params.scripts_dir}/FinalResiliencyWithCFU_wrapper.R \
+        Rscript {params.scripts_dir}/FinalResiliencyWithCFU_wrapper.R \
             {input.readstable} \
             NULL \
             {params.inoc_cfu} \
