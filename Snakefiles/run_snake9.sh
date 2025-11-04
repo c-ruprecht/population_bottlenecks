@@ -46,7 +46,6 @@ snakemake \
   --keep-going \
   --use-conda \
   --executor lsf \
-  --unlock \
   --default-resources \
     mem_mb=100000 \
     disk_mb=30000 \
