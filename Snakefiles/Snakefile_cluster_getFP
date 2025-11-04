@@ -97,19 +97,59 @@ rule get_resilient_FP:
         OUTPUT_DIR + "logs/{experiment}/{strain}_FP.log"
     shell:
         """
-        mkdir -p {params.output_dir}
-        mkdir -p $(dirname {log})
+        # Initialize log file with timestamp
+        echo "=== FP Analysis Started: $(date) ===" > {log}
+        echo "Input file: {input.readstable}" >> {log}
+        echo "Output directory: {params.output_dir}" >> {log}
+
+        # Create directories
+        echo "Creating output directories..." >> {log}
+        mkdir -p {params.output_dir} 2>> {log}
+        mkdir -p $(dirname {log}) 2>> {log}
+        echo "Directories created successfully" >> {log}
+
+        # Check if input file exists
+        echo "Checking input file..." >> {log}
+        if [ ! -f "{input.readstable}" ]; then
+            echo "ERROR: Input file does not exist: {input.readstable}" >> {log}
+            exit 1
+        fi
+        echo "Input file exists" >> {log}
 
         # Dynamically find gavage column indices (1-indexed for R)
+        echo "Finding gavage columns..." >> {log}
         WHERE_REFS=$(conda run -n umi_tools_env python -c "
-                            import pandas as pd
-                            import sys
-                            df = pd.read_csv('{input.readstable}')
-                            gavage_cols = [i for i, col in enumerate(df.columns) if 'gavage' in str(col).lower()]
-                            print(','.join(map(str, gavage_cols)) if gavage_cols else '1')
-                            ")
+import pandas as pd
+import sys
+try:
+    df = pd.read_csv('{input.readstable}')
+    print('Columns in dataframe:', list(df.columns), file=sys.stderr)
+    gavage_cols = [i+1 for i, col in enumerate(df.columns) if 'gavage' in str(col).lower()]
+    print('Found gavage columns at indices:', gavage_cols, file=sys.stderr)
+    print(','.join(map(str, gavage_cols)) if gavage_cols else '1')
+except Exception as e:
+    print('ERROR finding gavage columns:', str(e), file=sys.stderr)
+    print('1')
+" 2>> {log})
 
-        echo "Using gavage columns: $WHERE_REFS" >> {log}
+        echo "Gavage column indices (1-based for R): $WHERE_REFS" >> {log}
+
+        # Check conda environment
+        echo "Checking conda environment..." >> {log}
+        conda env list | grep r_bottleneck >> {log} 2>&1
+        if [ $? -ne 0 ]; then
+            echo "WARNING: r_bottleneck environment not found in conda env list" >> {log}
+        fi
+
+        # Run R script
+        echo "Starting R script execution..." >> {log}
+        echo "Command: Rscript {params.scripts_dir}/FinalResiliencyWithCFU_wrapper.R" >> {log}
+        echo "  Input: {input.readstable}" >> {log}
+        echo "  Inoculum CFU: {params.inoc_cfu}" >> {log}
+        echo "  Reference columns: $WHERE_REFS" >> {log}
+        echo "  Min weight: {params.minweight}" >> {log}
+        echo "  Noise correction: {params.correct_noise}" >> {log}
+        echo "  Output dir: {params.output_dir}" >> {log}
 
         conda run -n r_bottleneck Rscript {params.scripts_dir}/FinalResiliencyWithCFU_wrapper.R \
             {input.readstable} \
@@ -119,7 +159,16 @@ rule get_resilient_FP:
             {params.minweight} \
             {params.correct_noise} \
             {params.output_dir} \
-            NULL &>> {log}
+            NULL 2>&1 | tee -a {log}
+
+        EXIT_CODE=${{PIPESTATUS[0]}}
+
+        if [ $EXIT_CODE -eq 0 ]; then
+            echo "=== R script completed successfully: $(date) ===" >> {log}
+        else
+            echo "=== R script FAILED with exit code $EXIT_CODE: $(date) ===" >> {log}
+            exit $EXIT_CODE
+        fi
         """
 
 
