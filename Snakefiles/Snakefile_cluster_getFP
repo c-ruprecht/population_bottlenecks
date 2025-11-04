@@ -103,15 +103,13 @@ rule get_resilient_FP:
     output:
         OUTPUT_DIR + "FP/{experiment}/{strain}/clustered/TableOfEstimates.csv"
     params:
-        output_dir = OUTPUT_DIR + "FP/{experiment}/{strain}{suffix}/",
+        output_dir = OUTPUT_DIR + "FP/{experiment}/{strain}/clustered/",
         scripts_dir = SCRIPTS_DIR,
         inoc_cfu = 1000000,
         minweight = 0.03,
         correct_noise = 0.01
-    wildcard_constraints:
-        suffix = "|_denoised|_denoised_nocontrols"
     log:
-        OUTPUT_DIR + "logs/{experiment}/{strain}_FP{suffix}.log"
+        OUTPUT_DIR + "logs/{experiment}/{strain}_FP_clustered.log"
     shell:
         """
         # Initialize log file with timestamp
@@ -195,15 +193,13 @@ rule get_resilient_FP_denoised:
     output:
         OUTPUT_DIR + "FP/{experiment}/{strain}/denoised/TableOfEstimates.csv"
     params:
-        output_dir = OUTPUT_DIR + "FP/{experiment}/{strain}{suffix}/",
+        output_dir = OUTPUT_DIR + "FP/{experiment}/{strain}/denoised/",
         scripts_dir = SCRIPTS_DIR,
         inoc_cfu = 1000000,
         minweight = 0.03,
         correct_noise = 0.01
-    wildcard_constraints:
-        suffix = "|_denoised|_denoised_nocontrols"
     log:
-        OUTPUT_DIR + "logs/{experiment}/{strain}_FP{suffix}.log"
+        OUTPUT_DIR + "logs/{experiment}/{strain}_FP_denoised.log"
     shell:
         """
         # Initialize log file with timestamp
@@ -286,15 +282,13 @@ rule get_resilient_FP_nocontrols:
     output:
         OUTPUT_DIR + "FP/{experiment}/{strain}/denoised_nocontrols/TableOfEstimates.csv"
     params:
-        output_dir = OUTPUT_DIR + "FP/{experiment}/{strain}{suffix}/",
+        output_dir = OUTPUT_DIR + "FP/{experiment}/{strain}/denoised_nocontrols/",
         scripts_dir = SCRIPTS_DIR,
         inoc_cfu = 1000000,
         minweight = 0.03,
         correct_noise = 0.01
-    wildcard_constraints:
-        suffix = "|_denoised|_denoised_nocontrols"
     log:
-        OUTPUT_DIR + "logs/{experiment}/{strain}_FP{suffix}.log"
+        OUTPUT_DIR + "logs/{experiment}/{strain}/FP_denoised_nocontrols.log"
     shell:
         """
         # Initialize log file with timestamp
