@@ -80,8 +80,7 @@ def main():
     
     # Convert numeric columns to integers to save space
     df_cluster[numeric_cols] = df_cluster[numeric_cols].astype(int)
-    df_cluster.to_csv(args.output + '_clustered.csv', index = False)
-    
+    df_cluster_exp = df_cluster.copy()
     
     ### Noise filter based on negative controls 99 percentile
     ntc_cols = [col for col in df_cluster.columns if 'NTC' in col or 'WATER' in col.upper()]
@@ -107,6 +106,7 @@ def main():
     df_cluster_no_controls = df_filtered[cols_to_keep].copy()
     df_cluster_no_controls.to_csv(args.output + 'clustered_denoised_nocontrols.csv', index = False)
     
-    
+    df_cluster_exp.to_csv(args.output + '_clustered.csv', index = False)
+
 if __name__ == "__main__":
     main()
