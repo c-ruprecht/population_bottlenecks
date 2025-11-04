@@ -42,17 +42,17 @@ def get_all_moleculetables(wildcards):
 rule all:
     input:
         # Regular clustered files
-        lambda wildcards: expand(OUTPUT_DIR + "FP/{experiment}/{strain}/TableOfEstimates.csv",
+        lambda wildcards: expand(OUTPUT_DIR + "FP/{experiment}/{strain}/clustered/TableOfEstimates.csv",
                                  zip,
                                  experiment=[s[0] for s in get_all_moleculetables(wildcards)],
                                  strain=[s[1] for s in get_all_moleculetables(wildcards)]),
         # Denoised files
-        lambda wildcards: expand(OUTPUT_DIR + "FP/{experiment}/{strain}_denoised/TableOfEstimates.csv",
+        lambda wildcards: expand(OUTPUT_DIR + "FP/{experiment}/{strain}/denoised/TableOfEstimates.csv",
                                  zip,
                                  experiment=[s[0] for s in get_all_moleculetables(wildcards)],
                                  strain=[s[1] for s in get_all_moleculetables(wildcards)]),
         # Denoised no controls files
-        lambda wildcards: expand(OUTPUT_DIR + "FP/{experiment}/{strain}_denoised_nocontrols/TableOfEstimates.csv",
+        lambda wildcards: expand(OUTPUT_DIR + "FP/{experiment}/{strain}/denoised_nocontrols/TableOfEstimates.csv",
                                  zip,
                                  experiment=[s[0] for s in get_all_moleculetables(wildcards)],
                                  strain=[s[1] for s in get_all_moleculetables(wildcards)])
@@ -80,7 +80,7 @@ rule cluster_moleculetables:
     output:
         OUTPUT_DIR + "clustered/{experiment}/{strain}_clustered.csv",
         OUTPUT_DIR + "clustered/{experiment}/{strain}_clustered_denoised.csv",
-        OUTPUT_DIR + "clustered/{experiment}/{strain}_clustered_denoised_nocontrols.csv",
+        OUTPUT_DIR + "clustered/{experiment}/{strain}_clustered_denoised_nocontrols.csv"
     params:
         scripts_dir = SCRIPTS_DIR,
         output_prefix = OUTPUT_DIR + "clustered/{experiment}/{strain}"
@@ -99,9 +99,9 @@ rule cluster_moleculetables:
     
 rule get_resilient_FP:
     input:
-        readstable = OUTPUT_DIR + "clustered/{experiment}/{strain}_clustered{suffix}.csv"
+        readstable = OUTPUT_DIR + "clustered/{experiment}/{strain}_clustered.csv"
     output:
-        OUTPUT_DIR + "FP/{experiment}/{strain}{suffix}/TableOfEstimates.csv"
+        OUTPUT_DIR + "FP/{experiment}/{strain}/clustered/TableOfEstimates.csv"
     params:
         output_dir = OUTPUT_DIR + "FP/{experiment}/{strain}{suffix}/",
         scripts_dir = SCRIPTS_DIR,
@@ -189,3 +189,184 @@ except Exception as e:
         """
 
 
+rule get_resilient_FP_denoised:
+    input:
+        readstable = OUTPUT_DIR + "clustered/{experiment}/{strain}_denoised.csv"
+    output:
+        OUTPUT_DIR + "FP/{experiment}/{strain}/denoised/TableOfEstimates.csv"
+    params:
+        output_dir = OUTPUT_DIR + "FP/{experiment}/{strain}{suffix}/",
+        scripts_dir = SCRIPTS_DIR,
+        inoc_cfu = 1000000,
+        minweight = 0.03,
+        correct_noise = 0.01
+    wildcard_constraints:
+        suffix = "|_denoised|_denoised_nocontrols"
+    log:
+        OUTPUT_DIR + "logs/{experiment}/{strain}_FP{suffix}.log"
+    shell:
+        """
+        # Initialize log file with timestamp
+        echo "=== FP Analysis Started: $(date) ===" > {log}
+        echo "Input file: {input.readstable}" >> {log}
+        echo "Output directory: {params.output_dir}" >> {log}
+
+        # Create directories
+        echo "Creating output directories..." >> {log}
+        mkdir -p {params.output_dir} 2>> {log}
+        mkdir -p $(dirname {log}) 2>> {log}
+        echo "Directories created successfully" >> {log}
+
+        # Check if input file exists
+        echo "Checking input file..." >> {log}
+        if [ ! -f "{input.readstable}" ]; then
+            echo "ERROR: Input file does not exist: {input.readstable}" >> {log}
+            exit 1
+        fi
+        echo "Input file exists" >> {log}
+
+        # Dynamically find gavage column indices (1-indexed for R)
+        echo "Finding gavage columns..." >> {log}
+        WHERE_REFS=$(conda run -n umi_tools_env python -c "
+import pandas as pd
+import sys
+try:
+    df = pd.read_csv('{input.readstable}')
+    print('Columns in dataframe:', list(df.columns), file=sys.stderr)
+    gavage_cols = [i for i, col in enumerate(df.columns) if 'gavage' in str(col).lower()]
+    print('Found gavage columns at indices:', gavage_cols, file=sys.stderr)
+    print(','.join(map(str, gavage_cols)) if gavage_cols else '1')
+except Exception as e:
+    print('ERROR finding gavage columns:', str(e), file=sys.stderr)
+    print('1')
+" 2>> {log})
+
+        echo "Gavage column indices (1-based for R): $WHERE_REFS" >> {log}
+
+        # Check conda environment
+        echo "Checking conda environment..." >> {log}
+        conda env list | grep r_bottleneck >> {log} 2>&1
+        if [ $? -ne 0 ]; then
+            echo "WARNING: r_bottleneck environment not found in conda env list" >> {log}
+        fi
+
+        # Run R script
+        echo "Starting R script execution..." >> {log}
+        echo "Command: Rscript {params.scripts_dir}/FinalResiliencyWithCFU_wrapper.R" >> {log}
+        echo "  Input: {input.readstable}" >> {log}
+        echo "  Inoculum CFU: {params.inoc_cfu}" >> {log}
+        echo "  Reference columns: $WHERE_REFS" >> {log}
+        echo "  Min weight: {params.minweight}" >> {log}
+        echo "  Noise correction: {params.correct_noise}" >> {log}
+        echo "  Output dir: {params.output_dir}" >> {log}
+
+        conda run -n r_bottleneck Rscript {params.scripts_dir}/FinalResiliencyWithCFU_wrapper.R \
+            {input.readstable} \
+            NULL \
+            {params.inoc_cfu} \
+            "$WHERE_REFS" \
+            {params.minweight} \
+            {params.correct_noise} \
+            {params.output_dir} \
+            NULL 2>&1 | tee -a {log}
+
+        EXIT_CODE=${{PIPESTATUS[0]}}
+
+        if [ $EXIT_CODE -eq 0 ]; then
+            echo "=== R script completed successfully: $(date) ===" >> {log}
+        else
+            echo "=== R script FAILED with exit code $EXIT_CODE: $(date) ===" >> {log}
+            exit $EXIT_CODE
+        fi
+        """
+
+rule get_resilient_FP_nocontrols:
+    input:
+        readstable = OUTPUT_DIR + "clustered/{experiment}/{strain}_denoised_nocontrols.csv"
+    output:
+        OUTPUT_DIR + "FP/{experiment}/{strain}/denoised_nocontrols/TableOfEstimates.csv"
+    params:
+        output_dir = OUTPUT_DIR + "FP/{experiment}/{strain}{suffix}/",
+        scripts_dir = SCRIPTS_DIR,
+        inoc_cfu = 1000000,
+        minweight = 0.03,
+        correct_noise = 0.01
+    wildcard_constraints:
+        suffix = "|_denoised|_denoised_nocontrols"
+    log:
+        OUTPUT_DIR + "logs/{experiment}/{strain}_FP{suffix}.log"
+    shell:
+        """
+        # Initialize log file with timestamp
+        echo "=== FP Analysis Started: $(date) ===" > {log}
+        echo "Input file: {input.readstable}" >> {log}
+        echo "Output directory: {params.output_dir}" >> {log}
+
+        # Create directories
+        echo "Creating output directories..." >> {log}
+        mkdir -p {params.output_dir} 2>> {log}
+        mkdir -p $(dirname {log}) 2>> {log}
+        echo "Directories created successfully" >> {log}
+
+        # Check if input file exists
+        echo "Checking input file..." >> {log}
+        if [ ! -f "{input.readstable}" ]; then
+            echo "ERROR: Input file does not exist: {input.readstable}" >> {log}
+            exit 1
+        fi
+        echo "Input file exists" >> {log}
+
+        # Dynamically find gavage column indices (1-indexed for R)
+        echo "Finding gavage columns..." >> {log}
+        WHERE_REFS=$(conda run -n umi_tools_env python -c "
+import pandas as pd
+import sys
+try:
+    df = pd.read_csv('{input.readstable}')
+    print('Columns in dataframe:', list(df.columns), file=sys.stderr)
+    gavage_cols = [i for i, col in enumerate(df.columns) if 'gavage' in str(col).lower()]
+    print('Found gavage columns at indices:', gavage_cols, file=sys.stderr)
+    print(','.join(map(str, gavage_cols)) if gavage_cols else '1')
+except Exception as e:
+    print('ERROR finding gavage columns:', str(e), file=sys.stderr)
+    print('1')
+" 2>> {log})
+
+        echo "Gavage column indices (1-based for R): $WHERE_REFS" >> {log}
+
+        # Check conda environment
+        echo "Checking conda environment..." >> {log}
+        conda env list | grep r_bottleneck >> {log} 2>&1
+        if [ $? -ne 0 ]; then
+            echo "WARNING: r_bottleneck environment not found in conda env list" >> {log}
+        fi
+
+        # Run R script
+        echo "Starting R script execution..." >> {log}
+        echo "Command: Rscript {params.scripts_dir}/FinalResiliencyWithCFU_wrapper.R" >> {log}
+        echo "  Input: {input.readstable}" >> {log}
+        echo "  Inoculum CFU: {params.inoc_cfu}" >> {log}
+        echo "  Reference columns: $WHERE_REFS" >> {log}
+        echo "  Min weight: {params.minweight}" >> {log}
+        echo "  Noise correction: {params.correct_noise}" >> {log}
+        echo "  Output dir: {params.output_dir}" >> {log}
+
+        conda run -n r_bottleneck Rscript {params.scripts_dir}/FinalResiliencyWithCFU_wrapper.R \
+            {input.readstable} \
+            NULL \
+            {params.inoc_cfu} \
+            "$WHERE_REFS" \
+            {params.minweight} \
+            {params.correct_noise} \
+            {params.output_dir} \
+            NULL 2>&1 | tee -a {log}
+
+        EXIT_CODE=${{PIPESTATUS[0]}}
+
+        if [ $EXIT_CODE -eq 0 ]; then
+            echo "=== R script completed successfully: $(date) ===" >> {log}
+        else
+            echo "=== R script FAILED with exit code $EXIT_CODE: $(date) ===" >> {log}
+            exit $EXIT_CODE
+        fi
+        """
