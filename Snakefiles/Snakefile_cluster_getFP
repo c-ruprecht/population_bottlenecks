@@ -79,6 +79,8 @@ rule cluster_moleculetables:
         readstable = OUTPUT_DIR + "moleculetables/{experiment}/moleculetables/{strain}_moleculestable.csv"
     output:
         OUTPUT_DIR + "clustered/{experiment}/{strain}_clustered.csv",
+        OUTPUT_DIR + "clustered/{experiment}/{strain}_clustered_denoised.csv",
+        OUTPUT_DIR + "clustered/{experiment}/{strain}_clustered_denoised_nocontrols.csv",
     params:
         scripts_dir = SCRIPTS_DIR,
         output_prefix = OUTPUT_DIR + "clustered/{experiment}/{strain}"
