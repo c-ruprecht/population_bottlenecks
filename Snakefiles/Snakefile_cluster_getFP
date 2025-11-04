@@ -92,7 +92,7 @@ rule get_resilient_FP:
         scripts_dir = SCRIPTS_DIR,
         inoc_cfu = 1000000,  # Adjust this value based on your experimental inoculum CFU
         minweight = 0.03,     # Minimum weight threshold (3%)
-        correct_noise = 0.001     # Noise correction factor (0 = no correction)
+        correct_noise = 0.03     # Noise correction factor (0 = no correction)
     conda:
         "../environments/r_bottleneck.yaml"
     log:
