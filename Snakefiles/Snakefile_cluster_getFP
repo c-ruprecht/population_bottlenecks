@@ -41,7 +41,18 @@ def get_all_moleculetables(wildcards):
 
 rule all:
     input:
+        # Regular clustered files
         lambda wildcards: expand(OUTPUT_DIR + "FP/{experiment}/{strain}/TableOfEstimates.csv",
+                                 zip,
+                                 experiment=[s[0] for s in get_all_moleculetables(wildcards)],
+                                 strain=[s[1] for s in get_all_moleculetables(wildcards)]),
+        # Denoised files
+        lambda wildcards: expand(OUTPUT_DIR + "FP/{experiment}/{strain}_denoised/TableOfEstimates.csv",
+                                 zip,
+                                 experiment=[s[0] for s in get_all_moleculetables(wildcards)],
+                                 strain=[s[1] for s in get_all_moleculetables(wildcards)]),
+        # Denoised no controls files
+        lambda wildcards: expand(OUTPUT_DIR + "FP/{experiment}/{strain}_denoised_nocontrols/TableOfEstimates.csv",
                                  zip,
                                  experiment=[s[0] for s in get_all_moleculetables(wildcards)],
                                  strain=[s[1] for s in get_all_moleculetables(wildcards)])
@@ -67,7 +78,9 @@ rule cluster_moleculetables:
     input:
         readstable = OUTPUT_DIR + "moleculetables/{experiment}/moleculetables/{strain}_moleculestable.csv"
     output:
-        OUTPUT_DIR + "clustered/{experiment}/{strain}_clustered.csv"
+        OUTPUT_DIR + "clustered/{experiment}/{strain}_clustered.csv",
+        OUTPUT_DIR + "clustered/{experiment}/{strain}_clustered_denoised.csv",
+        OUTPUT_DIR + "clustered/{experiment}/{strain}_clustered_denoised_nocontrols.csv"
     params:
         scripts_dir = SCRIPTS_DIR,
         output_prefix = OUTPUT_DIR + "clustered/{experiment}/{strain}"
@@ -84,17 +97,17 @@ rule cluster_moleculetables:
     
 rule get_resilient_FP:
     input:
-        readstable = OUTPUT_DIR + "clustered/{experiment}/{strain}_clustered.csv"
+        readstable = OUTPUT_DIR + "clustered/{experiment}/{strain}_clustered{suffix}.csv"
     output:
-        OUTPUT_DIR + "FP/{experiment}/{strain}/TableOfEstimates.csv"
+        OUTPUT_DIR + "FP/{experiment}/{strain}{suffix}/TableOfEstimates.csv"
     params:
-        output_dir = OUTPUT_DIR + "FP/{experiment}/{strain}/",
+        output_dir = OUTPUT_DIR + "FP/{experiment}/{strain}{suffix}/",
         scripts_dir = SCRIPTS_DIR,
-        inoc_cfu = 1000000,  # Adjust this value based on your experimental inoculum CFU
-        minweight = 0.03,     # Minimum weight threshold (3%)
-        correct_noise = 0.03     # Noise correction factor (0 = no correction)
+        inoc_cfu = 1000000,
+        minweight = 0.03,
+        correct_noise = 0.01
     log:
-        OUTPUT_DIR + "logs/{experiment}/{strain}_FP.log"
+        OUTPUT_DIR + "logs/{experiment}/{strain}_FP{suffix}.log"
     shell:
         """
         # Initialize log file with timestamp

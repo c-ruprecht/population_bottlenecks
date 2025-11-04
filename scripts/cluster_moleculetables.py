@@ -96,7 +96,7 @@ def main():
     gavage_cols = [col for col in df.columns if 'gavage' in col.lower()]
     df_filtered = df_filtered[df_filtered[gavage_cols].sum(axis=1) > 0]
 
-    df_filtered.to_csv(args.output + '_denoised_clustered.csv', index = False)
+    df_filtered.to_csv(args.output + 'clustered_denoised.csv', index = False)
 
     ### Create a version without NTC/WATER columns for FP analysis
     # Keep umi_seq and all columns that don't contain NTC or WATER
@@ -104,11 +104,9 @@ def main():
                                     if col != 'umi_seq'
                                     and 'NTC' not in col.upper()
                                     and 'WATER' not in col.upper()]
-    df_cluster_no_controls = df_cluster[cols_to_keep].copy()
-    df_cluster_no_controls.to_csv(args.output + '_nocontrols_clustered.csv', index = False)
-    print(f"Removed {len(df_cluster.columns) - len(cols_to_keep)} control columns (NTC/WATER)")
-    print(f"Saved filtered version to: {args.output}_nocontrols_clustered.csv")
-
+    df_cluster_no_controls = df_filtered[cols_to_keep].copy()
+    df_cluster_no_controls.to_csv(args.output + 'clustered_denoised_nocontrols.csv', index = False)
+    
     
 if __name__ == "__main__":
     main()
