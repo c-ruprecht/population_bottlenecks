@@ -106,6 +106,8 @@ rule get_resilient_FP:
         inoc_cfu = 1000000,
         minweight = 0.03,
         correct_noise = 0.01
+    wildcard_constraints:
+        suffix = "|_denoised|_denoised_nocontrols"
     log:
         OUTPUT_DIR + "logs/{experiment}/{strain}_FP{suffix}.log"
     shell:
