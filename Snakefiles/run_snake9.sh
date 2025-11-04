@@ -11,15 +11,14 @@ while getopts "s:" opt; do
       SNAKEFILE="$OPTARG"
       ;;
     *)
-      echo "Usage: $0 [-s snakefile_path] [additional snakemake arguments]"
+      echo "Usage: $0 [-s snakefile_path]"
       exit 1
       ;;
   esac
 done
 
 # Shift to get remaining arguments (for passing to snakemake)
-shift $((OPTIND-1))
-EXTRA_ARGS="$@"
+
 
 #remove old logs
 #rm -rf /sc/arion/work/ruprec01/results/P4C2-run1/FP
@@ -47,6 +46,7 @@ snakemake \
   --keep-going \
   --use-conda \
   --executor lsf \
+  --unlock \
   --default-resources \
     mem_mb=100000 \
     disk_mb=30000 \
@@ -54,4 +54,4 @@ snakemake \
     lsf_queue="premium" \
     walltime=720 \
     "lsf_extra='-o /sc/arion/work/ruprec01/log/cluster/%J.out -e /sc/arion/work/ruprec01/log/cluster/%J.err -L /bin/bash'" \
-  ${EXTRA_ARGS}
+  
