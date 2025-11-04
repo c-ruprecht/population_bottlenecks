@@ -86,8 +86,6 @@ rule cluster_moleculetables:
         output_prefix = OUTPUT_DIR + "clustered/{experiment}/{strain}"
     log:
         OUTPUT_DIR + "logs/{experiment}/{strain}_clustering.log"
-    wildcard_constraints:
-        strain = "(?!.*denoised).*"
     shell:
         """
         mkdir -p $(dirname {output})
