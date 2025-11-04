@@ -189,7 +189,7 @@ except Exception as e:
 
 rule get_resilient_FP_denoised:
     input:
-        readstable = OUTPUT_DIR + "clustered/{experiment}/{strain}_denoised.csv"
+        readstable = OUTPUT_DIR + "clustered/{experiment}/{strain}_clustered_denoised.csv"
     output:
         OUTPUT_DIR + "FP/{experiment}/{strain}/denoised/TableOfEstimates.csv"
     params:
@@ -278,7 +278,7 @@ except Exception as e:
 
 rule get_resilient_FP_nocontrols:
     input:
-        readstable = OUTPUT_DIR + "clustered/{experiment}/{strain}_denoised_nocontrols.csv"
+        readstable = OUTPUT_DIR + "clustered/{experiment}/{strain}_clustered_denoised_nocontrols.csv"
     output:
         OUTPUT_DIR + "FP/{experiment}/{strain}/denoised_nocontrols/TableOfEstimates.csv"
     params:
