@@ -124,7 +124,7 @@ import sys
 try:
     df = pd.read_csv('{input.readstable}')
     print('Columns in dataframe:', list(df.columns), file=sys.stderr)
-    gavage_cols = [i+1 for i, col in enumerate(df.columns) if 'gavage' in str(col).lower()]
+    gavage_cols = [i for i, col in enumerate(df.columns) if 'gavage' in str(col).lower()]
     print('Found gavage columns at indices:', gavage_cols, file=sys.stderr)
     print(','.join(map(str, gavage_cols)) if gavage_cols else '1')
 except Exception as e:
