@@ -1,5 +1,7 @@
 ### Clustering of UMIs in a molecule table using Gavage columns.
-### Creates sums for all samples
+### Filters 99 percentile of NTC or Water controls
+### Creates clustered, denoised, and denoised without control files (sometimes NTC leads to getFP failures)
+#/Volumes/sd/faith/MTCSB/projects/P4-barcoding_strains/20251104-analysis/test_empty/P4C1T8/test_clsuter
 from umi_tools import UMIClusterer
 import argparse
 import pandas as pd
@@ -59,6 +61,8 @@ def main():
     args = parse_arguments()
 
     df = pd.read_csv(args.input)
+    print('starting to cluster')
+    print(df)
     df_cluster = cluster_umis(df, cluster_method = "directional", threshold = 1)
 
     #downscale reads if neccessary to stay in integer R limit
@@ -94,17 +98,15 @@ def main():
     #drop everything where gavage.lower() is 0
     gavage_cols = [col for col in df.columns if 'gavage' in col.lower()]
     df_filtered = df_filtered[df_filtered[gavage_cols].sum(axis=1) > 0]
-
     df_filtered.to_csv(args.output + '_clustered_denoised.csv', index = False)
 
-    ### Create a version without NTC/WATER columns for FP analysis
-    # Keep umi_seq and all columns that don't contain NTC or WATER
+    ### 
+    # drop everything that is empty using an empty tag
     cols_to_keep = ['umi_seq'] + [col for col in df_cluster.columns
                                     if col != 'umi_seq'
-                                    and 'NTC' not in col.upper()
-                                    and 'WATER' not in col.upper()]
+                                    and '_empty' not in col]
     df_cluster_no_controls = df_filtered[cols_to_keep].copy()
-    df_cluster_no_controls.to_csv(args.output + '_clustered_denoised_nocontrols.csv', index = False)
+    df_cluster_no_controls.to_csv(args.output + '_clustered_denoised_noempty.csv', index = False)
     
     df_cluster_exp.to_csv(args.output + '_clustered.csv', index = False)
 

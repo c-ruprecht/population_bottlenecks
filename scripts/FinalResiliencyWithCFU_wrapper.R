@@ -12,8 +12,8 @@
 library(extraDistr)
 library(EnvStats)
 
-# Source the original getNrNb function
-source("/hpc/users/ruprec02/git/population_bottlenecks/scripts/FinalResiliencyWithCFU.R")
+# Source the error handling version of getNrNb function
+source("/hpc/users/ruprec02/git/population_bottlenecks/scripts/FinalResiliencyWithCFU_ErrorHandling.R")
 
 # Parse command-line arguments
 cmd_args <- commandArgs(trailingOnly = TRUE)

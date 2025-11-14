@@ -9,13 +9,18 @@ def parse_arguments():
     parser.add_argument("-b", "--basepath", required = True, help = "Path to the ILL readtable folders")
     parser.add_argument("-m", "--metadir", required=True, help="Path to the metadata directories")
     parser.add_argument("-o", "--output", required=True, help="Path to the output directory")
+    parser.add_argument('-e', "--empty", required=False, help="Path to a csv sheet containing characterizations of samples as empty")
     
     return parser.parse_args()
 
 
 def main():
     args = parse_arguments()
-    
+    ## read empty
+    df_empty = pd.read_csv(args.empty)
+    df_empty = df_empty[['ILL', 'sample', 'is_empty']].copy()
+    df_empty.columns = ['ill', 'file_name','is_empty']
+    df_empty['ill'] = 'ILL' + df_empty['ill'].astype(str)
     ### P4C1T8
     print('Creating Moleculetables for P4C1T8')
     basepath = Path(args.basepath)
@@ -38,6 +43,11 @@ def main():
     df_ill['file_name'] = df_ill['Sample Name/Pool Name*'].apply(lambda x: str(x).replace('_', '-'))
     df_merge = pd.merge(df_ill[['sample_id', 'ill', 'file_name', 'project']], df_samplesheet, how = 'right', on = ['sample_id', 'project'])
 
+    print(df_merge.head(3))
+    print(df_empty.head(3))
+    # merge in or map 
+    df_merge = pd.merge(df_merge, df_empty, how = 'left', on = ['ill', 'file_name'])
+    print(df_merge)
     df_ill_ntc = df_ill.loc[df_ill['Sample Name/Pool Name*'].str.contains("WATER|NTC")]
     
     ## c1 as gavage for cages 1 to 4, cage 5 has own gavage
@@ -45,28 +55,39 @@ def main():
     strains_c1toc4_mBgavage = [ 'ST5', 'ST6']
     strains_c5 = ['ST1', 'ST2', 'ST4']
     #get NTC data
-    df_ntc = pd.DataFrame()
+    li_ntc = []
     for idx, row in df_ill_ntc.iterrows():
         file_path = basepath / row['ill'] / 'readtables' / row['file_name'] / f"{row['file_name']}_total_moleculestable.csv"
         df = pd.read_csv(file_path)
-        df['sample'] = row['Sample Name/Pool Name*']+'_'+row['sample_id']
-        df_ntc = pd.concat([df_ntc, df])
+        #manually added empty to negative control
+        df['sample'] = row['Sample Name/Pool Name*']+'_'+row['sample_id']+'_empty'
+        li_ntc.append(df)
+    df_ntc = pd.concat(li_ntc)
     df_ntc_pivot = df_ntc.pivot(index = ['strain', 'umi_seq'], columns = 'sample', values = 'molecules').fillna(0)
+    print(df_ntc_pivot)
 
-    #creates a readtable per mouse gavage
+    #creates a readtable per mouse gavage, only taking cage1 as gavage
     df_mA_gavage = df_merge[((df_merge['mouse_id'] == 'mA') & (df_merge['sample_type'] == 'gavage DNA')& (df_merge['cage_id'] == 'c1'))]
     df_mB_gavage = df_merge[((df_merge['mouse_id'] == 'mB') & (df_merge['sample_type'] == 'gavage DNA')& (df_merge['cage_id'] == 'c1'))]
 
     for idx, row in df_mA_gavage.iterrows():
         file_path = basepath / row['ill'] / 'readtables' / row['file_name'] / f"{row['file_name']}_total_moleculestable.csv"
         df = pd.read_csv(file_path)
-        df['sample'] = row['sample_id']+'_'+row['sample_type']
+        if row['is_empty'] == True:
+            df['sample'] =row['project']+'_'+row['file_name']+'_'+row['sample_type']+'_empty'
+        else:
+            df['sample'] = row['project']+'_'+row['file_name']+'_'+row['sample_type']       
         df_reads_mA = df
+
     for idx, row in df_mB_gavage.iterrows():
         file_path = basepath / row['ill'] / 'readtables' / row['file_name'] / f"{row['file_name']}_total_moleculestable.csv"
-        df = pd.read_csv(file_path)
-        df['sample'] = row['sample_id']+'_'+row['sample_type']
+        df = pd.read_csv(file_path) 
+        if row['is_empty'] == True:
+            df['sample'] = row['project']+'_'+row['file_name']+'_'+row['sample_type']+'_empty'
+        else:
+            df['sample'] = row['project']+'_'+row['file_name']+'_'+row['sample_type']       
         df_reads_mB = df
+
     df_gavage_mA = df_reads_mA.pivot(index = ['strain', 'umi_seq'], columns = 'sample', values = 'molecules').fillna(0)
     df_gavage_mB = df_reads_mB.pivot(index = ['strain', 'umi_seq'], columns = 'sample', values = 'molecules').fillna(0)
 
@@ -75,16 +96,19 @@ def main():
         print(cage)
         if cage != 'c5':
             df_cage = df_merge[df_merge['cage_id'] == cage].copy()
-
             #get all samples into dataframe   
             df_samples = df_cage[df_cage['sample_type'] != 'gavage DNA'].copy()
             #print(df_samples)
-            df_reads = pd.DataFrame()
+            li_reads = []
             for idx, row in df_samples.iterrows():
                 file_path = basepath / row['ill'] / 'readtables' / row['file_name'] / f"{row['file_name']}_total_moleculestable.csv"
                 df = pd.read_csv(file_path)
-                df['sample'] = row['sample_id']+'_'+row['sample_type']
-                df_reads = pd.concat([df_reads,df])
+                if row['is_empty'] == True:
+                    df['sample'] = row['project']+'_'+row['file_name']+'_'+row['sample_type']+'_empty'
+                else:
+                    df['sample'] = row['project']+'_'+row['file_name']+'_'+row['sample_type']    
+                li_reads.append(df)            
+            df_reads = pd.concat(li_reads)
             
             #pivot all dataframes
             df_reads_pivot = df_reads.pivot(index = ['strain', 'umi_seq'], columns = 'sample', values = 'molecules').fillna(0)
@@ -115,18 +139,26 @@ def main():
             for idx, row in df_mA_gavage.iterrows():
                 file_path = basepath / row['ill'] / 'readtables' / row['file_name'] / f"{row['file_name']}_total_moleculestable.csv"
                 df = pd.read_csv(file_path)
-                df['sample'] = row['sample_id']+'_'+row['sample_type']
+                if row['is_empty'] == True:
+                    df['sample'] = row['project']+'_'+row['file_name']+'_'+row['sample_type']+'_empty'
+                else:
+                    df['sample'] = row['project']+'_'+row['file_name']+'_'+row['sample_type']                
                 df_reads_mA = df
             
             #get all samples into dataframe   
             df_samples = df_cage[df_cage['sample_type'] != 'gavage DNA'].copy()
             #print(df_samples)
-            df_reads = pd.DataFrame()
+            li_reads = []
             for idx, row in df_samples.iterrows():
                 file_path = basepath / row['ill'] / 'readtables' / row['file_name'] / f"{row['file_name']}_total_moleculestable.csv"
                 df = pd.read_csv(file_path)
-                df['sample'] = row['sample_id']+'_'+row['sample_type']
-                df_reads = pd.concat([df_reads,df])
+                if row['is_empty'] == True:
+                    print(row['is_empty'])
+                    df['sample'] = row['project']+'_'+row['file_name']+'_'+row['sample_type']+'_empty'
+                else:
+                    df['sample'] = row['project']+'_'+row['file_name']+'_'+row['sample_type']
+                li_reads.append(df)
+            df_reads = pd.concat(li_reads)
 
             #pivot all dataframes
             df_reads_pivot = df_reads.pivot(index = ['strain', 'umi_seq'], columns = 'sample', values = 'molecules').fillna(0)
