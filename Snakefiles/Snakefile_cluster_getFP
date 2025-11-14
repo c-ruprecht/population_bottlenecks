@@ -63,7 +63,7 @@ checkpoint create_experiments:
             -b {params.basepath} \
             -m {params.metadir} \
             -o {output} \
-            -e {params.metadir} &> {log}
+            -e {params.empty_samples} &> {log}
         """
 
 
