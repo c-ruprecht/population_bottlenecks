@@ -47,34 +47,24 @@ print(paste("InocCFU:", InocCFU))
 print(paste("WhereAreReferences:", paste(WhereAreReferences, collapse=",")))
 print(paste("minweight:", minweight))
 print(paste("CorrectForNoise:", CorrectForNoise))
-print(paste("output_dir:", output_dir))
+print(paste("output_basename:", output_dir))
 print(paste("CalibrationFile:", ifelse(is.null(CalibrationFile), "NULL", CalibrationFile)))
 
-# Convert output_dir to outputfilename format expected by FinalResiliencyWithCFU.R
-# The function expects a single CSV output filename, not a directory
-# We'll create the directory structure and pass the filename
-dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
-outputfilename <- file.path(output_dir, "TableOfEstimates.csv")
+# The output_dir parameter is actually a basename (e.g., /path/to/FP/experiment/strain)
+# The R function will append _TableOfEstimates.csv and _FrequenciesWithoutNoise.csv
+outputfilename <- output_dir  # This is the basename prefix
 
-# Change working directory to output_dir so FrequenciesWithoutNoise.csv is written there
-# The original function writes FrequenciesWithoutNoise.csv to the current working directory
-original_wd <- getwd()
-setwd(output_dir)
+# Create the output directory
+output_directory <- dirname(outputfilename)
+dir.create(output_directory, recursive = TRUE, showWarnings = FALSE)
 
-# Call the getNrNb function
-tryCatch({
-  getNrNb(ReadsTable, CFUtable, InocCFU, WhereAreReferences, minweight, CorrectForNoise, outputfilename, CalibrationFile)
-}, finally = {
-  # Always restore the original working directory
-  setwd(original_wd)
-})
+# Call the getNrNb function with the basename
+# The function will create:
+#   outputfilename + '_TableOfEstimates.csv'
+#   outputfilename + '_FrequenciesWithoutNoise.csv'
+getNrNb(ReadsTable, CFUtable, InocCFU, WhereAreReferences, minweight, CorrectForNoise, outputfilename, CalibrationFile)
 
-# The function writes:
-# - TableOfEstimates.csv (using outputfilename parameter in output_dir)
-# - FrequenciesWithoutNoise.csv (to current working directory, which we set to output_dir)
-# Both files will be in output_dir
-
-print(paste("Analysis complete. Output written to:", output_dir))
+print(paste("Analysis complete. Output written to:", output_directory))
 print("Files created:")
-print(paste("  -", file.path(output_dir, "TableOfEstimates.csv")))
-print(paste("  -", file.path(output_dir, "FrequenciesWithoutNoise.csv")))
+print(paste("  -", paste0(outputfilename, "_TableOfEstimates.csv")))
+print(paste("  -", paste0(outputfilename, "_FrequenciesWithoutNoise.csv")))

@@ -313,8 +313,8 @@ getNrNb <- function(ReadsTable, CFUtable, InocCFU, WhereAreReferences, minweight
     colnames(TableOfEstimates) <- c("Nb", "Nr", "Nb_cal", "Nr_cal", "Error_Description")
   }
 
-  write.csv(TableOfEstimates, outputfilename)
-  write.csv(TableWithoutNoise, "FrequenciesWithoutNoise.csv")
+  write.csv(TableOfEstimates, paste0(outputfilename, '_TableOfEstimates.csv'))
+  write.csv(TableWithoutNoise, paste0(outputfilename, '_FrequenciesWithoutNoise.csv'))
 
   TableOfEstimates <<- TableOfEstimates
   FrequenciesWithoutNoise <<- TableWithoutNoise

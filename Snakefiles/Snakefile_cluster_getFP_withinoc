@@ -1,0 +1,201 @@
+import os
+from snakemake.io import expand, directory
+import re
+import glob
+import pandas as pd
+
+# PATHS
+OUTPUT_DIR = '/sc/arion/work/ruprec02/population-bottlenecks/'
+SCRIPTS_DIR = '/hpc/users/ruprec02/git/population_bottlenecks/scripts'
+METADIR = '/hpc/users/ruprec02/git/population_bottlenecks/input_files'
+
+# Create main output directory structure
+os.makedirs(OUTPUT_DIR, exist_ok=True)
+
+# Load FP configuration from TSV
+FP_CONFIG_FILE = os.path.join(METADIR, 'fp_config.tsv')
+fp_config_df = pd.read_csv(FP_CONFIG_FILE, sep='\t')
+
+# Create lookup dictionary: (experiment, strain, anal_folder) -> params
+fp_config = {}
+for _, row in fp_config_df.iterrows():
+    key = (row['experiment'], row['strain'], row['anal_folder'])
+    fp_config[key] = {
+        'inoc_cfu': int(row['inoc_cfu']),
+        'minweight': float(row['minweight']),
+        'correct_noise': float(row['correct_noise'])
+    }
+
+print(f"Loaded {len(fp_config)} FP configurations from {FP_CONFIG_FILE}")
+
+
+def get_all_moleculetables(wildcards):
+    """Dynamically discover moleculetable files created by checkpoint"""
+    checkpoint_output = checkpoints.create_experiments.get(**wildcards).output[0]
+    all_files = glob.glob(os.path.join(checkpoint_output, '**/moleculetables/*_moleculestable.csv'), recursive=True)
+
+    # Extract experiment and strain from each file
+    samples = []
+    for f in all_files:
+        # Parse the path to get experiment and strain
+        # Expected: .../P4C1T8/moleculetables/c1_ST1_moleculestable.csv
+        parts = f.split('/')
+        experiment = parts[-3]  # P4C1T8 or P4C2T4T5
+        filename = parts[-1]    # c1_ST1_moleculestable.csv
+
+        # Extract strain from filename
+        if experiment == 'P4C1T8':
+            # Format: c1_ST1_moleculestable.csv -> c1_ST1
+            strain = filename.replace('_moleculestable.csv', '')
+        else:  # P4C2T4T5
+            # Format: ST1_moleculestable.csv -> ST1
+            strain = filename.replace('_moleculestable.csv', '')
+
+        samples.append((experiment, strain))
+
+    return samples
+
+
+rule all:
+    input:
+        # FP analysis outputs based on config file
+        expand(OUTPUT_DIR + "FP/{experiment}/{anal_folder}/{strain}_TableOfEstimates.csv",
+               zip,
+               experiment=fp_config_df['experiment'].tolist(),
+               strain=fp_config_df['strain'].tolist(),
+               anal_folder=fp_config_df['anal_folder'].tolist()),
+        expand(OUTPUT_DIR + "FP/{experiment}/{anal_folder}/{strain}_FrequenciesWithoutNoise.csv",
+               zip,
+               experiment=fp_config_df['experiment'].tolist(),
+               strain=fp_config_df['strain'].tolist(),
+               anal_folder=fp_config_df['anal_folder'].tolist())
+
+checkpoint create_experiments:
+    output:
+        directory(OUTPUT_DIR + "moleculetables")
+    params:
+        basepath = OUTPUT_DIR,
+        metadir = METADIR,
+        scripts_dir = SCRIPTS_DIR,
+        empty_samples= METADIR+'/non_empty_sample.csv'
+    log:
+        OUTPUT_DIR + "logs/create_moleculetables.log"
+    shell:
+        """
+        conda run -n umi_tools_env python {params.scripts_dir}/create_experiment_moleculetables.py \
+            -b {params.basepath} \
+            -m {params.metadir} \
+            -o {output} \
+            -e {params.empty_samples} &> {log}
+        """
+
+rule cluster_moleculetables:
+    input:
+        readstable = OUTPUT_DIR + "moleculetables/{experiment}/moleculetables/{strain}_moleculestable.csv"
+    output:
+        OUTPUT_DIR + "clustered/{experiment}/{strain}_clustered.csv",
+    params:
+        scripts_dir = SCRIPTS_DIR,
+        output_prefix = OUTPUT_DIR + "clustered/{experiment}/{strain}"
+    log:
+        OUTPUT_DIR + "logs/{experiment}/{strain}_clustering.log"
+    shell:
+        """
+        mkdir -p $(dirname {output})
+        mkdir -p $(dirname {log})
+        conda run -n umi_tools_env python {params.scripts_dir}/cluster_moleculetables.py \
+            --input {input.readstable} \
+            --output {params.output_prefix} &> {log}
+        """
+
+### Run the FP calculation with correct inoculation CFUs
+rule get_resilient_FP:
+    input:
+        readstable = OUTPUT_DIR + "clustered/{experiment}/{strain}_clustered.csv"
+    output:
+        OUTPUT_DIR + "FP/{experiment}/{anal_folder}/{strain}_TableOfEstimates.csv",
+        OUTPUT_DIR + "FP/{experiment}/{anal_folder}/{strain}_FrequenciesWithoutNoise.csv"
+    params:
+        output_basename = lambda wildcards: OUTPUT_DIR + f"FP/{wildcards.experiment}/{wildcards.anal_folder}/{wildcards.strain}",
+        scripts_dir = SCRIPTS_DIR,
+        inoc_cfu = lambda wildcards: fp_config[(wildcards.experiment, wildcards.strain, wildcards.anal_folder)]['inoc_cfu'],
+        minweight = lambda wildcards: fp_config[(wildcards.experiment, wildcards.strain, wildcards.anal_folder)]['minweight'],
+        correct_noise = lambda wildcards: fp_config[(wildcards.experiment, wildcards.strain, wildcards.anal_folder)]['correct_noise']
+    log:
+        OUTPUT_DIR + "logs/{experiment}/{anal_folder}/{strain}_FP.log"
+    shell:
+        """
+        # Initialize log file with timestamp
+        echo "=== FP Analysis Started: $(date) ===" > {log}
+        echo "Input file: {input.readstable}" >> {log}
+        echo "Output basename: {params.output_basename}" >> {log}
+        echo "Analysis folder: {wildcards.anal_folder}" >> {log}
+
+        # Create directories
+        echo "Creating output directories..." >> {log}
+        mkdir -p $(dirname {output[0]}) 2>> {log}
+        mkdir -p $(dirname {log}) 2>> {log}
+        echo "Directories created successfully" >> {log}
+
+        # Check if input file exists
+        echo "Checking input file..." >> {log}
+        if [ ! -f "{input.readstable}" ]; then
+            echo "ERROR: Input file does not exist: {input.readstable}" >> {log}
+            exit 1
+        fi
+        echo "Input file exists" >> {log}
+
+        # Dynamically find gavage column indices (1-indexed for R)
+        echo "Finding gavage columns..." >> {log}
+        WHERE_REFS=$(conda run -n umi_tools_env python -c "
+import pandas as pd
+import sys
+try:
+    df = pd.read_csv('{input.readstable}')
+    print('Columns in dataframe:', list(df.columns), file=sys.stderr)
+    gavage_cols = [i for i, col in enumerate(df.columns) if 'gavage' in str(col).lower()]
+    print('Found gavage columns at indices:', gavage_cols, file=sys.stderr)
+    print(','.join(map(str, gavage_cols)) if gavage_cols else '1')
+except Exception as e:
+    print('ERROR finding gavage columns:', str(e), file=sys.stderr)
+    print('1')
+" 2>> {log})
+
+        echo "Gavage column indices (1-based for R): $WHERE_REFS" >> {log}
+
+        # Check conda environment
+        echo "Checking conda environment..." >> {log}
+        conda env list | grep r_bottleneck >> {log} 2>&1
+        if [ $? -ne 0 ]; then
+            echo "WARNING: r_bottleneck environment not found in conda env list" >> {log}
+        fi
+
+        # Run R script
+        echo "Starting R script execution..." >> {log}
+        echo "Command: Rscript {params.scripts_dir}/FinalResiliencyWithCFU_wrapper.R" >> {log}
+        echo "  Input: {input.readstable}" >> {log}
+        echo "  Inoculum CFU: {params.inoc_cfu}" >> {log}
+        echo "  Reference columns: $WHERE_REFS" >> {log}
+        echo "  Min weight: {params.minweight}" >> {log}
+        echo "  Noise correction: {params.correct_noise}" >> {log}
+        echo "  Output basename: {params.output_basename}" >> {log}
+
+        conda run -n r_bottleneck Rscript {params.scripts_dir}/FinalResiliencyWithCFU_wrapper.R \
+            {input.readstable} \
+            NULL \
+            {params.inoc_cfu} \
+            "$WHERE_REFS" \
+            {params.minweight} \
+            {params.correct_noise} \
+            {params.output_basename} \
+            NULL 2>&1 | tee -a {log}
+
+        EXIT_CODE=${{PIPESTATUS[0]}}
+
+        if [ $EXIT_CODE -eq 0 ]; then
+            echo "=== R script completed successfully: $(date) ===" >> {log}
+        else
+            echo "=== R script FAILED with exit code $EXIT_CODE: $(date) ===" >> {log}
+            exit $EXIT_CODE
+        fi
+        """
