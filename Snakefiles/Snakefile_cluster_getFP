@@ -53,7 +53,7 @@ checkpoint create_experiments:
     params:
         basepath = OUTPUT_DIR,
         metadir = METADIR,
-        scripts_dir = SCRIPTS_DIR
+        scripts_dir = SCRIPTS_DIR,
         empty_samples= METADIR+'/non_empty_sample.csv'
     log:
         OUTPUT_DIR + "logs/create_moleculetables.log"
