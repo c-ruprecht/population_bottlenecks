@@ -54,12 +54,16 @@ checkpoint create_experiments:
         basepath = OUTPUT_DIR,
         metadir = METADIR,
         scripts_dir = SCRIPTS_DIR
+        empty_samples= METADIR+'/non_empty_sample.csv'
+    log:
+        OUTPUT_DIR + "logs/create_moleculetables.log"
     shell:
         """
         conda run -n umi_tools_env python {params.scripts_dir}/create_experiment_moleculetables.py \
             -b {params.basepath} \
             -m {params.metadir} \
-            -o {output}
+            -o {output} \
+            -e {params.metadir} &> {log}
         """
 
 
