@@ -86,24 +86,46 @@ def main():
     df_cluster[numeric_cols] = df_cluster[numeric_cols].astype(int)
     
     #drop everything where gavage.lower() is 0
-    gavage_cols = [col for col in df.columns if 'gavage' in col.lower()]
-    df_cluster[df_cluster[gavage_cols].sum(axis=1) > 0].to_csv(args.output + '_clustered.csv', index = False)
+    gavage_cols = [col for col in df_cluster.columns if 'gavage' in col.lower()]
+    df_cluster_filtered = df_cluster[df_cluster[gavage_cols].sum(axis=1) > 0].copy()
+    df_cluster_filtered.to_csv(args.output + '_clustered.csv', index = False)
+    print('exported clustered file')
 
-    # drop everything that is empty using an empty tag
-    #cols_to_keep = ['umi_seq'] + [col for col in df_cluster.columns
-    ##                                if col != 'umi_seq'
-    #                                and '_empty' not in col]
-    #df_cluster_no_controls = df_filtered[cols_to_keep].copy()
-    #df_cluster_no_controls.to_csv(args.output + '_clustered_noempty.csv', index = False)
-    
     ### Noise filter based on negative controls 99 percentile
-    #ntc_cols = [col for col in df_cluster.columns if 'NTC' in col or 'WATER' in col.upper()]
-    #df_stack = df_cluster.set_index('umi_seq')[ntc_cols].stack().reset_index()
-    #df_stack.columns = ['umi_seq', 'sample', 'clustered_molecules']
-    #noise_threshold = df_stack['clustered_molecules'].quantile(0.99)
-    ##df_filtered = df_cluster.copy()
-    #numeric_cols = df_filtered.select_dtypes(include=['int64', 'float64']).columns
-    #df_filtered[numeric_cols] = df_filtered[numeric_cols].where(df_filtered[numeric_cols] >= noise_threshold, 0)
+    #ntc_cols = [col for col in df_cluster_filtered.columns if 'NTC' in col or 'WATER' in col.upper()]
+
+    #if len(ntc_cols) > 0:
+    #    df_stack = df_cluster_filtered.set_index('umi_seq')[ntc_cols].stack().reset_index()
+    ##    df_stack.columns = ['umi_seq', 'sample', 'clustered_molecules']
+    #    noise_threshold = df_stack['clustered_molecules'].quantile(0.99)
+    #    print(f'Noise threshold (99th percentile): {noise_threshold}')
+
+    #    df_denoised = df_cluster_filtered.copy()
+    #    numeric_cols = df_denoised.select_dtypes(include=['int64', 'float64']).columns
+    #    df_denoised[numeric_cols] = df_denoised[numeric_cols].where(df_denoised[numeric_cols] >= noise_threshold, 0)
+   # else:
+    #    print('No NTC or WATER columns found, skipping denoising')
+   #     df_denoised = df_cluster_filtered.copy()
+
+    #df_denoised.to_csv(args.output + '_clustered_denoised.csv', index = False)
+    #print('exported denoised file')
+
+    # Create version without control columns
+    ##cols_to_keep = ['umi_seq'] + [col for col in df_denoised.columns
+    #                                if col != 'umi_seq'
+    #                                and 'NTC' not in col
+    #                                and 'WATER' not in col.upper()]
+    #df_denoised_no_controls = df_denoised[cols_to_keep].copy()
+    #df_denoised_no_controls.to_csv(args.output + '_clustered_denoised_nocontrols.csv', index = False)
+    #print('exported denoised without controls file')
+
+    #print('All output files created successfully')
+    return 0
 
 if __name__ == "__main__":
-    main()
+    import sys
+    try:
+        sys.exit(main())
+    except Exception as e:
+        print(f"ERROR: {e}", file=sys.stderr)
+        sys.exit(1)
