@@ -84,31 +84,26 @@ def main():
     
     # Convert numeric columns to integers to save space
     df_cluster[numeric_cols] = df_cluster[numeric_cols].astype(int)
-    df_cluster_exp = df_cluster.copy()
     
-    ### Noise filter based on negative controls 99 percentile
-    ntc_cols = [col for col in df_cluster.columns if 'NTC' in col or 'WATER' in col.upper()]
-    df_stack = df_cluster.set_index('umi_seq')[ntc_cols].stack().reset_index()
-    df_stack.columns = ['umi_seq', 'sample', 'clustered_molecules']
-    noise_threshold = df_stack['clustered_molecules'].quantile(0.99)
-    df_filtered = df_cluster.copy()
-    numeric_cols = df_filtered.select_dtypes(include=['int64', 'float64']).columns
-    df_filtered[numeric_cols] = df_filtered[numeric_cols].where(df_filtered[numeric_cols] >= noise_threshold, 0)
-
     #drop everything where gavage.lower() is 0
     gavage_cols = [col for col in df.columns if 'gavage' in col.lower()]
-    df_filtered = df_filtered[df_filtered[gavage_cols].sum(axis=1) > 0]
-    df_filtered.to_csv(args.output + '_clustered_denoised.csv', index = False)
+    df_cluster[df_cluster[gavage_cols].sum(axis=1) > 0].to_csv(args.output + '_clustered.csv', index = False)
 
-    ### 
     # drop everything that is empty using an empty tag
-    cols_to_keep = ['umi_seq'] + [col for col in df_cluster.columns
-                                    if col != 'umi_seq'
-                                    and '_empty' not in col]
-    df_cluster_no_controls = df_filtered[cols_to_keep].copy()
-    df_cluster_no_controls.to_csv(args.output + '_clustered_denoised_noempty.csv', index = False)
+    #cols_to_keep = ['umi_seq'] + [col for col in df_cluster.columns
+    ##                                if col != 'umi_seq'
+    #                                and '_empty' not in col]
+    #df_cluster_no_controls = df_filtered[cols_to_keep].copy()
+    #df_cluster_no_controls.to_csv(args.output + '_clustered_noempty.csv', index = False)
     
-    df_cluster_exp.to_csv(args.output + '_clustered.csv', index = False)
+    ### Noise filter based on negative controls 99 percentile
+    #ntc_cols = [col for col in df_cluster.columns if 'NTC' in col or 'WATER' in col.upper()]
+    #df_stack = df_cluster.set_index('umi_seq')[ntc_cols].stack().reset_index()
+    #df_stack.columns = ['umi_seq', 'sample', 'clustered_molecules']
+    #noise_threshold = df_stack['clustered_molecules'].quantile(0.99)
+    ##df_filtered = df_cluster.copy()
+    #numeric_cols = df_filtered.select_dtypes(include=['int64', 'float64']).columns
+    #df_filtered[numeric_cols] = df_filtered[numeric_cols].where(df_filtered[numeric_cols] >= noise_threshold, 0)
 
 if __name__ == "__main__":
     main()
