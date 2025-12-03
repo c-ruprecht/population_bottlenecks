@@ -51,6 +51,6 @@ snakemake \
     disk_mb=30000 \
     lsf_project="acc_faithj02a" \
     lsf_queue="premium" \
-    walltime=720 \
+    walltime=2880 \
     "lsf_extra='-o /sc/arion/work/ruprec01/log/cluster/%J.out -e /sc/arion/work/ruprec01/log/cluster/%J.err -L /bin/bash'" \
   

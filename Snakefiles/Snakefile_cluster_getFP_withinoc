@@ -108,7 +108,7 @@ rule cluster_moleculetables:
             --output {params.output_prefix} &> {log}
         """
 
-### Run the FP calculation with correct inoculation CFUs
+# Run the FP calculation with correct inoculation CFUs
 rule get_resilient_FP:
     input:
         readstable = OUTPUT_DIR + "clustered/{experiment}/{strain}_clustered.csv"

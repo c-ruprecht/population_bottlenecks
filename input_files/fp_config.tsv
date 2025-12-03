@@ -1,4 +1,9 @@
 experiment	strain	inoc_cfu	minweight	correct_noise	anal_folder
+P4C2T45	ST1	1000000	0.03	0.01	min03_noise01
+P4C2T45	ST2	1000000	0.03	0.01	min03_noise01
+P4C2T45	ST4	1000000	0.03	0.01	min03_noise01
+P4C2T45	ST5	1000000	0.03	0.01	min03_noise01
+P4C2T45	ST6	1000000	0.03	0.01	min03_noise01
 P4C1T8	c1_ST1	100000000	0.03	0.01	min03_noise01
 P4C1T8	c1_ST2	100000000	0.03	0.01	min03_noise01
 P4C1T8	c1_ST5	100000000	0.03	0.01	min03_noise01
