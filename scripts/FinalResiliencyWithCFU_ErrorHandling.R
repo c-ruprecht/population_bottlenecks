@@ -39,6 +39,14 @@ getNrNb <- function(ReadsTable, CFUtable, InocCFU, WhereAreReferences, minweight
 
     print(paste("Processing sample:", samplename))
 
+    # Initialize variables in outer scope
+    invec <- ReferenceVector
+    outvec <- ReadsTable[,colnames(ReadsTable) == samplename]
+
+    if(!is.null(CFUtable)) {
+      cfu <<- CFUtable[CFUtable[,1]==samplename,2]
+    } else {cfu <- 1E8}
+
     # Initialize result variables
     nb_result <- NA
     nr_result <- NA
@@ -49,19 +57,11 @@ getNrNb <- function(ReadsTable, CFUtable, InocCFU, WhereAreReferences, minweight
     # Wrap Nb calculation in a tryCatch block
     nb_success <- tryCatch({
 
-      #Specifies input vector (which is the average of your inputs), output (the row which corresponds to the particular sample name), and CFU (a single value corresponding to the name of the sample)
-      invec <- ReferenceVector
-      outvec <- ReadsTable[,colnames(ReadsTable) == samplename]
-
-      if(!is.null(CFUtable)) {
-      cfu <<- CFUtable[CFUtable[,1]==samplename,2]
-      } else {cfu <- 1E8}
-
       #Noise adjustment
       if (CorrectForNoise != 0) {
         ResampledInvec <- rmvhyper(1, round(invec), round(CorrectForNoise*sum(outvec)))
-        outvec <- as.numeric(outvec - ResampledInvec)
-        outvec[outvec < 0] <- 0
+        outvec <<- as.numeric(outvec - ResampledInvec)
+        outvec[outvec < 0] <<- 0
       }
 
 
@@ -77,7 +77,7 @@ getNrNb <- function(ReadsTable, CFUtable, InocCFU, WhereAreReferences, minweight
 
       #As the script is run, bindsorted itself will be changed, so we make a few copies of it for later use
       bindsortedcopy <<- bindsorted
-      bindsortedcopy2 <- bindsortedcopy
+      bindsortedcopy2 <<- bindsortedcopy
 
       #x is the first iteration of the Resiliency graph. The first value is 0 so it has a place to start
       x <- 0
