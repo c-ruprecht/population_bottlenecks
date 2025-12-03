@@ -39,15 +39,8 @@ getNrNb <- function(ReadsTable, CFUtable, InocCFU, WhereAreReferences, minweight
 
     print(paste("Processing sample:", samplename))
 
-    # Initialize result variables
-    nb_result <- NA
-    nr_result <- NA
-    nb_calibrated <- NA
-    nr_calibrated <- NA
-    error_msg <- "SUCCESS"
-
-    # Wrap Nb calculation in a tryCatch block
-    nb_success <- tryCatch({
+    # Wrap the entire processing in a tryCatch block
+    result <- tryCatch({
 
       #Specifies input vector (which is the average of your inputs), output (the row which corresponds to the particular sample name), and CFU (a single value corresponding to the name of the sample)
       invec <- ReferenceVector
@@ -105,23 +98,6 @@ getNrNb <- function(ReadsTable, CFUtable, InocCFU, WhereAreReferences, minweight
       x<<-x
       bindsorted <<- bindsorted
 
-      # Store Nb result
-      nb_result <<- x[1]
-      if(nb_result < 1) {nb_result <<- 1}
-
-      TRUE  # Return TRUE to indicate Nb calculation succeeded
-
-    }, error = function(e) {
-      # Nb calculation failed
-      error_msg <<- paste("ERROR in Nb calculation:", conditionMessage(e))
-      print(paste("Error calculating Nb for", samplename, ":", error_msg))
-      return(FALSE)
-    })
-
-    # If Nb calculation succeeded, proceed with Nr calculation
-    if(nb_success) {
-
-      nr_success <- tryCatch({
 
       #Outer layer of the function that scans for minima. The input to this, p, is later defined. p is a specific set of numbers that specifiy all the poisitions for which the minimum finder will start. scanformin is applied over each of these positions
       scanformin <- function(p) {
@@ -277,10 +253,6 @@ getNrNb <- function(ReadsTable, CFUtable, InocCFU, WhereAreReferences, minweight
       CompBottleneck <<- NLSstClosestX(dfxy, minimumnearesttimes)
       if(finalvalue < CompBottleneck) {finalvalue <<- CompBottleneck}
 
-      # Store Nr result
-      nr_result <<- finalvalue
-      if(nr_result < 1) {nr_result <<- 1}
-
       #Plots the new resiliency function if needed
       if(plots){
         abline(h = cutoffpositions)
@@ -289,38 +261,21 @@ getNrNb <- function(ReadsTable, CFUtable, InocCFU, WhereAreReferences, minweight
         plot(z, log = "y", ylim = c(.01, 2E6), xlim = c(1, length(as.numeric(na.omit(z)))), main = "Resiliency without noise", ylab = "Nb", xlab = "Iteration")
       }
 
-      TRUE  # Return TRUE to indicate Nr calculation succeeded
-
-      }, error = function(e) {
-        # Nr calculation failed, but Nb is still valid
-        nr_result <<- NA
-        error_msg <<- paste("ERROR in Nr calculation:", conditionMessage(e))
-        print(paste("Error calculating Nr for", samplename, ":", error_msg))
-        return(FALSE)
-      })
-    }
-
-    # Process calibration and return results (if not in plot mode)
-    if(plots == FALSE) {
-      print(samplename)
-
-      # Handle calibration if provided
-      if(!is.null(CalibrationFile)) {
-        LookUpTable <<- read.csv(CalibrationFile, row.names = 1)
-
-        # Calibrate Nb if it was successfully calculated
-        if(!is.na(nb_result)) {
-          nb_calibrated <- as.numeric(LookUpTable[as.character(round(log10(nb_result), digits = 2)),])
+      #If plots is set to FALSE, this indicates to the computer that you are running a lot of data to get our the table, and so this will be gathered.
+      if(plots == FALSE) {
+        print(samplename)
+        if(!is.null(CalibrationFile)) {LookUpTable <<- read.csv(CalibrationFile, row.names = 1)}
+        if(x[1] < 1) {x[1] <- 1}
+        if(finalvalue<1) {finalvalue <- 1}
+        if(!is.null(CalibrationFile)) {
+          nbcalibrated <<- as.numeric(LookUpTable[as.character(round(log10(x[1]), digits = 2)),])
+          nrcalibrated <<- as.numeric(LookUpTable[as.character(round(log10(finalvalue), digits = 2)),])
+        }
+        if(is.null(CalibrationFile)) {
+          nbcalibrated <- NA
+          nrcalibrated <- NA
         }
 
-        # Calibrate Nr if it was successfully calculated
-        if(!is.na(nr_result)) {
-          nr_calibrated <- as.numeric(LookUpTable[as.character(round(log10(nr_result), digits = 2)),])
-        }
-      }
-
-      # Update TableWithoutNoise if Nb calculation succeeded
-      if(nb_success) {
         numberofzeros <- sum(outvecwithoutnoise == 0)
         outvec[order(outvec)][1:numberofzeros] <- 0
         TableWithoutNoise <- data.frame(TableWithoutNoise, outvec)
@@ -329,16 +284,23 @@ getNrNb <- function(ReadsTable, CFUtable, InocCFU, WhereAreReferences, minweight
         outvec <<- outvec
         invecNoiseCorrected <<- invec
         invec <<- ReferenceVector
+        c(x[1], finalvalue, nbcalibrated, nrcalibrated, "SUCCESS")
       }
 
-      # Return results based on calibration file presence
+    }, error = function(e) {
+      # If an error occurs during Nb calculation, return NA for everything
+      error_msg <- paste("ERROR:", conditionMessage(e))
+      print(paste("Error processing", samplename, ":", error_msg))
+
+      # Return NA values for all estimates plus the error message
       if(is.null(CalibrationFile)) {
-        return(c(nb_result, nr_result, nb_calibrated, nr_calibrated, error_msg))
+        return(c(NA, NA, NA, NA, error_msg))
       } else {
-        return(c(nb_result, nr_result, nb_calibrated, nb_calibrated, nb_calibrated,
-                 nr_calibrated, nr_calibrated, nr_calibrated, error_msg))
+        return(c(NA, NA, NA, NA, NA, NA, NA, NA, error_msg))
       }
-    }
+    })
+
+    return(result)
   }
 
   #TableOfEstimates is what the final table is called, and it will have different dimentions depending on if you specify a calibration curve. This variable is written into your directory and important metadata is spit out of the function so you can run the resiliency script to stand alone if needed (remembering to set plots = TRUE)
