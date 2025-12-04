@@ -48,7 +48,7 @@ snakemake \
   --use-conda \
   --executor lsf \
   --default-resources \
-    mem_mb=200000 \
+    mem_mb=300000 \
     disk_mb=40000 \
     lsf_project="acc_faithj02a" \
     lsf_queue="premium" \
