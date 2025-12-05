@@ -1,5 +1,6 @@
 #!/bin/bash
-# Setup
+# to run you need to use full path to snake file because working directories are changed for each parallel run
+# sh run_snake9_parallel.sh -s /hpc/users/ruprec02/git/population_bottlenecks/Snakefiles/process_R2_get_batch.smk
 
 # Default Snakefile
 SNAKEFILE="Snakefiles/ampliconez_Snakefile"
@@ -59,6 +60,7 @@ for i in "${!INPUT_DIRS[@]}"; do
     --latency-wait 240 \
     --keep-going \
     --executor lsf \
+    --scheduler greedy \
     --default-resources \
       mem_mb=32000 \
       disk_mb=10000 \
