@@ -20,6 +20,7 @@ getNrNb <- function(ReadsTable, CFUtable, InocCFU, WhereAreReferences, minweight
   library(extraDistr)
   print("Building simulation table...")
   RoundedRefVector <-unname(round(round(ReferenceVector) * InocCFU / sum(round(ReferenceVector))))
+  # steps can be modified from 10 to higher values if ram becomes limiting
   steps <- seq(from = 1, to = length(RoundedRefVector)*10, by = 10)
 
   GetBotTable <- function(n) {
