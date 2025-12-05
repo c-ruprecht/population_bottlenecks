@@ -51,6 +51,7 @@ for i in "${!INPUT_DIRS[@]}"; do
   mkdir -p "${WORK_DIR}"
 
   # Run Snakemake from the unique working directory
+  # greedy scheduling is needed to make this work
   (cd "${WORK_DIR}" && snakemake \
     -s ${SNAKEFILE} \
     --config input_dir="${INPUT_DIRS[$i]}" output_dir="${OUTPUT_DIRS[$i]}" scratch_dir="${SCRATCH_DIR[$i]}" \
@@ -62,8 +63,8 @@ for i in "${!INPUT_DIRS[@]}"; do
     --executor lsf \
     --scheduler greedy \
     --default-resources \
-      mem_mb=32000 \
-      disk_mb=10000 \
+      mem_mb=64000 \
+      disk_mb=30000 \
       lsf_project="acc_faithj02a" \
       lsf_queue="express" \
       walltime=720 \
