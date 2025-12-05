@@ -76,7 +76,6 @@ rule cluster_moleculetables:
         """
         mkdir -p $(dirname {output})
         mkdir -p $(dirname {log})
-        mkdir -p $(dirname {benchmark})
         conda run -n umi_tools_env python {params.scripts_dir}/cluster_moleculetables.py \
             --input {input.readstable} \
             --output {params.output_prefix} \
