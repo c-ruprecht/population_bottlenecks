@@ -27,33 +27,6 @@ for _, row in fp_config_df.iterrows():
 print(f"Loaded {len(fp_config)} FP configurations from {FP_CONFIG_FILE}")
 
 
-def get_all_moleculetables(wildcards):
-    """Dynamically discover moleculetable files created by checkpoint"""
-    checkpoint_output = checkpoints.create_experiments.get(**wildcards).output[0]
-    all_files = glob.glob(os.path.join(checkpoint_output, '**/moleculetables/*_moleculestable.csv'), recursive=True)
-
-    # Extract experiment and strain from each file
-    samples = []
-    for f in all_files:
-        # Parse the path to get experiment and strain
-        # Expected: .../P4C1T8/moleculetables/c1_ST1_moleculestable.csv
-        parts = f.split('/')
-        experiment = parts[-3]  # P4C1T8 or P4C2T4T5
-        filename = parts[-1]    # c1_ST1_moleculestable.csv
-
-        # Extract strain from filename
-        if experiment == 'P4C1T8':
-            # Format: c1_ST1_moleculestable.csv -> c1_ST1
-            strain = filename.replace('_moleculestable.csv', '')
-        else:  # P4C2T4T5
-            # Format: ST1_moleculestable.csv -> ST1
-            strain = filename.replace('_moleculestable.csv', '')
-
-        samples.append((experiment, strain))
-
-    return samples
-
-
 rule all:
     input:
         # Nb analysis outputs based on config file
@@ -82,9 +55,14 @@ checkpoint create_experiments:
             -e {params.empty_samples} &> {log}
         """
 
+def get_moleculetable_input(wildcards):
+    """Input function that waits for checkpoint completion"""
+    checkpoints.create_experiments.get()
+    return OUTPUT_DIR + f"moleculetables/{wildcards.experiment}/moleculetables/{wildcards.strain}_moleculestable.csv"
+
 rule cluster_moleculetables:
     input:
-        readstable = OUTPUT_DIR + "moleculetables/{experiment}/moleculetables/{strain}_moleculestable.csv"
+        readstable = get_moleculetable_input
     output:
         OUTPUT_DIR + "clustered/{experiment}/{anal_folder}/{strain}_clustered.csv",
     benchmark:
