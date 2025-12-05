@@ -52,8 +52,9 @@ for i in "${!INPUT_DIRS[@]}"; do
     --jobs 100 \
     --cores 1 \
     --rerun-incomplete \
-    --latency-wait 400 \
+    --latency-wait 240 \
     --executor lsf \
+    --scheduler greedy \
     --default-resources \
       mem_mb=64000 \
       disk_mb=30000 \
