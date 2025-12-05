@@ -63,7 +63,8 @@ def main():
     df = pd.read_csv(args.input)
     print('starting to cluster')
     print(df)
-    df_cluster = cluster_umis(df, cluster_method = "directional", threshold = args.threshold)
+    threshold = int(args.threshold) if args.threshold is not None else 1
+    df_cluster = cluster_umis(df, cluster_method = "directional", threshold = threshold)
 
     #downscale reads if neccessary to stay in integer R limit
     SAFE_THRESHOLD = 2e9
