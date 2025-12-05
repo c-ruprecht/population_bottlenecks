@@ -39,7 +39,6 @@ mkdir -p /sc/arion/work/ruprec01/log/cluster
 # rerung specific rules -R get_single_GD get_GD_aggregate
 snakemake \
   -s ${SNAKEFILE} \
-  -R get_resilient_FP \
   --jobs 200 \
   --cores 1 \
   --rerun-incomplete \
@@ -48,8 +47,8 @@ snakemake \
   --use-conda \
   --executor lsf \
   --default-resources \
-    mem_mb=300000 \
-    disk_mb=40000 \
+    mem_mb=60000 \
+    disk_mb=10000 \
     lsf_project="acc_faithj02a" \
     lsf_queue="premium" \
     walltime=2880 \
