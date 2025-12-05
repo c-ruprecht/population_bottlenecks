@@ -52,19 +52,19 @@ for i in "${!INPUT_DIRS[@]}"; do
 
   # Run Snakemake from the unique working directory
   # greedy scheduling is needed to make this work
+  #--rerun-incomplete \
   (cd "${WORK_DIR}" && snakemake \
     -s ${SNAKEFILE} \
     --config input_dir="${INPUT_DIRS[$i]}" output_dir="${OUTPUT_DIRS[$i]}" scratch_dir="${SCRATCH_DIR[$i]}" \
     --jobs 500 \
     --cores 1 \
     --forceall \
-    --rerun-incomplete \
     --latency-wait 240 \
     --keep-going \
     --executor lsf \
     --scheduler greedy \
     --default-resources \
-      mem_mb=64000 \
+      mem_mb=80000 \
       disk_mb=30000 \
       lsf_project="acc_faithj02a" \
       lsf_queue="express" \
