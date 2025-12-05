@@ -44,7 +44,13 @@ SCRATCH_DIR=('/sc/arion/scratch/ruprec02/population-bottlenecks/ILL138'
 # Run with Snakemake 9.1.1 in parallel
 # rerung specific rules -R get_single_GD get_GD_aggregate
 for i in "${!INPUT_DIRS[@]}"; do
-  snakemake \
+  # Create a unique working directory for each Snakemake instance
+  # needed for parrallel processing to avoid lock
+  WORK_DIR="${OUTPUT_DIRS[$i]}/.snakemake_work"
+  mkdir -p "${WORK_DIR}"
+
+  # Run Snakemake from the unique working directory
+  (cd "${WORK_DIR}" && snakemake \
     -s ${SNAKEFILE} \
     --config input_dir="${INPUT_DIRS[$i]}" output_dir="${OUTPUT_DIRS[$i]}" scratch_dir="${SCRATCH_DIR[$i]}" \
     --jobs 500 \
@@ -59,7 +65,7 @@ for i in "${!INPUT_DIRS[@]}"; do
       lsf_project="acc_faithj02a" \
       lsf_queue="express" \
       walltime=720 \
-      "lsf_extra='-o /sc/arion/work/ruprec01/log/cluster/%J.out -e /sc/arion/work/ruprec01/log/cluster/%J.err -L /bin/bash'" &
+      "lsf_extra='-o /sc/arion/work/ruprec01/log/cluster/%J.out -e /sc/arion/work/ruprec01/log/cluster/%J.err -L /bin/bash'") &
 done
 
 # Wait for all background jobs to complete
