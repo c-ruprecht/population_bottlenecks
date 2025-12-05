@@ -49,7 +49,7 @@ for i in "${!INPUT_DIRS[@]}"; do
   snakemake \
     -s ${SNAKEFILE} \
     --config input_dir="${INPUT_DIRS[$i]}" output_dir="${OUTPUT_DIRS[$i]}" scratch_dir="${SCRATCH_DIR[$i]}" \
-    --jobs 500 \
+    --jobs 100 \
     --cores 1 \
     --forceall \
     --latency-wait 400 \
