@@ -88,7 +88,7 @@ rule cluster_moleculetables:
     output:
         OUTPUT_DIR + "clustered/{experiment}/{anal_folder}/{strain}_clustered.csv",
     benchmark:
-        OUTPUT_DIR + "benchmarks/cluster_molecules.csv",
+        OUTPUT_DIR + "benchmarks/{experiment}/{anal_folder}/{strain}_cluster_molecules.csv",
     params:
         scripts_dir = SCRIPTS_DIR,
         output_prefix = OUTPUT_DIR + "clustered/{experiment}/{anal_folder}/{strain}",
@@ -99,6 +99,7 @@ rule cluster_moleculetables:
         """
         mkdir -p $(dirname {output})
         mkdir -p $(dirname {log})
+        mkdir -p $(dirname {benchmark})
         conda run -n umi_tools_env python {params.scripts_dir}/cluster_moleculetables.py \
             --input {input.readstable} \
             --output {params.output_prefix} \
