@@ -44,7 +44,7 @@ SCRATCH_DIR=('/sc/arion/scratch/ruprec02/population-bottlenecks/ILL138'
 # Run with Snakemake 9.1.1
 # rerung specific rules -R get_single_GD get_GD_aggregate
 # --keep-going \
-# --rerun-incomplete \
+# 
 for i in "${!INPUT_DIRS[@]}"; do
   snakemake \
     -s ${SNAKEFILE} \
@@ -52,6 +52,7 @@ for i in "${!INPUT_DIRS[@]}"; do
     --jobs 100 \
     --cores 1 \
     --forceall \
+    --rerun-incomplete \
     --latency-wait 400 \
     --executor lsf \
     --default-resources \
