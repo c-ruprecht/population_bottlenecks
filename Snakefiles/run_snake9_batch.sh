@@ -50,12 +50,12 @@ for i in "${!INPUT_DIRS[@]}"; do
     --jobs 500 \
     --cores 1 \
     --rerun-incomplete \
-    --latency-wait 240 \
+    --latency-wait 400 \
     --keep-going \
     --executor lsf \
     --default-resources \
-      mem_mb=32000 \
-      disk_mb=10000 \
+      mem_mb=64000 \
+      disk_mb=20000 \
       lsf_project="acc_faithj02a" \
       lsf_queue="express" \
       walltime=720 \
