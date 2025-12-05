@@ -143,11 +143,10 @@ except Exception as e:
 
         EXIT_CODE=${{PIPESTATUS[0]}}
 
-        # Rename output file to match expected output name
+        # Check script completion
         if [ $EXIT_CODE -eq 0 ]; then
             echo "=== Python script completed successfully: $(date) ===" >> {log}
-            mv {params.output_dir}/Nb_estimates.csv {output} 2>> {log}
-            echo "Renamed output file to {output}" >> {log}
+            echo "Output file created at {output}" >> {log}
         else
             echo "=== Python script FAILED with exit code $EXIT_CODE: $(date) ===" >> {log}
             exit $EXIT_CODE
