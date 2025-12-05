@@ -68,7 +68,7 @@ rule create_moleculetables:
         file=SCRATCH_DIR + "/trimmed/{prefix}_filtered.fastq.gz",
         barcodes= STRAIN_BARCODES
     output:
-        OUTPUT_DIR + "/readtables/{prefix}/{prefix}_total_moleculestable.csv"
+        OUTPUT_DIR + "/readtables/{prefix}/{prefix}_total_moleculestable.csv"        
     params:
         output_dir = directory(OUTPUT_DIR + "/readtables/{prefix}/"),
         sample = "{prefix}",
