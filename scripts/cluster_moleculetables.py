@@ -11,7 +11,7 @@ def parse_arguments():
     parser = argparse.ArgumentParser(description="Process UMI clustering.")
     parser.add_argument("-i", "--input", required=True, help="Path to the input moleculetables")
     parser.add_argument("-o", "--output", required=True, help="Path to the output directory")
-    
+    parser.add_argument("-t", "--threshhold", required = False, help = " Set threshhold for umi cluster algorithm, default, directional 1")
     return parser.parse_args()
 
 
@@ -63,7 +63,7 @@ def main():
     df = pd.read_csv(args.input)
     print('starting to cluster')
     print(df)
-    df_cluster = cluster_umis(df, cluster_method = "directional", threshold = 2)
+    df_cluster = cluster_umis(df, cluster_method = "directional", threshold = args.threshhold)
 
     #downscale reads if neccessary to stay in integer R limit
     SAFE_THRESHOLD = 2e9

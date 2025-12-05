@@ -13,7 +13,7 @@ METADIR = '/hpc/users/ruprec02/git/population_bottlenecks/input_files'
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # Load FP configuration from TSV
-FP_CONFIG_FILE = os.path.join(METADIR, 'fp_config.tsv')
+FP_CONFIG_FILE = os.path.join(METADIR, 'nb_config.tsv')
 fp_config_df = pd.read_csv(FP_CONFIG_FILE, sep='\t')
 
 # Create lookup dictionary: (experiment, strain, anal_folder) -> params
@@ -21,9 +21,7 @@ fp_config = {}
 for _, row in fp_config_df.iterrows():
     key = (row['experiment'], row['strain'], row['anal_folder'])
     fp_config[key] = {
-        'inoc_cfu': int(row['inoc_cfu']),
-        'minweight': float(row['minweight']),
-        'correct_noise': float(row['correct_noise'])
+        'umi_threshhold': int(row['umi_threshhold'])
     }
 
 print(f"Loaded {len(fp_config)} FP configurations from {FP_CONFIG_FILE}")
@@ -58,13 +56,8 @@ def get_all_moleculetables(wildcards):
 
 rule all:
     input:
-        # FP analysis outputs based on config file
-        expand(OUTPUT_DIR + "FP/{experiment}/{anal_folder}/{strain}_TableOfEstimates.csv",
-               zip,
-               experiment=fp_config_df['experiment'].tolist(),
-               strain=fp_config_df['strain'].tolist(),
-               anal_folder=fp_config_df['anal_folder'].tolist()),
-        expand(OUTPUT_DIR + "FP/{experiment}/{anal_folder}/{strain}_FrequenciesWithoutNoise.csv",
+        # Nb analysis outputs based on config file
+        expand(OUTPUT_DIR + "FP/{experiment}/{anal_folder}/{strain}_Nb_estimates.csv",
                zip,
                experiment=fp_config_df['experiment'].tolist(),
                strain=fp_config_df['strain'].tolist(),
@@ -99,6 +92,7 @@ rule cluster_moleculetables:
     params:
         scripts_dir = SCRIPTS_DIR,
         output_prefix = OUTPUT_DIR + "clustered/{experiment}/{strain}"
+        threshold = lambda wildcards: {wildcards.experiment},
     log:
         OUTPUT_DIR + "logs/{experiment}/{strain}_clustering.log"
     shell:
@@ -107,36 +101,33 @@ rule cluster_moleculetables:
         mkdir -p $(dirname {log})
         conda run -n umi_tools_env python {params.scripts_dir}/cluster_moleculetables.py \
             --input {input.readstable} \
-            --output {params.output_prefix} &> {log}
+            --output {params.output_prefix} \
+            --threshold {params.threshhold} &> {log}
         """
 
 
-# Run the FP calculation with correct inoculation CFUs
-rule get_resilient_FP:
+# Run the Nb calculation
+rule get_FP:
     input:
         readstable = OUTPUT_DIR + "clustered/{experiment}/{strain}_clustered.csv"
     output:
-        OUTPUT_DIR + "FP/{experiment}/{anal_folder}/{strain}_TableOfEstimates.csv",
-        OUTPUT_DIR + "FP/{experiment}/{anal_folder}/{strain}_FrequenciesWithoutNoise.csv"
+        OUTPUT_DIR + "FP/{experiment}/{anal_folder}/{strain}_Nb_estimates.csv"
     params:
-        output_basename = lambda wildcards: OUTPUT_DIR + f"FP/{wildcards.experiment}/{wildcards.anal_folder}/{wildcards.strain}",
-        scripts_dir = SCRIPTS_DIR,
-        inoc_cfu = lambda wildcards: fp_config[(wildcards.experiment, wildcards.strain, wildcards.anal_folder)]['inoc_cfu'],
-        minweight = lambda wildcards: fp_config[(wildcards.experiment, wildcards.strain, wildcards.anal_folder)]['minweight'],
-        correct_noise = lambda wildcards: fp_config[(wildcards.experiment, wildcards.strain, wildcards.anal_folder)]['correct_noise']
+        output_dir = lambda wildcards: fp_config[(wildcards.experiment, wildcards.strain, wildcards.anal_folder)]['umi_threshhold'],
+        scripts_dir = SCRIPTS_DIR
     log:
-        OUTPUT_DIR + "logs/{experiment}/{anal_folder}/{strain}_FP.log"
+        OUTPUT_DIR + "logs/{experiment}/{anal_folder}/{strain}_Nb.log"
     shell:
         """
         # Initialize log file with timestamp
-        echo "=== FP Analysis Started: $(date) ===" > {log}
+        echo "=== Nb Analysis Started: $(date) ===" > {log}
         echo "Input file: {input.readstable}" >> {log}
-        echo "Output basename: {params.output_basename}" >> {log}
+        echo "Output directory: {params.output_dir}" >> {log}
         echo "Analysis folder: {wildcards.anal_folder}" >> {log}
 
         # Create directories
         echo "Creating output directories..." >> {log}
-        mkdir -p $(dirname {output[0]}) 2>> {log}
+        mkdir -p {params.output_dir} 2>> {log}
         mkdir -p $(dirname {log}) 2>> {log}
         echo "Directories created successfully" >> {log}
 
@@ -148,57 +139,39 @@ rule get_resilient_FP:
         fi
         echo "Input file exists" >> {log}
 
-        # Dynamically find gavage column indices (1-indexed for R)
+        # Dynamically find gavage column indices (0-indexed for Python)
         echo "Finding gavage columns..." >> {log}
         WHERE_REFS=$(conda run -n umi_tools_env python -c "
 import pandas as pd
 import sys
 try:
-    df = pd.read_csv('{input.readstable}')
+    df = pd.read_csv('{input.readstable}', index_col=0)
     print('Columns in dataframe:', list(df.columns), file=sys.stderr)
     gavage_cols = [i for i, col in enumerate(df.columns) if 'gavage' in str(col).lower()]
     print('Found gavage columns at indices:', gavage_cols, file=sys.stderr)
-    print(','.join(map(str, gavage_cols)) if gavage_cols else '1')
+    print(','.join(map(str, gavage_cols)) if gavage_cols else '0')
 except Exception as e:
     print('ERROR finding gavage columns:', str(e), file=sys.stderr)
-    print('1')
+    print('0')
 " 2>> {log})
 
-        echo "Gavage column indices (1-based for R): $WHERE_REFS" >> {log}
+        echo "Gavage column indices (0-based for Python): $WHERE_REFS" >> {log}
 
-        # Check conda environment
-        echo "Checking conda environment..." >> {log}
-        conda env list | grep r_bottleneck >> {log} 2>&1
-        if [ $? -ne 0 ]; then
-            echo "WARNING: r_bottleneck environment not found in conda env list" >> {log}
-        fi
-
-        # Run R script
-        echo "Starting R script execution..." >> {log}
-        echo "Command: Rscript {params.scripts_dir}/FinalResiliencyWithCFU_wrapper.R" >> {log}
-        echo "  Input: {input.readstable}" >> {log}
-        echo "  Inoculum CFU: {params.inoc_cfu}" >> {log}
-        echo "  Reference columns: $WHERE_REFS" >> {log}
-        echo "  Min weight: {params.minweight}" >> {log}
-        echo "  Noise correction: {params.correct_noise}" >> {log}
-        echo "  Output basename: {params.output_basename}" >> {log}
-
-        conda run -n r_bottleneck Rscript {params.scripts_dir}/FinalResiliencyWithCFU_wrapper.R \
+        # Run Nb calculation
+        conda run -n umi_tools_env python {params.scripts_dir}/getFP_Nb.py \
             {input.readstable} \
-            NULL \
-            {params.inoc_cfu} \
             "$WHERE_REFS" \
-            {params.minweight} \
-            {params.correct_noise} \
-            {params.output_basename} \
-            NULL 2>&1 | tee -a {log}
+            {params.output_dir} 2>&1 | tee -a {log}
 
         EXIT_CODE=${{PIPESTATUS[0]}}
 
+        # Rename output file to match expected output name
         if [ $EXIT_CODE -eq 0 ]; then
-            echo "=== R script completed successfully: $(date) ===" >> {log}
+            echo "=== Python script completed successfully: $(date) ===" >> {log}
+            mv {params.output_dir}/Nb_estimates.csv {output} 2>> {log}
+            echo "Renamed output file to {output}" >> {log}
         else
-            echo "=== R script FAILED with exit code $EXIT_CODE: $(date) ===" >> {log}
+            echo "=== Python script FAILED with exit code $EXIT_CODE: $(date) ===" >> {log}
             exit $EXIT_CODE
         fi
         """
