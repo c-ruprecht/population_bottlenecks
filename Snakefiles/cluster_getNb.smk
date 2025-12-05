@@ -55,6 +55,7 @@ checkpoint create_experiments:
             -e {params.empty_samples} &> {log}
         """
 
+# defines input molecules tables from the config file for moleculetable clustering
 def get_moleculetable_input(wildcards):
     """Input function that waits for checkpoint completion"""
     checkpoints.create_experiments.get()
@@ -65,8 +66,6 @@ rule cluster_moleculetables:
         readstable = get_moleculetable_input
     output:
         OUTPUT_DIR + "clustered/{experiment}/{anal_folder}/{strain}_clustered.csv",
-    benchmark:
-        OUTPUT_DIR + "benchmarks/{experiment}/{anal_folder}/{strain}_cluster_molecules.csv",
     params:
         scripts_dir = SCRIPTS_DIR,
         output_prefix = OUTPUT_DIR + "clustered/{experiment}/{anal_folder}/{strain}",
