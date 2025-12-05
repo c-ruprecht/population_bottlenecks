@@ -1,4 +1,4 @@
-experiment	strain	umi_threshhold	anal_folder
+experiment	strain	umi_threshold	anal_folder
 P4C2T4T5	ST1	1	umi_thold1
 P4C2T4T5	ST2	1	umi_thold1
 P4C2T4T5	ST4	1	umi_thold1

@@ -21,7 +21,7 @@ fp_config = {}
 for _, row in fp_config_df.iterrows():
     key = (row['experiment'], row['strain'], row['anal_folder'])
     fp_config[key] = {
-        'umi_threshhold': int(row['umi_threshhold'])
+        'umi_threshold': int(row['umi_threshold'])
     }
 
 print(f"Loaded {len(fp_config)} FP configurations from {FP_CONFIG_FILE}")
@@ -86,15 +86,15 @@ rule cluster_moleculetables:
     input:
         readstable = OUTPUT_DIR + "moleculetables/{experiment}/moleculetables/{strain}_moleculestable.csv"
     output:
-        OUTPUT_DIR + "clustered/{experiment}/{strain}_clustered.csv",
+        OUTPUT_DIR + "clustered/{experiment}/{anal_folder}/{strain}_clustered.csv",
     benchmark:
         OUTPUT_DIR + "benchmarks/cluster_molecules.csv",
     params:
         scripts_dir = SCRIPTS_DIR,
-        output_prefix = OUTPUT_DIR + "clustered/{experiment}/{strain}",
-        threshold = lambda wildcards: {wildcards.experiment}
+        output_prefix = OUTPUT_DIR + "clustered/{experiment}/{anal_folder}/{strain}",
+        threshold = lambda wildcards: fp_config[(wildcards.experiment, wildcards.strain, wildcards.anal_folder)]['umi_threshold'],
     log:
-        OUTPUT_DIR + "logs/{experiment}/{strain}_clustering.log"
+        OUTPUT_DIR + "logs/{experiment}/{anal_folder}/{strain}_clustering.log"
     shell:
         """
         mkdir -p $(dirname {output})
@@ -102,18 +102,19 @@ rule cluster_moleculetables:
         conda run -n umi_tools_env python {params.scripts_dir}/cluster_moleculetables.py \
             --input {input.readstable} \
             --output {params.output_prefix} \
-            --threshold {params.threshhold} &> {log}
+            --threshold {params.threshold} &> {log}
         """
 
 
 # Run the Nb calculation
 rule get_FP:
     input:
-        readstable = OUTPUT_DIR + "clustered/{experiment}/{strain}_clustered.csv"
+        readstable = OUTPUT_DIR + "clustered/{experiment}/{anal_folder}/{strain}_clustered.csv"
     output:
         OUTPUT_DIR + "FP/{experiment}/{anal_folder}/{strain}_Nb_estimates.csv"
     params:
-        output_dir = lambda wildcards: fp_config[(wildcards.experiment, wildcards.strain, wildcards.anal_folder)]['umi_threshhold'],
+        output_dir = lambda wildcards: OUTPUT_DIR + f"FP/{wildcards.experiment}/{wildcards.anal_folder}/{wildcards.strain}",
+        #output_dir = lambda wildcards: fp_config[(wildcards.experiment, wildcards.strain, wildcards.anal_folder)]['anal'],
         scripts_dir = SCRIPTS_DIR
     log:
         OUTPUT_DIR + "logs/{experiment}/{anal_folder}/{strain}_Nb.log"

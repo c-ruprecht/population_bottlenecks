@@ -184,11 +184,12 @@ def main():
     ])
 
     # Save outputs
-    summary_df.to_csv(output_dir / 'Nb_estimates.csv', index=False)
+    output_file = str(output_dir) + '_Nb_estimates.csv'
+    summary_df.to_csv(output_file, index=False)
 
     print("\n" + "="*60)
     print("Analysis complete!")
-    print(f"Results saved to: {output_dir / 'Nb_estimates.csv'}")
+    print(f"Results saved to: {output_file}")
     print("="*60)
     print("\nSummary:")
     print(summary_df.to_string(index=False))
