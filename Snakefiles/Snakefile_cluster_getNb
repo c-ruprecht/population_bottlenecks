@@ -91,8 +91,8 @@ rule cluster_moleculetables:
         OUTPUT_DIR + "benchmarks/cluster_molecules.csv",
     params:
         scripts_dir = SCRIPTS_DIR,
-        output_prefix = OUTPUT_DIR + "clustered/{experiment}/{strain}"
-        threshold = lambda wildcards: {wildcards.experiment},
+        output_prefix = OUTPUT_DIR + "clustered/{experiment}/{strain}",
+        threshold = lambda wildcards: {wildcards.experiment}
     log:
         OUTPUT_DIR + "logs/{experiment}/{strain}_clustering.log"
     shell:
