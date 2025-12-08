@@ -59,9 +59,9 @@ P4C3T2	s57	Pr. Colon DNA		24 h	cage5	germ_free	None	mA	female	10^4	ST1a|ST2d	E. 
 P4C3T2	s58	Pr. Colon CFU		24 h	cage5	germ_free	None	mA	female	10^4	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
 P4C3T2	s59	Pr. Colon DNA		24 h	cage6	germ_free	None	mA	female	10^4	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
 P4C3T2	s60	Pr. Colon CFU		24 h	cage6	germ_free	None	mA	female	10^4	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
-P4C3T2	s61	Gavage DNA		24 h	gavage	NA	NA	NA	NA	10^8	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
-P4C3T2	s62	Gavage DNA		24 h	gavage	NA	NA	NA	NA	10^8	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s61	Gavage DNA		24 h	gavage	NA	NA	NA	NA	10^4	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s62	Gavage DNA		24 h	gavage	NA	NA	NA	NA	10^4	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
 P4C3T2	s63	Gavage DNA		24 h	gavage	NA	NA	NA	NA	10^6	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
 P4C3T2	s64	Gavage DNA		24 h	gavage	NA	NA	NA	NA	10^6	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
-P4C3T2	s65	Gavage DNA		24 h	gavage	NA	NA	NA	NA	10^4	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
-P4C3T2	s66	Gavage DNA		24 h	gavage	NA	NA	NA	NA	10^4	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s65	Gavage DNA		24 h	gavage	NA	NA	NA	NA	10^8	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
+P4C3T2	s66	Gavage DNA		24 h	gavage	NA	NA	NA	NA	10^8	ST1a|ST2d	E. coli|E.coli	2ml_screwcap							
