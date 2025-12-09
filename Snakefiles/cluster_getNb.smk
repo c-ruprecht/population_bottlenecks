@@ -90,7 +90,7 @@ rule get_FP:
     output:
         OUTPUT_DIR + "FP/{experiment}/{anal_folder}/{strain}_Nb_estimates.csv"
     params:
-        output_dir = lambda wildcards: OUTPUT_DIR + f"FP/{wildcards.experiment}/{wildcards.anal_folder}/{wildcards.strain}",
+        output_dir = lambda wildcards: OUTPUT_DIR + f"FP/{wildcards.experiment}/{wildcards.anal_folder}",
         #output_dir = lambda wildcards: fp_config[(wildcards.experiment, wildcards.strain, wildcards.anal_folder)]['anal'],
         scripts_dir = SCRIPTS_DIR
     log:
